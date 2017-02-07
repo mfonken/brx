@@ -1,20 +1,8 @@
-/*!
- * File:
- *  si4355_api_lib.h
- *
- * Description:
- *  This file contains the Si4355 API library.
- *
- * Silicon Laboratories Confidential
- * Copyright 2011 Silicon Laboratories, Inc.
- */
+#ifndef _SI4355_H_
+#define _SI4355_H_
 
-#ifndef _SI4355_API_LIB_H_
-#define _SI4355_API_LIB_H_
-
-extern SEGMENT_VARIABLE( Si4355Cmd, union si4355_cmd_reply_union, SEG_XDATA );
-extern SEGMENT_VARIABLE( radioCmd[16], U8, SEG_XDATA );
-
+extern union si4355_cmd_reply_union Si4355Cmd;
+extern U8 radioCmd[16];
 
 #define SI4355_FIFO_SIZE 64
 

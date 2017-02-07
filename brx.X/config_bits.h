@@ -1,5 +1,5 @@
-#ifndef CONFIG_H
-#define	CONFIG_H
+#ifndef CONFIG_BITS_H
+#define	CONFIG_BITS_H
 
 #ifdef	__cplusplus
 extern "C" {

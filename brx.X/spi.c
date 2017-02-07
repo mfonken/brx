@@ -26,18 +26,110 @@ void SPI_Init( void )
 	SSPEN   = 1;
 } 
 
-void SPI_Write(unsigned char data)
+
+void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata )
+{
+    SPI_WriteBytes( wlen, wdata );
+    SPI_ReadBytes(  rlen, rdata );
+}
+
+void SPI_WriteBytes( U8 len, U8 * data )
+{
+    while( len-- )
+    {
+        SPI_WriteByte( *data++ );
+    }
+}
+
+void SPI_WriteByte( U8 data)
 {   
     SSPBUF = data; 
     while (!SSP1IF);  //wait for transmission complete 
     data = SSPBUF; 
 }
 
-unsigned char SPI_Read( void )
+void SPI_ReadBytes( U8 len, U8 * data )
+{
+    while( len-- )
+    {
+        *data++ = SPI_ReadByte();
+    }
+}
+
+U8 SPI_ReadByte( void )
 {   
-    unsigned char data;
+    U8 data;
 	SSPBUF = 0;				// write out to buffer
-    while(!BF);				// wait for flag
+    while(!SSP1IF);				// wait for flag
     data = SSPBUF;
     return data;
 }
+
+
+/*
+U8 Comm_IF_Spi1ReadByteBitbang(void)
+{
+    SEGMENT_VARIABLE(read_byte, U8, SEG_DATA) = 0u;
+    SEGMENT_VARIABLE(ii,        U8, SEG_DATA);
+    
+    MCU_SCK = TRUE;
+    
+    NOP();
+    NOP();
+    NOP();
+    NOP();
+    
+    MCU_SCK = FALSE;
+    
+    NOP();
+    
+    for(ii = 0u; ii < 8u; ii++)
+    {
+        MCU_SCK = TRUE;
+        read_byte <<= 1u;
+        
+        / * Sample the line * /
+        if (TRUE == MCU_MISO)
+        {
+            read_byte |= 0x01;
+        }
+        MCU_SCK = FALSE;
+    }
+    
+    return read_byte;
+}
+
+/ **
+ *  Write one byte to the SPI1 using bit-bang method.
+ *
+ *  @param[in] data_in Data byte to be sent.
+ *  @param[in] nmbr_bit Number of bits to be sent from the data byte.
+ *
+ *  @note
+ *
+ ****************************************************************************** /
+void Comm_IF_Spi1WriteBitsBitbang(U8 data_in, U8 nmbr_bit)
+{
+    SEGMENT_VARIABLE(ii,     U8, SEG_DATA);
+    SEGMENT_VARIABLE(lMask,  U8, SEG_DATA);
+    
+    lMask = (1u << (nmbr_bit - 1u));
+    for (ii = 0u; ii < nmbr_bit; ii++)
+    {
+        MCU_SCK = FALSE;
+        if ((data_in & lMask) != 0u)
+        {
+            MCU_MOSI = TRUE;
+        }
+        else
+        {
+            MCU_MOSI = FALSE;
+        }
+        /* clock pulse to sample */
+        MCU_SCK = TRUE;
+        lMask >>= 1u;
+    }
+    
+    MCU_SCK = FALSE;
+}
+*/

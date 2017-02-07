@@ -1,41 +1,16 @@
-/*!
- * File:
- *  si4355_api_lib.c
- *
- * Description:
- *  This file contains the Si4355 API library.
- *
- * Silicon Laboratories Confidential
- * Copyright 2011 Silicon Laboratories, Inc.
- */
-
 #include <stdarg.h>
-#include "../../compiler_defs.h"
-#include "../radio_comm.h"
-#include "../radio_hal.h"
 #include "si4355_defs.h"
-#include "si4355_api_lib.h"
+#include "si4355h"
 
-#define SI4355_USER_CONFIG_XTAL_FREQ 30000000L
-SEGMENT_VARIABLE( Si4355Cmd, union si4355_cmd_reply_union, SEG_XDATA );
-SEGMENT_VARIABLE( radioCmd[16u], U8, SEG_XDATA );
+#define SI4355_XTAL_FREQ 30000000L
 
+union si4355_cmd_reply_union Si4355Cmd;
+U8 radioCmd[16u];
 
-/*!
- * This functions is used to reset the si4355 radio by applying shutdown and
- * releasing it.  After this function @ref si4355_boot should be called.  You
- * can check if POR has completed by waiting 4 ms or by polling GPIO 0, 2, or 3.
- * When these GPIOs are high, it is safe to call @ref si4355_boot.
- */
 void si4355_reset(void)
 {
-    U8 loopCount;
-
-    /* Put radio in shutdown, wait then release */
-    radio_hal_AssertShutdown();
-    //! @todo this needs to be a better delay function.
-    for (loopCount = 255; loopCount != 0; loopCount--);
-    radio_hal_DeassertShutdown();
+    /* No access to SDN pin */
+    /* ? try software reset ? */
 }
 
 
@@ -209,16 +184,16 @@ void si4355_ezconfig_check(U16 CHECKSUM)
 {
   /* Do not check CTS */
 
-  radio_hal_ClearNsel();
+  SS = 0;
 
   /* Command byte */
-  radio_hal_SpiWriteByte(SI4355_CMD_ID_EZCONFIG_CHECK);
+  SPI_WriteByte(SI4355_CMD_ID_EZCONFIG_CHECK);
 
   /* CRC */
-  radio_hal_SpiWriteByte((U16) CHECKSUM >> 8u);
-  radio_hal_SpiWriteByte((U16) CHECKSUM & 0x00FF);
+  SPI_WriteByte((U16) CHECKSUM >> 8u);
+  SPI_WriteByte((U16) CHECKSUM & 0x00FF);
 
-  radio_hal_SetNsel();
+  SS = 1;
 
   /* Get the respoonse from the radio chip */
   radio_comm_GetResp(1u, radioCmd);
