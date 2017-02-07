@@ -1,0 +1,11 @@
+
+# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/si4355.c"
+
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
