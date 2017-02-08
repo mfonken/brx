@@ -9,8 +9,8 @@ STARTUP 0
 ARMED 1
 RECEIVING 2
 ]
-"31 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
-[e E2132 . `uc
+"29 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+[e E2137 . `uc
 SUCCESS 0
 NO_PATCH 1
 CTS_TIMEOUT 2
@@ -27,25 +27,25 @@ COMMAND_ERROR 4
 ]
 "8 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _radio_comm_GetResp radio_comm_GetResp `(uc  1 e 1 0 ]
-"45
+"42
 [v _radio_comm_PollCTS radio_comm_PollCTS `(uc  1 e 1 0 ]
-"50
+"47
 [v _radio_comm_SendCmd radio_comm_SendCmd `(v  1 e 1 0 ]
-"67
+"64
 [v _radio_comm_SendCmdGetResp radio_comm_SendCmdGetResp `(uc  1 e 1 0 ]
-"73
+"70
 [v _radio_comm_ReadData radio_comm_ReadData `(v  1 e 1 0 ]
 "12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c
 [v _main main `(v  1 e 1 0 ]
 "38
 [v _Timer0_ISR Timer0_ISR `II(v  1 e 1 0 ]
-"16 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+"14 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
 [v _Radio_PowerUp Radio_PowerUp `(v  1 e 1 0 ]
-"25
+"23
 [v _Radio_Init Radio_Init `(v  1 e 1 0 ]
-"41
+"39
 [v _Radio_CheckReceived Radio_CheckReceived `(uc  1 e 1 0 ]
-"60
+"57
 [v _Radio_StartRX Radio_StartRX `(v  1 e 1 0 ]
 "13 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_configuration_init si4355_configuration_init `(uc  1 e 1 0 ]
@@ -176,14 +176,14 @@ COMMAND_ERROR 4
 {
 "27
 } 0
-"60 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+"57 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
 [v _Radio_StartRX Radio_StartRX `(v  1 e 1 0 ]
 {
 [v Radio_StartRX@channel channel `uc  1 a 1 wreg ]
 [v Radio_StartRX@channel channel `uc  1 a 1 wreg ]
-"63
+"60
 [v Radio_StartRX@channel channel `uc  1 a 1 15 ]
-"70
+"67
 } 0
 "261 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_start_rx si4355_start_rx `(v  1 e 1 0 ]
@@ -199,10 +199,10 @@ COMMAND_ERROR 4
 [v si4355_start_rx@CHANNEL CHANNEL `uc  1 a 1 9 ]
 "273
 } 0
-"25 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+"23 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
 [v _Radio_Init Radio_Init `(v  1 e 1 0 ]
 {
-"39
+"37
 } 0
 "13 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_configuration_init si4355_configuration_init `(uc  1 e 1 0 ]
@@ -215,22 +215,22 @@ COMMAND_ERROR 4
 [v si4355_configuration_init@pSetPropCmd pSetPropCmd `*.25uc  1 p 2 13 ]
 "57
 } 0
-"16 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+"14 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
 [v _Radio_PowerUp Radio_PowerUp `(v  1 e 1 0 ]
 {
-"18
+"16
 [v Radio_PowerUp@wDelay wDelay `ui  1 a 2 2 ]
-"23
+"21
 } 0
 "59 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_reset si4355_reset `(v  1 e 1 0 ]
 {
 "63
 } 0
-"41 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+"39 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
 [v _Radio_CheckReceived Radio_CheckReceived `(uc  1 e 1 0 ]
 {
-"58
+"55
 } 0
 "360 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_read_rx_fifo si4355_read_rx_fifo `(v  1 e 1 0 ]
@@ -242,7 +242,7 @@ COMMAND_ERROR 4
 [v si4355_read_rx_fifo@numBytes numBytes `uc  1 a 1 7 ]
 "363
 } 0
-"73 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
+"70 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _radio_comm_ReadData radio_comm_ReadData `(v  1 e 1 0 ]
 {
 [v radio_comm_ReadData@cmd cmd `uc  1 a 1 wreg ]
@@ -250,9 +250,9 @@ COMMAND_ERROR 4
 [v radio_comm_ReadData@pollCts pollCts `uc  1 p 1 0 ]
 [v radio_comm_ReadData@byteCount byteCount `uc  1 p 1 1 ]
 [v radio_comm_ReadData@pData pData `*.4uc  1 p 1 2 ]
-"75
+"72
 [v radio_comm_ReadData@cmd cmd `uc  1 a 1 3 ]
-"87
+"84
 } 0
 "239 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _si4355_get_int_status si4355_get_int_status `(v  1 e 1 0 ]
@@ -265,7 +265,7 @@ COMMAND_ERROR 4
 [v si4355_get_int_status@PH_CLR_PEND PH_CLR_PEND `uc  1 a 1 12 ]
 "259
 } 0
-"67 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
+"64 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _radio_comm_SendCmdGetResp radio_comm_SendCmdGetResp `(uc  1 e 1 0 ]
 {
 [v radio_comm_SendCmdGetResp@cmdByteCount cmdByteCount `uc  1 a 1 wreg ]
@@ -273,24 +273,24 @@ COMMAND_ERROR 4
 [v radio_comm_SendCmdGetResp@pCmdData pCmdData `*.4uc  1 p 1 2 ]
 [v radio_comm_SendCmdGetResp@respByteCount respByteCount `uc  1 p 1 3 ]
 [v radio_comm_SendCmdGetResp@pRespData pRespData `*.4uc  1 p 1 4 ]
-"69
+"66
 [v radio_comm_SendCmdGetResp@cmdByteCount cmdByteCount `uc  1 a 1 6 ]
-"71
+"68
 } 0
-"50
+"47
 [v _radio_comm_SendCmd radio_comm_SendCmd `(v  1 e 1 0 ]
 {
 [v radio_comm_SendCmd@byteCount byteCount `uc  1 a 1 wreg ]
 [v radio_comm_SendCmd@byteCount byteCount `uc  1 a 1 wreg ]
 [v radio_comm_SendCmd@pData pData `*.4uc  1 p 1 11 ]
-"54
+"51
 [v radio_comm_SendCmd@byteCount byteCount `uc  1 a 1 1 ]
-"65
+"62
 } 0
-"45
+"42
 [v _radio_comm_PollCTS radio_comm_PollCTS `(uc  1 e 1 0 ]
 {
-"48
+"45
 } 0
 "8
 [v _radio_comm_GetResp radio_comm_GetResp `(uc  1 e 1 0 ]
@@ -303,7 +303,7 @@ COMMAND_ERROR 4
 [v radio_comm_GetResp@pData pData `*.4uc  1 p 1 6 ]
 "10
 [v radio_comm_GetResp@byteCount byteCount `uc  1 a 1 8 ]
-"43
+"40
 } 0
 "44 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c
 [v _SPI_ReadBytes SPI_ReadBytes `(v  1 e 1 0 ]

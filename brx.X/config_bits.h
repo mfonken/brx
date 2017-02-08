@@ -1,10 +1,6 @@
 #ifndef CONFIG_BITS_H
 #define	CONFIG_BITS_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 // CONFIG1
 #pragma config FOSC = INTOSC // Oscillator Selection (INTOSC oscillator: I/O function on CLKIN pin)
 #pragma config WDTE = OFF // Watchdog Timer Enable (WDT disabled)
@@ -23,9 +19,5 @@ extern "C" {
 #pragma config STVREN = ON // Stack Overflow/Underflow Reset Enable (Stack Overflow or Underflow will cause a Reset)
 #pragma config BORV = LO // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), low trip point selected.)
 #pragma config LVP = ON // Low-Voltage Programming Enable (Low-voltage programming enabled)
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* SPI_H */

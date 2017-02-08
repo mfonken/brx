@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.41 build -162212810 
-                                                                                               Tue Feb 07 19:08:26 2017
+                                                                                               Tue Feb 07 19:33:51 2017
 
 Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250102
      1                           	processor	12LF1840
@@ -781,19 +781,19 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
    767  0FEF                     	;# 
    768                           
    769                           	psect	idataBANK0
-   770  039F                     __pidataBANK0:	
+   770  03A1                     __pidataBANK0:	
    771                           
    772                           ;initializer for _pRadioConfiguration
-   773  039F  345F               	retlw	low (_RadioConfiguration| 0)
+   773  03A1  345F               	retlw	low (_RadioConfiguration| 0)
    774                           
    775                           ;initializer for _RadioConfiguration
-   776  03A0  3433               	retlw	low (_Radio_Configuration_Data_Array| (0+32768))
-   777  03A1  3480               	retlw	high (_Radio_Configuration_Data_Array| (0+32768))
-   778  03A2  3400               	retlw	0
-   779  03A3  3407               	retlw	7
-   780  03A4  3403               	retlw	3
-   781  03A5  3400               	retlw	0
-   782  03A6  34F0               	retlw	240
+   776  03A2  3433               	retlw	low (_Radio_Configuration_Data_Array| (0+32768))
+   777  03A3  3480               	retlw	high (_Radio_Configuration_Data_Array| (0+32768))
+   778  03A4  3400               	retlw	0
+   779  03A5  3407               	retlw	7
+   780  03A6  3403               	retlw	3
+   781  03A7  3400               	retlw	0
+   782  03A8  34F0               	retlw	240
    783                           
    784                           	psect	stringtext
    785  0033                     __pstringtext:	
@@ -1101,7 +1101,7 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1087  001B                     __initialization:	
   1088                           
   1089                           ; Initialize objects allocated to BANK0
-  1090  001B  309F               	movlw	low __pidataBANK0
+  1090  001B  30A1               	movlw	low __pidataBANK0
   1091  001C  0084               	movwf	4
   1092  001D  3083               	movlw	(high __pidataBANK0)| (0+128)
   1093  001E  0085               	movwf	5
@@ -1110,7 +1110,7 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1096  0021  3000               	movlw	high __pdataBANK0
   1097  0022  0087               	movwf	7
   1098  0023  3008               	movlw	8
-  1099  0024  3183  23A7  3180   	fcall	init_ram
+  1099  0024  3183  23A9  3180   	fcall	init_ram
   1100                           
   1101                           ; Clear objects allocated to COMMON
   1102  0027  01FC               	clrf	__pbssCOMMON& (0+127)
@@ -1121,14 +1121,14 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1107  002A  3000               	movlw	high __pbssBANK0
   1108  002B  0085               	movwf	5
   1109  002C  302B               	movlw	43
-  1110  002D  3183  23AD         	fcall	clear_ram0
+  1110  002D  3183  23AF         	fcall	clear_ram0
   1111  002F                     end_of_initialization:	
   1112                           ;End of C runtime variable initialization code
   1113                           
   1114  002F                     __end_of__initialization:	
   1115  002F  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
   1116  0030  0020               	movlb	0
-  1117  0031  3182  2A3F         	ljmp	_main	;jump to C main() function
+  1117  0031  3182  2A41         	ljmp	_main	;jump to C main() function
   1118                           
   1119                           	psect	bssCOMMON
   1120  007C                     __pbssCOMMON:	
@@ -1158,27 +1158,27 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1144  005F                     	ds	7
   1145                           
   1146                           	psect	inittext
-  1147  03A7                     init_ram:	
-  1148  03A7  00FE               	movwf	126
-  1149  03A8                     initloop:	
-  1150  03A8  0012               	moviw fsr0++
-  1151  03A9  001E               	movwi fsr1++
-  1152  03AA  0BFE               	decfsz	126,f
-  1153  03AB  2BA8               	goto	initloop
-  1154  03AC  3400               	retlw	0
+  1147  03A9                     init_ram:	
+  1148  03A9  00FE               	movwf	126
+  1149  03AA                     initloop:	
+  1150  03AA  0012               	moviw fsr0++
+  1151  03AB  001E               	movwi fsr1++
+  1152  03AC  0BFE               	decfsz	126,f
+  1153  03AD  2BAA               	goto	initloop
+  1154  03AE  3400               	retlw	0
   1155                           
   1156                           	psect	clrtext
-  1157  03AD                     clear_ram0:	
+  1157  03AF                     clear_ram0:	
   1158                           ;	Called with FSR0 containing the base address, and
   1159                           ;	WREG with the size to clear
   1160                           
-  1161  03AD  0064               	clrwdt	;clear the watchdog before getting into this loop
-  1162  03AE                     clrloop0:	
-  1163  03AE  0180               	clrf	0	;clear RAM location pointed to by FSR
-  1164  03AF  3101               	addfsr 0,1
-  1165  03B0  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
-  1166  03B1  2BAE               	goto	clrloop0	;have we reached the end yet?
-  1167  03B2  3400               	retlw	0	;all done for this memory range, return
+  1161  03AF  0064               	clrwdt	;clear the watchdog before getting into this loop
+  1162  03B0                     clrloop0:	
+  1163  03B0  0180               	clrf	0	;clear RAM location pointed to by FSR
+  1164  03B1  3101               	addfsr 0,1
+  1165  03B2  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
+  1166  03B3  2BB0               	goto	clrloop0	;have we reached the end yet?
+  1167  03B4  3400               	retlw	0	;all done for this memory range, return
   1168                           
   1169                           	psect	cstackCOMMON
   1170  0070                     __pcstackCOMMON:	
@@ -1455,7 +1455,7 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1441  005D                     	ds	1
   1442                           
   1443                           	psect	maintext
-  1444  023F                     __pmaintext:	
+  1444  0241                     __pmaintext:	
   1445 ;;
   1446 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
   1447 ;;
@@ -1494,70 +1494,70 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1480                           
   1481                           
   1482                           ;psect for function _main
-  1483  023F                     _main:	
+  1483  0241                     _main:	
   1484                           
   1485                           ;main.c: 14: SPI_Init();
   1486                           
   1487                           ;incstack = 0
   1488                           ; Regs used in _main: [wreg-fsr1h+status,2+status,0+pclath+cstack]
-  1489  023F  3183  2368  3182   	fcall	_SPI_Init
+  1489  0241  3183  236A  3182   	fcall	_SPI_Init
   1490                           
   1491                           ;main.c: 16: {
   1492                           ;main.c: 17: switch( STATE )
   1493                           
-  1494                           ;main.c: 15: while (1)
-  1495  0242  2A5A               	goto	l1893
-  1496  0243                     l1883:	
+  1494                           ;main.c: 15: while(1)
+  1495  0244  2A5C               	goto	l1902
+  1496  0245                     l1892:	
   1497                           ;main.c: 18: {
   1498                           ;main.c: 19: case STARTUP:
   1499                           
   1500                           
   1501                           ;main.c: 20: Radio_Init();
-  1502  0243  3183  2300  3182   	fcall	_Radio_Init
-  1503  0246                     l1885:	
+  1502  0245  3183  2302  3182   	fcall	_Radio_Init
+  1503  0248                     l1894:	
   1504                           ;main.c: 21: case ARMED:
   1505                           
   1506                           
-  1507                           ;main.c: 22: Radio_StartRX(0u);
-  1508  0246  3000               	movlw	0
-  1509  0247  3182  22E5  3182   	fcall	_Radio_StartRX
+  1507                           ;main.c: 22: Radio_StartRX( 0u );
+  1508  0248  3000               	movlw	0
+  1509  0249  3182  22E7  3182   	fcall	_Radio_StartRX
   1510                           
-  1511                           ;main.c: 24: si4355_fifo_info(0x02);
-  1512  024A  3002               	movlw	2
-  1513  024B  3182  2267  3182   	fcall	_si4355_fifo_info
+  1511                           ;main.c: 24: si4355_fifo_info( 0x02 );
+  1512  024C  3002               	movlw	2
+  1513  024D  3182  2269  3182   	fcall	_si4355_fifo_info
   1514                           
   1515                           ;main.c: 25: STATE = RECEIVING;
-  1516  024E  3002               	movlw	2
-  1517  024F  0020               	movlb	0	; select bank0
-  1518  0250  00DD               	movwf	??_main
-  1519  0251  085D               	movf	??_main,w
-  1520  0252  00B2               	movwf	_STATE
+  1516  0250  3002               	movlw	2
+  1517  0251  0020               	movlb	0	; select bank0
+  1518  0252  00DD               	movwf	??_main
+  1519  0253  085D               	movf	??_main,w
+  1520  0254  00B2               	movwf	_STATE
   1521                           
   1522                           ;main.c: 26: break;
-  1523  0253  2A5A               	goto	l1893
-  1524  0254                     l1891:	
+  1523  0255  2A5C               	goto	l1902
+  1524  0256                     l1900:	
   1525                           ;main.c: 27: case RECEIVING:
   1526                           
   1527                           
-  1528                           ;main.c: 28: if(Radio_CheckReceived());
-  1529  0254  3183  2318  3182   	fcall	_Radio_CheckReceived
+  1528                           ;main.c: 28: if( Radio_CheckReceived() );
+  1529  0256  3183  231A  3182   	fcall	_Radio_CheckReceived
   1530                           
   1531                           ;main.c: 29: STATE = ARMED;
-  1532  0257  0020               	movlb	0	; select bank0
-  1533  0258                     l96:	
+  1532  0259  0020               	movlb	0	; select bank0
+  1533  025A                     l96:	
   1534                           ;main.c: 31: default:
   1535                           
   1536                           ;main.c: 30: break;
   1537                           
   1538                           
   1539                           ;main.c: 32: STATE = ARMED;
-  1540  0258  01B2               	clrf	_STATE
-  1541  0259  0AB2               	incf	_STATE,f
-  1542  025A                     l1893:	
+  1540  025A  01B2               	clrf	_STATE
+  1541  025B  0AB2               	incf	_STATE,f
+  1542  025C                     l1902:	
   1543                           ;main.c: 33: }
   1544                           
-  1545  025A  0020               	movlb	0	; select bank0
-  1546  025B  0832               	movf	_STATE,w
+  1545  025C  0020               	movlb	0	; select bank0
+  1546  025D  0832               	movf	_STATE,w
   1547                           
   1548                           ; Switch size 1, requested type "space"
   1549                           ; Number of cases is 3, Range of values is 0 to 2
@@ -1567,24 +1567,24 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1553                           ; direct_byte           12     6 (fixed)
   1554                           ; jumptable            260     6 (fixed)
   1555                           ;	Chosen strategy is simple_byte
-  1556  025C  3A00               	xorlw	0	; case 0
-  1557  025D  1903               	skipnz
-  1558  025E  2A43               	goto	l1883
-  1559  025F  3A01               	xorlw	1	; case 1
-  1560  0260  1903               	skipnz
-  1561  0261  2A46               	goto	l1885
-  1562  0262  3A03               	xorlw	3	; case 2
-  1563  0263  1903               	skipnz
-  1564  0264  2A54               	goto	l1891
-  1565  0265  2A58               	goto	l96
-  1566  0266  2A5A               	goto	l1893
-  1567  0267                     __end_of_main:	
+  1556  025E  3A00               	xorlw	0	; case 0
+  1557  025F  1903               	skipnz
+  1558  0260  2A45               	goto	l1892
+  1559  0261  3A01               	xorlw	1	; case 1
+  1560  0262  1903               	skipnz
+  1561  0263  2A48               	goto	l1894
+  1562  0264  3A03               	xorlw	3	; case 2
+  1563  0265  1903               	skipnz
+  1564  0266  2A56               	goto	l1900
+  1565  0267  2A5A               	goto	l96
+  1566  0268  2A5C               	goto	l1902
+  1567  0269                     __end_of_main:	
   1568                           ;main.c: 34: }
   1569                           ;main.c: 35: return;
   1570                           
   1571                           
   1572                           	psect	text1
-  1573  0267                     __ptext1:	
+  1573  0269                     __ptext1:	
   1574 ;; *************** function _si4355_fifo_info *****************
   1575 ;; Defined at:
   1576 ;;		line 200 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
@@ -1617,62 +1617,62 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1603                           
   1604                           
   1605                           ;psect for function _si4355_fifo_info
-  1606  0267                     _si4355_fifo_info:	
+  1606  0269                     _si4355_fifo_info:	
   1607                           
   1608                           ;incstack = 0
   1609                           ; Regs used in _si4355_fifo_info: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   1610                           ;si4355_fifo_info@FIFO stored from wreg
-  1611  0267  0020               	movlb	0	; select bank0
-  1612  0268  00D5               	movwf	si4355_fifo_info@FIFO
+  1611  0269  0020               	movlb	0	; select bank0
+  1612  026A  00D5               	movwf	si4355_fifo_info@FIFO
   1613                           
   1614                           ;si4355.c: 202: radioCmd[0] = 0x15;
-  1615  0269  3015               	movlw	21
-  1616  026A  00D2               	movwf	??_si4355_fifo_info
-  1617  026B  0852               	movf	??_si4355_fifo_info,w
-  1618  026C  00B4               	movwf	_radioCmd
+  1615  026B  3015               	movlw	21
+  1616  026C  00D2               	movwf	??_si4355_fifo_info
+  1617  026D  0852               	movf	??_si4355_fifo_info,w
+  1618  026E  00B4               	movwf	_radioCmd
   1619                           
   1620                           ;si4355.c: 203: radioCmd[1] = FIFO;
-  1621  026D  0855               	movf	si4355_fifo_info@FIFO,w
-  1622  026E  00D2               	movwf	??_si4355_fifo_info
-  1623  026F  0852               	movf	??_si4355_fifo_info,w
-  1624  0270  00B5               	movwf	_radioCmd+1
+  1621  026F  0855               	movf	si4355_fifo_info@FIFO,w
+  1622  0270  00D2               	movwf	??_si4355_fifo_info
+  1623  0271  0852               	movf	??_si4355_fifo_info,w
+  1624  0272  00B5               	movwf	_radioCmd+1
   1625                           
   1626                           ;si4355.c: 205: radio_comm_SendCmdGetResp( 2,
   1627                           ;si4355.c: 206: radioCmd,
   1628                           ;si4355.c: 207: 2,
   1629                           ;si4355.c: 208: radioCmd );
-  1630  0271  3034               	movlw	(low (_radioCmd| 0))& (0+255)
-  1631  0272  00D2               	movwf	??_si4355_fifo_info
-  1632  0273  0852               	movf	??_si4355_fifo_info,w
-  1633  0274  00CD               	movwf	radio_comm_SendCmdGetResp@pCmdData
-  1634  0275  3002               	movlw	2
-  1635  0276  00D3               	movwf	??_si4355_fifo_info+1
-  1636  0277  0853               	movf	??_si4355_fifo_info+1,w
-  1637  0278  00CE               	movwf	radio_comm_SendCmdGetResp@respByteCount
-  1638  0279  3034               	movlw	(low (_radioCmd| 0))& (0+255)
-  1639  027A  00D4               	movwf	??_si4355_fifo_info+2
-  1640  027B  0854               	movf	??_si4355_fifo_info+2,w
-  1641  027C  00CF               	movwf	radio_comm_SendCmdGetResp@pRespData
-  1642  027D  3002               	movlw	2
-  1643  027E  3183  2343         	fcall	_radio_comm_SendCmdGetResp
+  1630  0273  3034               	movlw	(low (_radioCmd| 0))& (0+255)
+  1631  0274  00D2               	movwf	??_si4355_fifo_info
+  1632  0275  0852               	movf	??_si4355_fifo_info,w
+  1633  0276  00CD               	movwf	radio_comm_SendCmdGetResp@pCmdData
+  1634  0277  3002               	movlw	2
+  1635  0278  00D3               	movwf	??_si4355_fifo_info+1
+  1636  0279  0853               	movf	??_si4355_fifo_info+1,w
+  1637  027A  00CE               	movwf	radio_comm_SendCmdGetResp@respByteCount
+  1638  027B  3034               	movlw	(low (_radioCmd| 0))& (0+255)
+  1639  027C  00D4               	movwf	??_si4355_fifo_info+2
+  1640  027D  0854               	movf	??_si4355_fifo_info+2,w
+  1641  027E  00CF               	movwf	radio_comm_SendCmdGetResp@pRespData
+  1642  027F  3002               	movlw	2
+  1643  0280  3183  2345         	fcall	_radio_comm_SendCmdGetResp
   1644                           
   1645                           ;si4355.c: 210: Si4355Cmd.FIFO_INFO.RX_FIFO_COUNT = radioCmd[0];
-  1646  0280  0020               	movlb	0	; select bank0
-  1647  0281  0834               	movf	_radioCmd,w
-  1648  0282  00D2               	movwf	??_si4355_fifo_info
-  1649  0283  0852               	movf	??_si4355_fifo_info,w
-  1650  0284  00A0               	movwf	_Si4355Cmd
+  1646  0282  0020               	movlb	0	; select bank0
+  1647  0283  0834               	movf	_radioCmd,w
+  1648  0284  00D2               	movwf	??_si4355_fifo_info
+  1649  0285  0852               	movf	??_si4355_fifo_info,w
+  1650  0286  00A0               	movwf	_Si4355Cmd
   1651                           
   1652                           ;si4355.c: 211: Si4355Cmd.FIFO_INFO.TX_FIFO_SPACE = radioCmd[1];
-  1653  0285  0835               	movf	_radioCmd+1,w
-  1654  0286  00D2               	movwf	??_si4355_fifo_info
-  1655  0287  0852               	movf	??_si4355_fifo_info,w
-  1656  0288  00A1               	movwf	_Si4355Cmd+1
-  1657  0289  0008               	return
-  1658  028A                     __end_of_si4355_fifo_info:	
+  1653  0287  0835               	movf	_radioCmd+1,w
+  1654  0288  00D2               	movwf	??_si4355_fifo_info
+  1655  0289  0852               	movf	??_si4355_fifo_info,w
+  1656  028A  00A1               	movwf	_Si4355Cmd+1
+  1657  028B  0008               	return
+  1658  028C                     __end_of_si4355_fifo_info:	
   1659                           
   1660                           	psect	text2
-  1661  0368                     __ptext2:	
+  1661  036A                     __ptext2:	
   1662 ;; *************** function _SPI_Init *****************
   1663 ;; Defined at:
   1664 ;;		line 5 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
@@ -1705,54 +1705,54 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1691                           
   1692                           
   1693                           ;psect for function _SPI_Init
-  1694  0368                     _SPI_Init:	
+  1694  036A                     _SPI_Init:	
   1695                           
   1696                           ;spi.c: 8: SSPEN = 0;
   1697                           
   1698                           ;incstack = 0
   1699                           ; Regs used in _SPI_Init: []
-  1700  0368  0024               	movlb	4	; select bank4
-  1701  0369  1295               	bcf	21,5	;volatile
+  1700  036A  0024               	movlb	4	; select bank4
+  1701  036B  1295               	bcf	21,5	;volatile
   1702                           
   1703                           ;spi.c: 10: SDOSEL = 1;
-  1704  036A  0022               	movlb	2	; select bank2
-  1705  036B  171D               	bsf	29,6	;volatile
+  1704  036C  0022               	movlb	2	; select bank2
+  1705  036D  171D               	bsf	29,6	;volatile
   1706                           
   1707                           ;spi.c: 11: SSSEL = 0;
-  1708  036C  129D               	bcf	29,5	;volatile
+  1708  036E  129D               	bcf	29,5	;volatile
   1709                           
   1710                           ;spi.c: 13: SMP = 0;
-  1711  036D  0024               	movlb	4	; select bank4
-  1712  036E  1394               	bcf	20,7	;volatile
+  1711  036F  0024               	movlb	4	; select bank4
+  1712  0370  1394               	bcf	20,7	;volatile
   1713                           
   1714                           ;spi.c: 15: CKE = 0;
-  1715  036F  1314               	bcf	20,6	;volatile
+  1715  0371  1314               	bcf	20,6	;volatile
   1716                           
   1717                           ;spi.c: 17: CKP = 0;
-  1718  0370  1215               	bcf	21,4	;volatile
+  1718  0372  1215               	bcf	21,4	;volatile
   1719                           
   1720                           ;spi.c: 19: SSPM0 = 0;
-  1721  0371  1015               	bcf	21,0	;volatile
+  1721  0373  1015               	bcf	21,0	;volatile
   1722                           
   1723                           ;spi.c: 20: SSPM1 = 0;
-  1724  0372  1095               	bcf	21,1	;volatile
+  1724  0374  1095               	bcf	21,1	;volatile
   1725                           
   1726                           ;spi.c: 21: SSPM2 = 0;
-  1727  0373  1115               	bcf	21,2	;volatile
+  1727  0375  1115               	bcf	21,2	;volatile
   1728                           
   1729                           ;spi.c: 22: SSPM3 = 0;
-  1730  0374  1195               	bcf	21,3	;volatile
+  1730  0376  1195               	bcf	21,3	;volatile
   1731                           
   1732                           ;spi.c: 26: SSPEN = 1;
-  1733  0375  1695               	bsf	21,5	;volatile
-  1734  0376  0008               	return
-  1735  0377                     __end_of_SPI_Init:	
+  1733  0377  1695               	bsf	21,5	;volatile
+  1734  0378  0008               	return
+  1735  0379                     __end_of_SPI_Init:	
   1736                           
   1737                           	psect	text3
-  1738  02E5                     __ptext3:	
+  1738  02E7                     __ptext3:	
   1739 ;; *************** function _Radio_StartRX *****************
   1740 ;; Defined at:
-  1741 ;;		line 60 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+  1741 ;;		line 57 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
   1742 ;; Parameters:    Size  Location     Type
   1743 ;;  channel         1    wreg     unsigned char 
   1744 ;; Auto vars:     Size  Location     Type
@@ -1783,46 +1783,46 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1769                           
   1770                           
   1771                           ;psect for function _Radio_StartRX
-  1772  02E5                     _Radio_StartRX:	
+  1772  02E7                     _Radio_StartRX:	
   1773                           
   1774                           ;incstack = 0
   1775                           ; Regs used in _Radio_StartRX: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   1776                           ;Radio_StartRX@channel stored from wreg
-  1777  02E5  0020               	movlb	0	; select bank0
-  1778  02E6  00DA               	movwf	Radio_StartRX@channel
+  1777  02E7  0020               	movlb	0	; select bank0
+  1778  02E8  00DA               	movwf	Radio_StartRX@channel
   1779                           
-  1780                           ;radio.c: 63: si4355_get_int_status(0u, 0u, 0u);
-  1781  02E7  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
-  1782  02E8  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
-  1783  02E9  3000               	movlw	0
-  1784  02EA  3181  219B  3182   	fcall	_si4355_get_int_status
+  1780                           ;radio.c: 60: si4355_get_int_status( 0u, 0u, 0u );
+  1781  02E9  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
+  1782  02EA  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
+  1783  02EB  3000               	movlw	0
+  1784  02EC  3181  219B  3182   	fcall	_si4355_get_int_status
   1785                           
-  1786                           ;radio.c: 66: si4355_start_rx(channel, 0u, 0u,
-  1787                           ;radio.c: 67: 8,
-  1788                           ;radio.c: 68: 1,
-  1789                           ;radio.c: 69: 8 );
-  1790  02ED  0020               	movlb	0	; select bank0
-  1791  02EE  01CD               	clrf	si4355_start_rx@CONDITION
-  1792  02EF  3000               	movlw	0
-  1793  02F0  00CE               	movwf	si4355_start_rx@RX_LEN
-  1794  02F1  00CF               	movwf	si4355_start_rx@RX_LEN+1
-  1795  02F2  3008               	movlw	8
-  1796  02F3  00D8               	movwf	??_Radio_StartRX
-  1797  02F4  0858               	movf	??_Radio_StartRX,w
-  1798  02F5  00D0               	movwf	si4355_start_rx@NEXT_STATE1
-  1799  02F6  01D1               	clrf	si4355_start_rx@NEXT_STATE2
-  1800  02F7  0AD1               	incf	si4355_start_rx@NEXT_STATE2,f
-  1801  02F8  3008               	movlw	8
-  1802  02F9  00D9               	movwf	??_Radio_StartRX+1
-  1803  02FA  0859               	movf	??_Radio_StartRX+1,w
-  1804  02FB  00D2               	movwf	si4355_start_rx@NEXT_STATE3
-  1805  02FC  085A               	movf	Radio_StartRX@channel,w
-  1806  02FD  3182  2215         	fcall	_si4355_start_rx
-  1807  02FF  0008               	return
-  1808  0300                     __end_of_Radio_StartRX:	
+  1786                           ;radio.c: 63: si4355_start_rx( channel, 0u, 0u,
+  1787                           ;radio.c: 64: 8,
+  1788                           ;radio.c: 65: 1,
+  1789                           ;radio.c: 66: 8 );
+  1790  02EF  0020               	movlb	0	; select bank0
+  1791  02F0  01CD               	clrf	si4355_start_rx@CONDITION
+  1792  02F1  3000               	movlw	0
+  1793  02F2  00CE               	movwf	si4355_start_rx@RX_LEN
+  1794  02F3  00CF               	movwf	si4355_start_rx@RX_LEN+1
+  1795  02F4  3008               	movlw	8
+  1796  02F5  00D8               	movwf	??_Radio_StartRX
+  1797  02F6  0858               	movf	??_Radio_StartRX,w
+  1798  02F7  00D0               	movwf	si4355_start_rx@NEXT_STATE1
+  1799  02F8  01D1               	clrf	si4355_start_rx@NEXT_STATE2
+  1800  02F9  0AD1               	incf	si4355_start_rx@NEXT_STATE2,f
+  1801  02FA  3008               	movlw	8
+  1802  02FB  00D9               	movwf	??_Radio_StartRX+1
+  1803  02FC  0859               	movf	??_Radio_StartRX+1,w
+  1804  02FD  00D2               	movwf	si4355_start_rx@NEXT_STATE3
+  1805  02FE  085A               	movf	Radio_StartRX@channel,w
+  1806  02FF  3182  2217         	fcall	_si4355_start_rx
+  1807  0301  0008               	return
+  1808  0302                     __end_of_Radio_StartRX:	
   1809                           
   1810                           	psect	text4
-  1811  0215                     __ptext4:	
+  1811  0217                     __ptext4:	
   1812 ;; *************** function _si4355_start_rx *****************
   1813 ;; Defined at:
   1814 ;;		line 261 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
@@ -1860,77 +1860,77 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1846                           
   1847                           
   1848                           ;psect for function _si4355_start_rx
-  1849  0215                     _si4355_start_rx:	
+  1849  0217                     _si4355_start_rx:	
   1850                           
   1851                           ;incstack = 0
   1852                           ; Regs used in _si4355_start_rx: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   1853                           ;si4355_start_rx@CHANNEL stored from wreg
-  1854  0215  0020               	movlb	0	; select bank0
-  1855  0216  00D4               	movwf	si4355_start_rx@CHANNEL
+  1854  0217  0020               	movlb	0	; select bank0
+  1855  0218  00D4               	movwf	si4355_start_rx@CHANNEL
   1856                           
   1857                           ;si4355.c: 263: radioCmd[0] = 0x32;
-  1858  0217  3032               	movlw	50
-  1859  0218  00D3               	movwf	??_si4355_start_rx
-  1860  0219  0853               	movf	??_si4355_start_rx,w
-  1861  021A  00B4               	movwf	_radioCmd
+  1858  0219  3032               	movlw	50
+  1859  021A  00D3               	movwf	??_si4355_start_rx
+  1860  021B  0853               	movf	??_si4355_start_rx,w
+  1861  021C  00B4               	movwf	_radioCmd
   1862                           
   1863                           ;si4355.c: 264: radioCmd[1] = CHANNEL;
-  1864  021B  0854               	movf	si4355_start_rx@CHANNEL,w
-  1865  021C  00D3               	movwf	??_si4355_start_rx
-  1866  021D  0853               	movf	??_si4355_start_rx,w
-  1867  021E  00B5               	movwf	_radioCmd+1
+  1864  021D  0854               	movf	si4355_start_rx@CHANNEL,w
+  1865  021E  00D3               	movwf	??_si4355_start_rx
+  1866  021F  0853               	movf	??_si4355_start_rx,w
+  1867  0220  00B5               	movwf	_radioCmd+1
   1868                           
   1869                           ;si4355.c: 265: radioCmd[2] = CONDITION;
-  1870  021F  084D               	movf	si4355_start_rx@CONDITION,w
-  1871  0220  00D3               	movwf	??_si4355_start_rx
-  1872  0221  0853               	movf	??_si4355_start_rx,w
-  1873  0222  00B6               	movwf	_radioCmd+2
+  1870  0221  084D               	movf	si4355_start_rx@CONDITION,w
+  1871  0222  00D3               	movwf	??_si4355_start_rx
+  1872  0223  0853               	movf	??_si4355_start_rx,w
+  1873  0224  00B6               	movwf	_radioCmd+2
   1874                           
-  1875                           ;si4355.c: 266: radioCmd[3] = (U8)(RX_LEN >> 8);
-  1876  0223  084F               	movf	si4355_start_rx@RX_LEN+1,w
-  1877  0224  00D3               	movwf	??_si4355_start_rx
-  1878  0225  0853               	movf	??_si4355_start_rx,w
-  1879  0226  00B7               	movwf	_radioCmd+3
+  1875                           ;si4355.c: 266: radioCmd[3] = ( U8 )( RX_LEN >> 8 );
+  1876  0225  084F               	movf	si4355_start_rx@RX_LEN+1,w
+  1877  0226  00D3               	movwf	??_si4355_start_rx
+  1878  0227  0853               	movf	??_si4355_start_rx,w
+  1879  0228  00B7               	movwf	_radioCmd+3
   1880                           
-  1881                           ;si4355.c: 267: radioCmd[4] = (U8)(RX_LEN);
-  1882  0227  084E               	movf	si4355_start_rx@RX_LEN,w
-  1883  0228  00D3               	movwf	??_si4355_start_rx
-  1884  0229  0853               	movf	??_si4355_start_rx,w
-  1885  022A  00B8               	movwf	_radioCmd+4
+  1881                           ;si4355.c: 267: radioCmd[4] = ( U8 )( RX_LEN );
+  1882  0229  084E               	movf	si4355_start_rx@RX_LEN,w
+  1883  022A  00D3               	movwf	??_si4355_start_rx
+  1884  022B  0853               	movf	??_si4355_start_rx,w
+  1885  022C  00B8               	movwf	_radioCmd+4
   1886                           
   1887                           ;si4355.c: 268: radioCmd[5] = NEXT_STATE1;
-  1888  022B  0850               	movf	si4355_start_rx@NEXT_STATE1,w
-  1889  022C  00D3               	movwf	??_si4355_start_rx
-  1890  022D  0853               	movf	??_si4355_start_rx,w
-  1891  022E  00B9               	movwf	_radioCmd+5
+  1888  022D  0850               	movf	si4355_start_rx@NEXT_STATE1,w
+  1889  022E  00D3               	movwf	??_si4355_start_rx
+  1890  022F  0853               	movf	??_si4355_start_rx,w
+  1891  0230  00B9               	movwf	_radioCmd+5
   1892                           
   1893                           ;si4355.c: 269: radioCmd[6] = NEXT_STATE2;
-  1894  022F  0851               	movf	si4355_start_rx@NEXT_STATE2,w
-  1895  0230  00D3               	movwf	??_si4355_start_rx
-  1896  0231  0853               	movf	??_si4355_start_rx,w
-  1897  0232  00BA               	movwf	_radioCmd+6
+  1894  0231  0851               	movf	si4355_start_rx@NEXT_STATE2,w
+  1895  0232  00D3               	movwf	??_si4355_start_rx
+  1896  0233  0853               	movf	??_si4355_start_rx,w
+  1897  0234  00BA               	movwf	_radioCmd+6
   1898                           
   1899                           ;si4355.c: 270: radioCmd[7] = NEXT_STATE3;
-  1900  0233  0852               	movf	si4355_start_rx@NEXT_STATE3,w
-  1901  0234  00D3               	movwf	??_si4355_start_rx
-  1902  0235  0853               	movf	??_si4355_start_rx,w
-  1903  0236  00BB               	movwf	_radioCmd+7
+  1900  0235  0852               	movf	si4355_start_rx@NEXT_STATE3,w
+  1901  0236  00D3               	movwf	??_si4355_start_rx
+  1902  0237  0853               	movf	??_si4355_start_rx,w
+  1903  0238  00BB               	movwf	_radioCmd+7
   1904                           
   1905                           ;si4355.c: 272: radio_comm_SendCmd( 8, radioCmd );
-  1906  0237  3034               	movlw	(low (_radioCmd| 0))& (0+255)
-  1907  0238  00D3               	movwf	??_si4355_start_rx
-  1908  0239  0853               	movf	??_si4355_start_rx,w
-  1909  023A  00FB               	movwf	radio_comm_SendCmd@pData
-  1910  023B  3008               	movlw	8
-  1911  023C  3182  22C8         	fcall	_radio_comm_SendCmd
-  1912  023E  0008               	return
-  1913  023F                     __end_of_si4355_start_rx:	
+  1906  0239  3034               	movlw	(low (_radioCmd| 0))& (0+255)
+  1907  023A  00D3               	movwf	??_si4355_start_rx
+  1908  023B  0853               	movf	??_si4355_start_rx,w
+  1909  023C  00FB               	movwf	radio_comm_SendCmd@pData
+  1910  023D  3008               	movlw	8
+  1911  023E  3182  22CA         	fcall	_radio_comm_SendCmd
+  1912  0240  0008               	return
+  1913  0241                     __end_of_si4355_start_rx:	
   1914                           
   1915                           	psect	text5
-  1916  0300                     __ptext5:	
+  1916  0302                     __ptext5:	
   1917 ;; *************** function _Radio_Init *****************
   1918 ;; Defined at:
-  1919 ;;		line 25 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+  1919 ;;		line 23 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
   1920 ;; Parameters:    Size  Location     Type
   1921 ;;		None
   1922 ;; Auto vars:     Size  Location     Type
@@ -1962,41 +1962,41 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   1948                           
   1949                           
   1950                           ;psect for function _Radio_Init
-  1951  0300                     _Radio_Init:	
+  1951  0302                     _Radio_Init:	
   1952                           
-  1953                           ;radio.c: 28: Radio_PowerUp();
+  1953                           ;radio.c: 26: Radio_PowerUp();
   1954                           
   1955                           ;incstack = 0
   1956                           ; Regs used in _Radio_Init: [wreg-fsr1h+status,2+status,0+pclath+cstack]
-  1957  0300  3182  228A  3183   	fcall	_Radio_PowerUp
+  1957  0302  3182  228C  3183   	fcall	_Radio_PowerUp
   1958                           
-  1959                           ;radio.c: 31: while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_Con
-      +                          figurationArray))
-  1960  0303  0020               	movlb	0	; select bank0
-  1961  0304  085E               	movf	_pRadioConfiguration,w
-  1962  0305  0086               	movwf	6
-  1963  0306  0187               	clrf	7
-  1964  0307  3F40               	moviw [0]fsr1
-  1965  0308  00D8               	movwf	si4355_configuration_init@pSetPropCmd
-  1966  0309  3F41               	moviw [1]fsr1
-  1967  030A  00D9               	movwf	si4355_configuration_init@pSetPropCmd+1
-  1968  030B  3181  2145  3183   	fcall	_si4355_configuration_init
-  1969  030E  3A00               	xorlw	0
-  1970  030F  1D03               	skipz
-  1971  0310  2B00               	goto	_Radio_Init
+  1959                           ;radio.c: 29: while( SUCCESS != si4355_configuration_init( pRadioConfiguration->Radio_Co
+      +                          nfigurationArray ) )
+  1960  0305  0020               	movlb	0	; select bank0
+  1961  0306  085E               	movf	_pRadioConfiguration,w
+  1962  0307  0086               	movwf	6
+  1963  0308  0187               	clrf	7
+  1964  0309  3F40               	moviw [0]fsr1
+  1965  030A  00D8               	movwf	si4355_configuration_init@pSetPropCmd
+  1966  030B  3F41               	moviw [1]fsr1
+  1967  030C  00D9               	movwf	si4355_configuration_init@pSetPropCmd+1
+  1968  030D  3181  2145  3183   	fcall	_si4355_configuration_init
+  1969  0310  3A00               	xorlw	0
+  1970  0311  1D03               	skipz
+  1971  0312  2B02               	goto	_Radio_Init
   1972                           
-  1973                           ;radio.c: 35: }
-  1974                           ;radio.c: 38: si4355_get_int_status(0u, 0u, 0u);
+  1973                           ;radio.c: 33: }
+  1974                           ;radio.c: 36: si4355_get_int_status(0u, 0u, 0u);
   1975                           
-  1976                           ;radio.c: 32: {
-  1977                           ;radio.c: 34: Radio_PowerUp();
-  1978  0311  0020               	movlb	0	; select bank0
-  1979  0312  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
-  1980  0313  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
-  1981  0314  3000               	movlw	0
-  1982  0315  3181  219B         	fcall	_si4355_get_int_status
-  1983  0317  0008               	return
-  1984  0318                     __end_of_Radio_Init:	
+  1976                           ;radio.c: 30: {
+  1977                           ;radio.c: 32: Radio_PowerUp();
+  1978  0313  0020               	movlb	0	; select bank0
+  1979  0314  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
+  1980  0315  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
+  1981  0316  3000               	movlw	0
+  1982  0317  3181  219B         	fcall	_si4355_get_int_status
+  1983  0319  0008               	return
+  1984  031A                     __end_of_Radio_Init:	
   1985                           
   1986                           	psect	text6
   1987  0145                     __ptext6:	
@@ -2046,8 +2046,8 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2031                           
   2032                           ;si4355.c: 16: U8 numOfBytes = 0;
   2033  0147  01DC               	clrf	si4355_configuration_init@numOfBytes
-  2034  0148                     l1825:	
-  2035                           ;si4355.c: 19: while (*pSetPropCmd != 0x00)
+  2034  0148                     l1834:	
+  2035                           ;si4355.c: 19: while ( *pSetPropCmd != 0x00 )
   2036                           
   2037  0148  0858               	movf	si4355_configuration_init@pSetPropCmd,w
   2038  0149  0084               	movwf	4
@@ -2055,7 +2055,7 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2040  014B  0085               	movwf	5
   2041  014C  0012               	moviw fsr0++
   2042  014D  1903               	btfsc	3,2
-  2043  014E  2999               	goto	l1827
+  2043  014E  2999               	goto	l1836
   2044                           
   2045                           ;si4355.c: 20: {
   2046                           ;si4355.c: 26: numOfBytes = *pSetPropCmd++;
@@ -2072,26 +2072,26 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2057  0159  3000               	movlw	0
   2058  015A  3DD9               	addwfc	si4355_configuration_init@pSetPropCmd+1,f
   2059                           
-  2060                           ;si4355.c: 28: if (numOfBytes > 16u)
+  2060                           ;si4355.c: 28: if ( numOfBytes > 16u )
   2061  015B  3011               	movlw	17
   2062  015C  025C               	subwf	si4355_configuration_init@numOfBytes,w
   2063  015D  1C03               	skipc
-  2064  015E  2961               	goto	l1801
+  2064  015E  2961               	goto	l1810
   2065                           
   2066                           ;si4355.c: 29: {
   2067                           ;si4355.c: 31: return COMMAND_ERROR;
   2068  015F  3004               	movlw	4
   2069  0160  0008               	return
-  2070  0161                     l1801:	
+  2070  0161                     l1810:	
   2071                           
   2072                           ;si4355.c: 32: }
-  2073                           ;si4355.c: 34: for (col = 0u; col < numOfBytes; col++)
+  2073                           ;si4355.c: 34: for ( col = 0u; col < numOfBytes; col++ )
   2074  0161  01DB               	clrf	si4355_configuration_init@col
-  2075  0162                     l1809:	
+  2075  0162                     l1818:	
   2076  0162  085C               	movf	si4355_configuration_init@numOfBytes,w
   2077  0163  025B               	subwf	si4355_configuration_init@col,w
   2078  0164  1803               	btfsc	3,0
-  2079  0165  297B               	goto	l1811
+  2079  0165  297B               	goto	l1820
   2080                           
   2081                           ;si4355.c: 35: {
   2082                           ;si4355.c: 36: radioCmd[col] = *pSetPropCmd;
@@ -2117,11 +2117,11 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2102  0177  00DA               	movwf	??_si4355_configuration_init
   2103  0178  085A               	movf	??_si4355_configuration_init,w
   2104  0179  07DB               	addwf	si4355_configuration_init@col,f
-  2105  017A  2962               	goto	l1809
-  2106  017B                     l1811:	
+  2105  017A  2962               	goto	l1818
+  2106  017B                     l1820:	
   2107                           
   2108                           ;si4355.c: 38: }
-  2109                           ;si4355.c: 40: if (radio_comm_SendCmdGetResp(numOfBytes, radioCmd, 0, 0) != 0xFF)
+  2109                           ;si4355.c: 40: if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
   2110  017B  3034               	movlw	(low (_radioCmd| 0))& (0+255)
   2111  017C  00DA               	movwf	??_si4355_configuration_init
   2112  017D  085A               	movf	??_si4355_configuration_init,w
@@ -2129,9 +2129,9 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2114  017F  01CE               	clrf	radio_comm_SendCmdGetResp@respByteCount
   2115  0180  01CF               	clrf	radio_comm_SendCmdGetResp@pRespData
   2116  0181  085C               	movf	si4355_configuration_init@numOfBytes,w
-  2117  0182  3183  2343  3181   	fcall	_radio_comm_SendCmdGetResp
-  2118  0185  3AFF               	xorlw	255
-  2119  0186  1903               	skipnz
+  2117  0182  3183  2345  3181   	fcall	_radio_comm_SendCmdGetResp
+  2118  0185  3A00               	xorlw	0
+  2119  0186  1D03               	skipz
   2120  0187  298A               	goto	l183
   2121                           
   2122                           ;si4355.c: 41: {
@@ -2141,29 +2141,29 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2126  018A                     l183:	
   2127                           
   2128                           ;si4355.c: 44: }
-  2129                           ;si4355.c: 46: if (!RA3)
+  2129                           ;si4355.c: 46: if( !RA3 )
   2130  018A  0020               	movlb	0	; select bank0
   2131  018B  198C               	btfsc	12,3	;volatile
-  2132  018C  2948               	goto	l1825
+  2132  018C  2948               	goto	l1834
   2133                           
   2134                           ;si4355.c: 47: {
-  2135                           ;si4355.c: 49: si4355_get_int_status(0, 0, 0);
+  2135                           ;si4355.c: 49: si4355_get_int_status( 0u, 0u, 0u );
   2136  018D  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
   2137  018E  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
   2138  018F  3000               	movlw	0
   2139  0190  3181  219B  3181   	fcall	_si4355_get_int_status
   2140                           
-  2141                           ;si4355.c: 50: if (Si4355Cmd.GET_INT_STATUS.CHIP_PEND)
+  2141                           ;si4355.c: 50: if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )
   2142  0193  0020               	movlb	0	; select bank0
   2143  0194  0826               	movf	_Si4355Cmd+6,w
   2144  0195  1903               	btfsc	3,2
-  2145  0196  2948               	goto	l1825
+  2145  0196  2948               	goto	l1834
   2146                           
   2147                           ;si4355.c: 51: {
   2148                           ;si4355.c: 52: return COMMAND_ERROR;
   2149  0197  3004               	movlw	4
   2150  0198  0008               	return
-  2151  0199                     l1827:	
+  2151  0199                     l1836:	
   2152                           
   2153                           ;si4355.c: 53: }
   2154                           ;si4355.c: 54: }
@@ -2174,10 +2174,10 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2159  019B                     __end_of_si4355_configuration_init:	
   2160                           
   2161                           	psect	text7
-  2162  028A                     __ptext7:	
+  2162  028C                     __ptext7:	
   2163 ;; *************** function _Radio_PowerUp *****************
   2164 ;; Defined at:
-  2165 ;;		line 16 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+  2165 ;;		line 14 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
   2166 ;; Parameters:    Size  Location     Type
   2167 ;;		None
   2168 ;; Auto vars:     Size  Location     Type
@@ -2208,55 +2208,55 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2193                           
   2194                           
   2195                           ;psect for function _Radio_PowerUp
-  2196  028A                     _Radio_PowerUp:	
+  2196  028C                     _Radio_PowerUp:	
   2197                           
-  2198                           ;radio.c: 18: U16 wDelay = 0u;
+  2198                           ;radio.c: 16: U16 wDelay = 0u;
   2199                           
   2200                           ;incstack = 0
   2201                           ; Regs used in _Radio_PowerUp: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  2202  028A  0020               	movlb	0	; select bank0
-  2203  028B  01CD               	clrf	Radio_PowerUp@wDelay
-  2204  028C  01CE               	clrf	Radio_PowerUp@wDelay+1
+  2202  028C  0020               	movlb	0	; select bank0
+  2203  028D  01CD               	clrf	Radio_PowerUp@wDelay
+  2204  028E  01CE               	clrf	Radio_PowerUp@wDelay+1
   2205                           
-  2206                           ;radio.c: 20: si4355_reset();
-  2207  028D  3183  23B8  3182   	fcall	_si4355_reset
-  2208  0290                     l1785:	
-  2209                           ;radio.c: 21: for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++
-      +                          );
+  2206                           ;radio.c: 18: si4355_reset();
+  2207  028F  3183  23BA  3182   	fcall	_si4355_reset
+  2208  0292                     l1794:	
+  2209                           ;radio.c: 19: for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++
+      +                           );
   2210                           
-  2211  0290  0020               	movlb	0	; select bank0
-  2212  0291  085E               	movf	_pRadioConfiguration,w
-  2213  0292  3E05               	addlw	5
-  2214  0293  0086               	movwf	6
-  2215  0294  0187               	clrf	7
-  2216  0295  3F40               	moviw [0]fsr1
-  2217  0296  00CB               	movwf	??_Radio_PowerUp
-  2218  0297  3F41               	moviw [1]fsr1
-  2219  0298  00CC               	movwf	??_Radio_PowerUp+1
-  2220  0299  084C               	movf	??_Radio_PowerUp+1,w
-  2221  029A  024E               	subwf	Radio_PowerUp@wDelay+1,w
-  2222  029B  1D03               	skipz
-  2223  029C  2A9F               	goto	u745
-  2224  029D  084B               	movf	??_Radio_PowerUp,w
-  2225  029E  024D               	subwf	Radio_PowerUp@wDelay,w
-  2226  029F                     u745:	
-  2227  029F  1803               	btfsc	3,0
-  2228  02A0  2AA7               	goto	l1787
-  2229  02A1  3001               	movlw	1
-  2230  02A2  0020               	movlb	0	; select bank0
-  2231  02A3  07CD               	addwf	Radio_PowerUp@wDelay,f
-  2232  02A4  3000               	movlw	0
-  2233  02A5  3DCE               	addwfc	Radio_PowerUp@wDelay+1,f
-  2234  02A6  2A90               	goto	l1785
-  2235  02A7                     l1787:	
+  2211  0292  0020               	movlb	0	; select bank0
+  2212  0293  085E               	movf	_pRadioConfiguration,w
+  2213  0294  3E05               	addlw	5
+  2214  0295  0086               	movwf	6
+  2215  0296  0187               	clrf	7
+  2216  0297  3F40               	moviw [0]fsr1
+  2217  0298  00CB               	movwf	??_Radio_PowerUp
+  2218  0299  3F41               	moviw [1]fsr1
+  2219  029A  00CC               	movwf	??_Radio_PowerUp+1
+  2220  029B  084C               	movf	??_Radio_PowerUp+1,w
+  2221  029C  024E               	subwf	Radio_PowerUp@wDelay+1,w
+  2222  029D  1D03               	skipz
+  2223  029E  2AA1               	goto	u745
+  2224  029F  084B               	movf	??_Radio_PowerUp,w
+  2225  02A0  024D               	subwf	Radio_PowerUp@wDelay,w
+  2226  02A1                     u745:	
+  2227  02A1  1803               	btfsc	3,0
+  2228  02A2  2AA9               	goto	l1796
+  2229  02A3  3001               	movlw	1
+  2230  02A4  0020               	movlb	0	; select bank0
+  2231  02A5  07CD               	addwf	Radio_PowerUp@wDelay,f
+  2232  02A6  3000               	movlw	0
+  2233  02A7  3DCE               	addwfc	Radio_PowerUp@wDelay+1,f
+  2234  02A8  2A92               	goto	l1794
+  2235  02A9                     l1796:	
   2236                           
-  2237                           ;radio.c: 22: radio_comm_PollCTS();
-  2238  02A7  3183  23B3         	fcall	_radio_comm_PollCTS
-  2239  02A9  0008               	return
-  2240  02AA                     __end_of_Radio_PowerUp:	
+  2237                           ;radio.c: 20: radio_comm_PollCTS();
+  2238  02A9  3183  23B5         	fcall	_radio_comm_PollCTS
+  2239  02AB  0008               	return
+  2240  02AC                     __end_of_Radio_PowerUp:	
   2241                           
   2242                           	psect	text8
-  2243  03B8                     __ptext8:	
+  2243  03BA                     __ptext8:	
   2244 ;; *************** function _si4355_reset *****************
   2245 ;; Defined at:
   2246 ;;		line 59 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
@@ -2289,18 +2289,18 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2273                           
   2274                           
   2275                           ;psect for function _si4355_reset
-  2276  03B8                     _si4355_reset:	
+  2276  03BA                     _si4355_reset:	
   2277                           
   2278                           ;incstack = 0
   2279                           ; Regs used in _si4355_reset: []
-  2280  03B8  0008               	return
-  2281  03B9                     __end_of_si4355_reset:	
+  2280  03BA  0008               	return
+  2281  03BB                     __end_of_si4355_reset:	
   2282                           
   2283                           	psect	text9
-  2284  0318                     __ptext9:	
+  2284  031A                     __ptext9:	
   2285 ;; *************** function _Radio_CheckReceived *****************
   2286 ;; Defined at:
-  2287 ;;		line 41 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+  2287 ;;		line 39 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
   2288 ;; Parameters:    Size  Location     Type
   2289 ;;		None
   2290 ;; Auto vars:     Size  Location     Type
@@ -2331,51 +2331,51 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2315                           
   2316                           
   2317                           ;psect for function _Radio_CheckReceived
-  2318  0318                     _Radio_CheckReceived:	
+  2318  031A                     _Radio_CheckReceived:	
   2319                           
-  2320                           ;radio.c: 43: if( !RA3 )
+  2320                           ;radio.c: 41: if( !RA3 )
   2321                           
   2322                           ;incstack = 0
   2323                           ; Regs used in _Radio_CheckReceived: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  2324  0318  0020               	movlb	0	; select bank0
-  2325  0319  198C               	btfsc	12,3	;volatile
-  2326  031A  2B2D               	goto	l1877
+  2324  031A  0020               	movlb	0	; select bank0
+  2325  031B  198C               	btfsc	12,3	;volatile
+  2326  031C  2B2F               	goto	l1886
   2327                           
-  2328                           ;radio.c: 44: {
-  2329                           ;radio.c: 46: si4355_get_int_status(0u, 0u, 0u);
-  2330  031B  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
-  2331  031C  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
-  2332  031D  3000               	movlw	0
-  2333  031E  3181  219B  3183   	fcall	_si4355_get_int_status
+  2328                           ;radio.c: 42: {
+  2329                           ;radio.c: 44: si4355_get_int_status(0u, 0u, 0u);
+  2330  031D  01D2               	clrf	si4355_get_int_status@MODEM_CLR_PEND
+  2331  031E  01D3               	clrf	si4355_get_int_status@CHIP_CLR_PEND
+  2332  031F  3000               	movlw	0
+  2333  0320  3181  219B  3183   	fcall	_si4355_get_int_status
   2334                           
-  2335                           ;radio.c: 49: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
-  2336  0321  0020               	movlb	0	; select bank0
-  2337  0322  1E22               	btfss	_Si4355Cmd+2,4
-  2338  0323  2B2D               	goto	l1877
+  2335                           ;radio.c: 47: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
+  2336  0323  0020               	movlb	0	; select bank0
+  2337  0324  1E22               	btfss	_Si4355Cmd+2,4
+  2338  0325  2B2F               	goto	l1886
   2339                           
-  2340                           ;radio.c: 50: {
-  2341                           ;radio.c: 52: si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
-  2342  0324  3044               	movlw	(low (_RadioPacket| 0))& (0+255)
-  2343  0325  00D8               	movwf	??_Radio_CheckReceived
-  2344  0326  0858               	movf	??_Radio_CheckReceived,w
-  2345  0327  00CF               	movwf	si4355_read_rx_fifo@pRxData
-  2346  0328  3007               	movlw	7
-  2347  0329  3183  2377         	fcall	_si4355_read_rx_fifo
+  2340                           ;radio.c: 48: {
+  2341                           ;radio.c: 50: si4355_read_rx_fifo( sizeof( tRadioPacket ), ( U8 * ) &RadioPacket );
+  2342  0326  3044               	movlw	(low (_RadioPacket| 0))& (0+255)
+  2343  0327  00D8               	movwf	??_Radio_CheckReceived
+  2344  0328  0858               	movf	??_Radio_CheckReceived,w
+  2345  0329  00CF               	movwf	si4355_read_rx_fifo@pRxData
+  2346  032A  3007               	movlw	7
+  2347  032B  3183  2379         	fcall	_si4355_read_rx_fifo
   2348                           
-  2349                           ;radio.c: 54: return 1;
-  2350  032B  3001               	movlw	1
-  2351  032C  0008               	return
-  2352  032D                     l1877:	
+  2349                           ;radio.c: 51: return 1;
+  2350  032D  3001               	movlw	1
+  2351  032E  0008               	return
+  2352  032F                     l1886:	
   2353                           
-  2354                           ;radio.c: 55: }
-  2355                           ;radio.c: 56: }
-  2356                           ;radio.c: 57: return 0;
-  2357  032D  3000               	movlw	0
-  2358  032E  0008               	return
-  2359  032F                     __end_of_Radio_CheckReceived:	
+  2354                           ;radio.c: 52: }
+  2355                           ;radio.c: 53: }
+  2356                           ;radio.c: 54: return 0;
+  2357  032F  3000               	movlw	0
+  2358  0330  0008               	return
+  2359  0331                     __end_of_Radio_CheckReceived:	
   2360                           
   2361                           	psect	text10
-  2362  0377                     __ptext10:	
+  2362  0379                     __ptext10:	
   2363 ;; *************** function _si4355_read_rx_fifo *****************
   2364 ;; Defined at:
   2365 ;;		line 360 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
@@ -2410,34 +2410,34 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2394                           
   2395                           
   2396                           ;psect for function _si4355_read_rx_fifo
-  2397  0377                     _si4355_read_rx_fifo:	
+  2397  0379                     _si4355_read_rx_fifo:	
   2398                           
   2399                           ;incstack = 0
   2400                           ; Regs used in _si4355_read_rx_fifo: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   2401                           ;si4355_read_rx_fifo@numBytes stored from wreg
-  2402  0377  0020               	movlb	0	; select bank0
-  2403  0378  00D2               	movwf	si4355_read_rx_fifo@numBytes
+  2402  0379  0020               	movlb	0	; select bank0
+  2403  037A  00D2               	movwf	si4355_read_rx_fifo@numBytes
   2404                           
   2405                           ;si4355.c: 362: radio_comm_ReadData( 0x77, 0, numBytes, pRxData );
-  2406  0379  01CB               	clrf	radio_comm_ReadData@pollCts
-  2407  037A  0852               	movf	si4355_read_rx_fifo@numBytes,w
-  2408  037B  00D0               	movwf	??_si4355_read_rx_fifo
-  2409  037C  0850               	movf	??_si4355_read_rx_fifo,w
-  2410  037D  00CC               	movwf	radio_comm_ReadData@byteCount
-  2411  037E  084F               	movf	si4355_read_rx_fifo@pRxData,w
-  2412  037F  00D1               	movwf	??_si4355_read_rx_fifo+1
-  2413  0380  0851               	movf	??_si4355_read_rx_fifo+1,w
-  2414  0381  00CD               	movwf	radio_comm_ReadData@pData
-  2415  0382  3077               	movlw	119
-  2416  0383  3182  22AA         	fcall	_radio_comm_ReadData
-  2417  0385  0008               	return
-  2418  0386                     __end_of_si4355_read_rx_fifo:	
+  2406  037B  01CB               	clrf	radio_comm_ReadData@pollCts
+  2407  037C  0852               	movf	si4355_read_rx_fifo@numBytes,w
+  2408  037D  00D0               	movwf	??_si4355_read_rx_fifo
+  2409  037E  0850               	movf	??_si4355_read_rx_fifo,w
+  2410  037F  00CC               	movwf	radio_comm_ReadData@byteCount
+  2411  0380  084F               	movf	si4355_read_rx_fifo@pRxData,w
+  2412  0381  00D1               	movwf	??_si4355_read_rx_fifo+1
+  2413  0382  0851               	movf	??_si4355_read_rx_fifo+1,w
+  2414  0383  00CD               	movwf	radio_comm_ReadData@pData
+  2415  0384  3077               	movlw	119
+  2416  0385  3182  22AC         	fcall	_radio_comm_ReadData
+  2417  0387  0008               	return
+  2418  0388                     __end_of_si4355_read_rx_fifo:	
   2419                           
   2420                           	psect	text11
-  2421  02AA                     __ptext11:	
+  2421  02AC                     __ptext11:	
   2422 ;; *************** function _radio_comm_ReadData *****************
   2423 ;; Defined at:
-  2424 ;;		line 73 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+  2424 ;;		line 70 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
   2425 ;; Parameters:    Size  Location     Type
   2426 ;;  cmd             1    wreg     unsigned char 
   2427 ;;  pollCts         1    0[BANK0 ] unsigned char 
@@ -2477,60 +2477,60 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2461                           
   2462                           
   2463                           ;psect for function _radio_comm_ReadData
-  2464  02AA                     _radio_comm_ReadData:	
+  2464  02AC                     _radio_comm_ReadData:	
   2465                           
   2466                           ;incstack = 0
   2467                           ; Regs used in _radio_comm_ReadData: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   2468                           ;radio_comm_ReadData@cmd stored from wreg
-  2469  02AA  0020               	movlb	0	; select bank0
-  2470  02AB  00CE               	movwf	radio_comm_ReadData@cmd
+  2469  02AC  0020               	movlb	0	; select bank0
+  2470  02AD  00CE               	movwf	radio_comm_ReadData@cmd
   2471                           
-  2472                           ;comm.c: 75: if(pollCts)
-  2473  02AC  084B               	movf	radio_comm_ReadData@pollCts,w
-  2474  02AD  1D03               	btfss	3,2
-  2475  02AE  2AB3               	goto	l1769
-  2476  02AF  2AB6               	goto	l292
-  2477  02B0                     l1767:	
-  2478                           ;comm.c: 76: {
-  2479                           ;comm.c: 77: while(!ctsWentHigh)
+  2472                           ;comm.c: 72: if( pollCts )
+  2473  02AE  084B               	movf	radio_comm_ReadData@pollCts,w
+  2474  02AF  1D03               	btfss	3,2
+  2475  02B0  2AB5               	goto	l1778
+  2476  02B1  2AB8               	goto	l289
+  2477  02B2                     l1776:	
+  2478                           ;comm.c: 73: {
+  2479                           ;comm.c: 74: while( !ctsWentHigh )
   2480                           
   2481                           
-  2482                           ;comm.c: 78: {
-  2483                           ;comm.c: 79: radio_comm_PollCTS();
-  2484  02B0  3183  23B3  3182   	fcall	_radio_comm_PollCTS
-  2485  02B3                     l1769:	
-  2486  02B3  087C               	movf	_ctsWentHigh,w
-  2487  02B4  1903               	btfsc	3,2
-  2488  02B5  2AB0               	goto	l1767
-  2489  02B6                     l292:	
+  2482                           ;comm.c: 75: {
+  2483                           ;comm.c: 76: radio_comm_PollCTS();
+  2484  02B2  3183  23B5  3182   	fcall	_radio_comm_PollCTS
+  2485  02B5                     l1778:	
+  2486  02B5  087C               	movf	_ctsWentHigh,w
+  2487  02B6  1903               	btfsc	3,2
+  2488  02B7  2AB2               	goto	l1776
+  2489  02B8                     l289:	
   2490                           
-  2491                           ;comm.c: 80: }
-  2492                           ;comm.c: 81: }
-  2493                           ;comm.c: 82: RA5 = 0;
-  2494  02B6  0020               	movlb	0	; select bank0
-  2495  02B7  128C               	bcf	12,5	;volatile
+  2491                           ;comm.c: 77: }
+  2492                           ;comm.c: 78: }
+  2493                           ;comm.c: 79: RA5 = 0;
+  2494  02B8  0020               	movlb	0	; select bank0
+  2495  02B9  128C               	bcf	12,5	;volatile
   2496                           
-  2497                           ;comm.c: 83: SPI_WriteByte(cmd);
-  2498  02B8  084E               	movf	radio_comm_ReadData@cmd,w
-  2499  02B9  3183  2386  3182   	fcall	_SPI_WriteByte
+  2497                           ;comm.c: 80: SPI_WriteByte( cmd );
+  2498  02BA  084E               	movf	radio_comm_ReadData@cmd,w
+  2499  02BB  3183  2388  3182   	fcall	_SPI_WriteByte
   2500                           
-  2501                           ;comm.c: 84: SPI_ReadBytes(byteCount, pData);
-  2502  02BC  0020               	movlb	0	; select bank0
-  2503  02BD  084D               	movf	radio_comm_ReadData@pData,w
-  2504  02BE  00FB               	movwf	??_radio_comm_ReadData
-  2505  02BF  087B               	movf	??_radio_comm_ReadData,w
-  2506  02C0  00F3               	movwf	SPI_ReadBytes@data
-  2507  02C1  084C               	movf	radio_comm_ReadData@byteCount,w
-  2508  02C2  3183  232F         	fcall	_SPI_ReadBytes
+  2501                           ;comm.c: 81: SPI_ReadBytes( byteCount, pData );
+  2502  02BE  0020               	movlb	0	; select bank0
+  2503  02BF  084D               	movf	radio_comm_ReadData@pData,w
+  2504  02C0  00FB               	movwf	??_radio_comm_ReadData
+  2505  02C1  087B               	movf	??_radio_comm_ReadData,w
+  2506  02C2  00F3               	movwf	SPI_ReadBytes@data
+  2507  02C3  084C               	movf	radio_comm_ReadData@byteCount,w
+  2508  02C4  3183  2331         	fcall	_SPI_ReadBytes
   2509                           
-  2510                           ;comm.c: 85: RA5 = 1;
-  2511  02C4  0020               	movlb	0	; select bank0
-  2512  02C5  168C               	bsf	12,5	;volatile
+  2510                           ;comm.c: 82: RA5 = 1;
+  2511  02C6  0020               	movlb	0	; select bank0
+  2512  02C7  168C               	bsf	12,5	;volatile
   2513                           
-  2514                           ;comm.c: 86: ctsWentHigh = 0;
-  2515  02C6  01FC               	clrf	_ctsWentHigh
-  2516  02C7  0008               	return
-  2517  02C8                     __end_of_radio_comm_ReadData:	
+  2514                           ;comm.c: 83: ctsWentHigh = 0;
+  2515  02C8  01FC               	clrf	_ctsWentHigh
+  2516  02C9  0008               	return
+  2517  02CA                     __end_of_radio_comm_ReadData:	
   2518                           
   2519                           	psect	text12
   2520  019B                     __ptext12:	
@@ -2621,7 +2621,7 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2604  01B7  0856               	movf	??_si4355_get_int_status+2,w
   2605  01B8  00CF               	movwf	radio_comm_SendCmdGetResp@pRespData
   2606  01B9  3004               	movlw	4
-  2607  01BA  3183  2343         	fcall	_radio_comm_SendCmdGetResp
+  2607  01BA  3183  2345         	fcall	_radio_comm_SendCmdGetResp
   2608                           
   2609                           ;si4355.c: 251: Si4355Cmd.GET_INT_STATUS.INT_PEND = radioCmd[0];
   2610  01BC  0020               	movlb	0	; select bank0
@@ -2675,10 +2675,10 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2658  01DE                     __end_of_si4355_get_int_status:	
   2659                           
   2660                           	psect	text13
-  2661  0343                     __ptext13:	
+  2661  0345                     __ptext13:	
   2662 ;; *************** function _radio_comm_SendCmdGetResp *****************
   2663 ;; Defined at:
-  2664 ;;		line 67 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+  2664 ;;		line 64 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
   2665 ;; Parameters:    Size  Location     Type
   2666 ;;  cmdByteCount    1    wreg     unsigned char 
   2667 ;;  pCmdData        1    2[BANK0 ] PTR unsigned char 
@@ -2721,39 +2721,39 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2704                           
   2705                           
   2706                           ;psect for function _radio_comm_SendCmdGetResp
-  2707  0343                     _radio_comm_SendCmdGetResp:	
+  2707  0345                     _radio_comm_SendCmdGetResp:	
   2708                           
   2709                           ;incstack = 0
   2710                           ; Regs used in _radio_comm_SendCmdGetResp: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cs
       +                          tack]
   2711                           ;radio_comm_SendCmdGetResp@cmdByteCount stored from wreg
-  2712  0343  0020               	movlb	0	; select bank0
-  2713  0344  00D1               	movwf	radio_comm_SendCmdGetResp@cmdByteCount
+  2712  0345  0020               	movlb	0	; select bank0
+  2713  0346  00D1               	movwf	radio_comm_SendCmdGetResp@cmdByteCount
   2714                           
-  2715                           ;comm.c: 69: radio_comm_SendCmd(cmdByteCount, pCmdData);
-  2716  0345  084D               	movf	radio_comm_SendCmdGetResp@pCmdData,w
-  2717  0346  00D0               	movwf	??_radio_comm_SendCmdGetResp
-  2718  0347  0850               	movf	??_radio_comm_SendCmdGetResp,w
-  2719  0348  00FB               	movwf	radio_comm_SendCmd@pData
-  2720  0349  0851               	movf	radio_comm_SendCmdGetResp@cmdByteCount,w
-  2721  034A  3182  22C8  3183   	fcall	_radio_comm_SendCmd
+  2715                           ;comm.c: 66: radio_comm_SendCmd( cmdByteCount, pCmdData );
+  2716  0347  084D               	movf	radio_comm_SendCmdGetResp@pCmdData,w
+  2717  0348  00D0               	movwf	??_radio_comm_SendCmdGetResp
+  2718  0349  0850               	movf	??_radio_comm_SendCmdGetResp,w
+  2719  034A  00FB               	movwf	radio_comm_SendCmd@pData
+  2720  034B  0851               	movf	radio_comm_SendCmdGetResp@cmdByteCount,w
+  2721  034C  3182  22CA  3183   	fcall	_radio_comm_SendCmd
   2722                           
-  2723                           ;comm.c: 70: return radio_comm_GetResp(respByteCount, pRespData);
-  2724  034D  0020               	movlb	0	; select bank0
-  2725  034E  084F               	movf	radio_comm_SendCmdGetResp@pRespData,w
-  2726  034F  00D0               	movwf	??_radio_comm_SendCmdGetResp
-  2727  0350  0850               	movf	??_radio_comm_SendCmdGetResp,w
-  2728  0351  00F6               	movwf	radio_comm_GetResp@pData
-  2729  0352  084E               	movf	radio_comm_SendCmdGetResp@respByteCount,w
-  2730  0353  3181  21DE         	fcall	_radio_comm_GetResp
-  2731  0355  0008               	return
-  2732  0356                     __end_of_radio_comm_SendCmdGetResp:	
+  2723                           ;comm.c: 67: return radio_comm_GetResp( respByteCount, pRespData );
+  2724  034F  0020               	movlb	0	; select bank0
+  2725  0350  084F               	movf	radio_comm_SendCmdGetResp@pRespData,w
+  2726  0351  00D0               	movwf	??_radio_comm_SendCmdGetResp
+  2727  0352  0850               	movf	??_radio_comm_SendCmdGetResp,w
+  2728  0353  00F6               	movwf	radio_comm_GetResp@pData
+  2729  0354  084E               	movf	radio_comm_SendCmdGetResp@respByteCount,w
+  2730  0355  3181  21DE         	fcall	_radio_comm_GetResp
+  2731  0357  0008               	return
+  2732  0358                     __end_of_radio_comm_SendCmdGetResp:	
   2733                           
   2734                           	psect	text14
-  2735  02C8                     __ptext14:	
+  2735  02CA                     __ptext14:	
   2736 ;; *************** function _radio_comm_SendCmd *****************
   2737 ;; Defined at:
-  2738 ;;		line 50 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+  2738 ;;		line 47 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
   2739 ;; Parameters:    Size  Location     Type
   2740 ;;  byteCount       1    wreg     unsigned char 
   2741 ;;  pData           1   11[COMMON] PTR unsigned char 
@@ -2791,64 +2791,64 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2773                           
   2774                           
   2775                           ;psect for function _radio_comm_SendCmd
-  2776  02C8                     _radio_comm_SendCmd:	
+  2776  02CA                     _radio_comm_SendCmd:	
   2777                           
   2778                           ;incstack = 0
   2779                           ; Regs used in _radio_comm_SendCmd: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
   2780                           ;radio_comm_SendCmd@byteCount stored from wreg
-  2781  02C8  0020               	movlb	0	; select bank0
-  2782  02C9  00CC               	movwf	radio_comm_SendCmd@byteCount
+  2781  02CA  0020               	movlb	0	; select bank0
+  2782  02CB  00CC               	movwf	radio_comm_SendCmd@byteCount
   2783                           
-  2784                           ;comm.c: 54: if (byteCount == 1)
-  2785  02CA  034C               	decf	radio_comm_SendCmd@byteCount,w
-  2786  02CB  1D03               	btfss	3,2
-  2787  02CC  2AD1               	goto	l1731
+  2784                           ;comm.c: 51: if ( byteCount == 1 )
+  2785  02CC  034C               	decf	radio_comm_SendCmd@byteCount,w
+  2786  02CD  1D03               	btfss	3,2
+  2787  02CE  2AD3               	goto	l1740
   2788                           
-  2789                           ;comm.c: 55: byteCount++;
-  2790  02CD  3001               	movlw	1
-  2791  02CE  00CB               	movwf	??_radio_comm_SendCmd
-  2792  02CF  084B               	movf	??_radio_comm_SendCmd,w
-  2793  02D0  07CC               	addwf	radio_comm_SendCmd@byteCount,f
-  2794  02D1                     l1731:	
-  2795                           ;comm.c: 57: while(!ctsWentHigh)
+  2789                           ;comm.c: 52: byteCount++;
+  2790  02CF  3001               	movlw	1
+  2791  02D0  00CB               	movwf	??_radio_comm_SendCmd
+  2792  02D1  084B               	movf	??_radio_comm_SendCmd,w
+  2793  02D2  07CC               	addwf	radio_comm_SendCmd@byteCount,f
+  2794  02D3                     l1740:	
+  2795                           ;comm.c: 54: while( !ctsWentHigh )
   2796                           
-  2797  02D1  087C               	movf	_ctsWentHigh,w
-  2798  02D2  1D03               	btfss	3,2
-  2799  02D3  2AD8               	goto	l285
+  2797  02D3  087C               	movf	_ctsWentHigh,w
+  2798  02D4  1D03               	btfss	3,2
+  2799  02D5  2ADA               	goto	l282
   2800                           
-  2801                           ;comm.c: 58: {
-  2802                           ;comm.c: 59: radio_comm_PollCTS();
-  2803  02D4  3183  23B3  3182   	fcall	_radio_comm_PollCTS
-  2804  02D7  2AD1               	goto	l1731
-  2805  02D8                     l285:	
+  2801                           ;comm.c: 55: {
+  2802                           ;comm.c: 56: radio_comm_PollCTS();
+  2803  02D6  3183  23B5  3182   	fcall	_radio_comm_PollCTS
+  2804  02D9  2AD3               	goto	l1740
+  2805  02DA                     l282:	
   2806                           
-  2807                           ;comm.c: 60: }
-  2808                           ;comm.c: 61: RA5 = 0;
-  2809  02D8  0020               	movlb	0	; select bank0
-  2810  02D9  128C               	bcf	12,5	;volatile
+  2807                           ;comm.c: 57: }
+  2808                           ;comm.c: 58: RA5 = 0;
+  2809  02DA  0020               	movlb	0	; select bank0
+  2810  02DB  128C               	bcf	12,5	;volatile
   2811                           
-  2812                           ;comm.c: 62: SPI_WriteBytes(byteCount, pData);
-  2813  02DA  087B               	movf	radio_comm_SendCmd@pData,w
-  2814  02DB  00CB               	movwf	??_radio_comm_SendCmd
-  2815  02DC  084B               	movf	??_radio_comm_SendCmd,w
-  2816  02DD  00F3               	movwf	SPI_WriteBytes@data
-  2817  02DE  084C               	movf	radio_comm_SendCmd@byteCount,w
-  2818  02DF  3183  2356         	fcall	_SPI_WriteBytes
+  2812                           ;comm.c: 59: SPI_WriteBytes( byteCount, pData );
+  2813  02DC  087B               	movf	radio_comm_SendCmd@pData,w
+  2814  02DD  00CB               	movwf	??_radio_comm_SendCmd
+  2815  02DE  084B               	movf	??_radio_comm_SendCmd,w
+  2816  02DF  00F3               	movwf	SPI_WriteBytes@data
+  2817  02E0  084C               	movf	radio_comm_SendCmd@byteCount,w
+  2818  02E1  3183  2358         	fcall	_SPI_WriteBytes
   2819                           
-  2820                           ;comm.c: 63: RA5 = 1;
-  2821  02E1  0020               	movlb	0	; select bank0
-  2822  02E2  168C               	bsf	12,5	;volatile
+  2820                           ;comm.c: 60: RA5 = 1;
+  2821  02E3  0020               	movlb	0	; select bank0
+  2822  02E4  168C               	bsf	12,5	;volatile
   2823                           
-  2824                           ;comm.c: 64: ctsWentHigh = 0;
-  2825  02E3  01FC               	clrf	_ctsWentHigh
-  2826  02E4  0008               	return
-  2827  02E5                     __end_of_radio_comm_SendCmd:	
+  2824                           ;comm.c: 61: ctsWentHigh = 0;
+  2825  02E5  01FC               	clrf	_ctsWentHigh
+  2826  02E6  0008               	return
+  2827  02E7                     __end_of_radio_comm_SendCmd:	
   2828                           
   2829                           	psect	text15
-  2830  03B3                     __ptext15:	
+  2830  03B5                     __ptext15:	
   2831 ;; *************** function _radio_comm_PollCTS *****************
   2832 ;; Defined at:
-  2833 ;;		line 45 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+  2833 ;;		line 42 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
   2834 ;; Parameters:    Size  Location     Type
   2835 ;;		None
   2836 ;; Auto vars:     Size  Location     Type
@@ -2881,18 +2881,18 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2863                           
   2864                           
   2865                           ;psect for function _radio_comm_PollCTS
-  2866  03B3                     _radio_comm_PollCTS:	
+  2866  03B5                     _radio_comm_PollCTS:	
   2867                           
-  2868                           ;comm.c: 47: return radio_comm_GetResp(0, 0);
+  2868                           ;comm.c: 44: return radio_comm_GetResp( 0, 0 );
   2869                           ;	Return value of _radio_comm_PollCTS is never used
   2870                           
   2871                           ;incstack = 0
   2872                           ; Regs used in _radio_comm_PollCTS: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  2873  03B3  01F6               	clrf	radio_comm_GetResp@pData
-  2874  03B4  3000               	movlw	0
-  2875  03B5  3181  21DE         	fcall	_radio_comm_GetResp
-  2876  03B7  0008               	return
-  2877  03B8                     __end_of_radio_comm_PollCTS:	
+  2873  03B5  01F6               	clrf	radio_comm_GetResp@pData
+  2874  03B6  3000               	movlw	0
+  2875  03B7  3181  21DE         	fcall	_radio_comm_GetResp
+  2876  03B9  0008               	return
+  2877  03BA                     __end_of_radio_comm_PollCTS:	
   2878                           
   2879                           	psect	text16
   2880  01DE                     __ptext16:	
@@ -2948,8 +2948,8 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2930  01E1  3013               	movlw	19
   2931  01E2  00FA               	movwf	radio_comm_GetResp@errCnt+1
   2932                           
-  2933                           ;comm.c: 11: while (errCnt != 0)
-  2934  01E3  29EA               	goto	l1701
+  2933                           ;comm.c: 11: while( errCnt != 0 )
+  2934  01E3  29EA               	goto	l1706
   2935  01E4                     l268:	
   2936                           ;comm.c: 23: break;
   2937                           
@@ -2964,11 +2964,11 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2946  01E7  02F9               	subwf	radio_comm_GetResp@errCnt,f
   2947  01E8  3000               	movlw	0
   2948  01E9  3BFA               	subwfb	radio_comm_GetResp@errCnt+1,f
-  2949  01EA                     l1701:	
+  2949  01EA                     l1706:	
   2950  01EA  0879               	movf	radio_comm_GetResp@errCnt,w
   2951  01EB  047A               	iorwf	radio_comm_GetResp@errCnt+1,w
   2952  01EC  1903               	btfsc	3,2
-  2953  01ED  2A0A               	goto	l1703
+  2953  01ED  2A0A               	goto	l1708
   2954                           
   2955                           ;comm.c: 12: {
   2956                           ;comm.c: 13: RA5 = 0;
@@ -2977,404 +2977,403 @@ Microchip Technology Omniscient Code Generator v1.41 (Free mode) build 201701250
   2959                           
   2960                           ;comm.c: 14: SPI_WriteByte( 0x44 );
   2961  01F0  3044               	movlw	68
-  2962  01F1  3183  2386  3181   	fcall	_SPI_WriteByte
+  2962  01F1  3183  2388  3181   	fcall	_SPI_WriteByte
   2963                           
   2964                           ;comm.c: 15: ctsWentHigh = SPI_ReadByte();
-  2965  01F4  3183  2393  3181   	fcall	_SPI_ReadByte
+  2965  01F4  3183  2395  3181   	fcall	_SPI_ReadByte
   2966  01F7  00F7               	movwf	??_radio_comm_GetResp
   2967  01F8  0877               	movf	??_radio_comm_GetResp,w
   2968  01F9  00FC               	movwf	_ctsWentHigh
   2969                           
-  2970                           ;comm.c: 16: if(ctsWentHigh)
+  2970                           ;comm.c: 16: if( ctsWentHigh )
   2971  01FA  087C               	movf	_ctsWentHigh,w
   2972  01FB  1903               	btfsc	3,2
   2973  01FC  29E4               	goto	l268
   2974                           
   2975                           ;comm.c: 17: {
-  2976                           ;comm.c: 18: if(byteCount)
+  2976                           ;comm.c: 18: if( byteCount )
   2977  01FD  0878               	movf	radio_comm_GetResp@byteCount,w
   2978  01FE  1903               	btfsc	3,2
-  2979  01FF  2A08               	goto	l1697
+  2979  01FF  2A08               	goto	l1702
   2980                           
   2981                           ;comm.c: 19: {
-  2982                           ;comm.c: 20: SPI_ReadBytes(byteCount, pData);
+  2982                           ;comm.c: 20: SPI_ReadBytes( byteCount, pData );
   2983  0200  0876               	movf	radio_comm_GetResp@pData,w
   2984  0201  00F7               	movwf	??_radio_comm_GetResp
   2985  0202  0877               	movf	??_radio_comm_GetResp,w
   2986  0203  00F3               	movwf	SPI_ReadBytes@data
   2987  0204  0878               	movf	radio_comm_GetResp@byteCount,w
-  2988  0205  3183  232F  3181   	fcall	_SPI_ReadBytes
-  2989  0208                     l1697:	
+  2988  0205  3183  2331  3181   	fcall	_SPI_ReadBytes
+  2989  0208                     l1702:	
   2990                           
   2991                           ;comm.c: 21: }
   2992                           ;comm.c: 22: RA5 = 1;
   2993  0208  0020               	movlb	0	; select bank0
   2994  0209  168C               	bsf	12,5	;volatile
-  2995  020A                     l1703:	
+  2995  020A                     l1708:	
   2996                           
   2997                           ;comm.c: 27: }
   2998                           ;comm.c: 29: if( errCnt == 0 )
   2999  020A  0879               	movf	radio_comm_GetResp@errCnt,w
   3000  020B  047A               	iorwf	radio_comm_GetResp@errCnt+1,w
-  3001  020C  1903               	btfsc	3,2
-  3002  020D                     l273:	
-  3003                           ;comm.c: 32: {
-  3004                           
-  3005                           ;comm.c: 30: {
-  3006                           ;comm.c: 31: while(1)
-  3007                           
-  3008  020D  2A0D               	goto	l273
+  3001  020C  1D03               	btfss	3,2
+  3002  020D  2A10               	goto	l1714
+  3003                           
+  3004                           ;comm.c: 30: {
+  3005                           ;comm.c: 31: return 0;
+  3006  020E  3000               	movlw	0
+  3007  020F  0008               	return
+  3008  0210                     l1714:	
   3009                           
-  3010                           ;comm.c: 34: }
-  3011                           ;comm.c: 35: }
-  3012                           ;comm.c: 37: if (ctsWentHigh)
-  3013  020E  087C               	movf	_ctsWentHigh,w
-  3014  020F  1903               	btfsc	3,2
-  3015  0210  2A13               	goto	l1709
-  3016                           
-  3017                           ;comm.c: 38: {
-  3018                           ;comm.c: 39: ctsWentHigh = 1;
-  3019  0211  01FC               	clrf	_ctsWentHigh
-  3020  0212  0AFC               	incf	_ctsWentHigh,f
-  3021  0213                     l1709:	
-  3022                           
-  3023                           ;comm.c: 40: }
-  3024                           ;comm.c: 42: return ctsWentHigh;
-  3025  0213  087C               	movf	_ctsWentHigh,w
-  3026  0214  0008               	return
-  3027  0215                     __end_of_radio_comm_GetResp:	
-  3028                           
-  3029                           	psect	text17
-  3030  032F                     __ptext17:	
-  3031 ;; *************** function _SPI_ReadBytes *****************
-  3032 ;; Defined at:
-  3033 ;;		line 44 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
-  3034 ;; Parameters:    Size  Location     Type
-  3035 ;;  len             1    wreg     unsigned char 
-  3036 ;;  data            1    3[COMMON] PTR unsigned char 
-  3037 ;;		 -> NULL(0), radioCmd(16), RadioPacket(7), 
-  3038 ;; Auto vars:     Size  Location     Type
-  3039 ;;  len             1    5[COMMON] unsigned char 
-  3040 ;; Return value:  Size  Location     Type
-  3041 ;;                  1    wreg      void 
-  3042 ;; Registers used:
-  3043 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
-  3044 ;; Tracked objects:
-  3045 ;;		On entry : 0/0
-  3046 ;;		On exit  : 0/0
-  3047 ;;		Unchanged: 0/0
-  3048 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-  3049 ;;      Params:         1       0       0       0
-  3050 ;;      Locals:         1       0       0       0
-  3051 ;;      Temps:          1       0       0       0
-  3052 ;;      Totals:         3       0       0       0
-  3053 ;;Total ram usage:        3 bytes
-  3054 ;; Hardware stack levels used:    1
-  3055 ;; Hardware stack levels required when called:    2
-  3056 ;; This function calls:
-  3057 ;;		_SPI_ReadByte
-  3058 ;; This function is called by:
-  3059 ;;		_radio_comm_GetResp
-  3060 ;;		_radio_comm_ReadData
-  3061 ;; This function uses a non-reentrant model
-  3062 ;;
+  3010                           ;comm.c: 32: }
+  3011                           ;comm.c: 34: if ( ctsWentHigh )
+  3012  0210  087C               	movf	_ctsWentHigh,w
+  3013  0211  1903               	btfsc	3,2
+  3014  0212  2A15               	goto	l1718
+  3015                           
+  3016                           ;comm.c: 35: {
+  3017                           ;comm.c: 36: ctsWentHigh = 1;
+  3018  0213  01FC               	clrf	_ctsWentHigh
+  3019  0214  0AFC               	incf	_ctsWentHigh,f
+  3020  0215                     l1718:	
+  3021                           
+  3022                           ;comm.c: 37: }
+  3023                           ;comm.c: 39: return ctsWentHigh;
+  3024  0215  087C               	movf	_ctsWentHigh,w
+  3025  0216  0008               	return
+  3026  0217                     __end_of_radio_comm_GetResp:	
+  3027                           
+  3028                           	psect	text17
+  3029  0331                     __ptext17:	
+  3030 ;; *************** function _SPI_ReadBytes *****************
+  3031 ;; Defined at:
+  3032 ;;		line 44 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
+  3033 ;; Parameters:    Size  Location     Type
+  3034 ;;  len             1    wreg     unsigned char 
+  3035 ;;  data            1    3[COMMON] PTR unsigned char 
+  3036 ;;		 -> NULL(0), radioCmd(16), RadioPacket(7), 
+  3037 ;; Auto vars:     Size  Location     Type
+  3038 ;;  len             1    5[COMMON] unsigned char 
+  3039 ;; Return value:  Size  Location     Type
+  3040 ;;                  1    wreg      void 
+  3041 ;; Registers used:
+  3042 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+  3043 ;; Tracked objects:
+  3044 ;;		On entry : 0/0
+  3045 ;;		On exit  : 0/0
+  3046 ;;		Unchanged: 0/0
+  3047 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+  3048 ;;      Params:         1       0       0       0
+  3049 ;;      Locals:         1       0       0       0
+  3050 ;;      Temps:          1       0       0       0
+  3051 ;;      Totals:         3       0       0       0
+  3052 ;;Total ram usage:        3 bytes
+  3053 ;; Hardware stack levels used:    1
+  3054 ;; Hardware stack levels required when called:    2
+  3055 ;; This function calls:
+  3056 ;;		_SPI_ReadByte
+  3057 ;; This function is called by:
+  3058 ;;		_radio_comm_GetResp
+  3059 ;;		_radio_comm_ReadData
+  3060 ;; This function uses a non-reentrant model
+  3061 ;;
+  3062                           
   3063                           
-  3064                           
-  3065                           ;psect for function _SPI_ReadBytes
-  3066  032F                     _SPI_ReadBytes:	
-  3067                           
-  3068                           ;incstack = 0
-  3069                           ; Regs used in _SPI_ReadBytes: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  3070                           ;SPI_ReadBytes@len stored from wreg
-  3071  032F  00F5               	movwf	SPI_ReadBytes@len
-  3072  0330                     l1683:	
-  3073                           ;spi.c: 46: while( len-- )
-  3074                           
-  3075  0330  3001               	movlw	1
-  3076  0331  02F5               	subwf	SPI_ReadBytes@len,f
-  3077  0332  0A75               	incf	SPI_ReadBytes@len,w
-  3078  0333  1903               	btfsc	3,2
-  3079  0334  0008               	return
-  3080                           
-  3081                           ;spi.c: 47: {
-  3082                           ;spi.c: 48: *data++ = SPI_ReadByte();
-  3083  0335  3183  2393  3183   	fcall	_SPI_ReadByte
-  3084  0338  00F4               	movwf	??_SPI_ReadBytes
-  3085  0339  0873               	movf	SPI_ReadBytes@data,w
-  3086  033A  0086               	movwf	6
-  3087  033B  0187               	clrf	7
-  3088  033C  0874               	movf	??_SPI_ReadBytes,w
-  3089  033D  0081               	movwf	1
-  3090  033E  3001               	movlw	1
-  3091  033F  00F4               	movwf	??_SPI_ReadBytes
-  3092  0340  0874               	movf	??_SPI_ReadBytes,w
-  3093  0341  07F3               	addwf	SPI_ReadBytes@data,f
-  3094  0342  2B30               	goto	l1683
-  3095  0343                     __end_of_SPI_ReadBytes:	
-  3096                           
-  3097                           	psect	text18
-  3098  0393                     __ptext18:	
-  3099 ;; *************** function _SPI_ReadByte *****************
-  3100 ;; Defined at:
-  3101 ;;		line 52 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
-  3102 ;; Parameters:    Size  Location     Type
-  3103 ;;		None
-  3104 ;; Auto vars:     Size  Location     Type
-  3105 ;;  data            1    2[COMMON] unsigned char 
-  3106 ;; Return value:  Size  Location     Type
-  3107 ;;                  1    wreg      unsigned char 
-  3108 ;; Registers used:
-  3109 ;;		wreg, status,2
-  3110 ;; Tracked objects:
-  3111 ;;		On entry : 0/0
-  3112 ;;		On exit  : 0/0
-  3113 ;;		Unchanged: 0/0
-  3114 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-  3115 ;;      Params:         0       0       0       0
-  3116 ;;      Locals:         1       0       0       0
-  3117 ;;      Temps:          1       0       0       0
-  3118 ;;      Totals:         2       0       0       0
-  3119 ;;Total ram usage:        2 bytes
-  3120 ;; Hardware stack levels used:    1
-  3121 ;; Hardware stack levels required when called:    1
-  3122 ;; This function calls:
-  3123 ;;		Nothing
-  3124 ;; This function is called by:
-  3125 ;;		_SPI_ReadBytes
-  3126 ;;		_radio_comm_GetResp
-  3127 ;; This function uses a non-reentrant model
-  3128 ;;
+  3064                           ;psect for function _SPI_ReadBytes
+  3065  0331                     _SPI_ReadBytes:	
+  3066                           
+  3067                           ;incstack = 0
+  3068                           ; Regs used in _SPI_ReadBytes: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+  3069                           ;SPI_ReadBytes@len stored from wreg
+  3070  0331  00F5               	movwf	SPI_ReadBytes@len
+  3071  0332                     l1688:	
+  3072                           ;spi.c: 46: while( len-- )
+  3073                           
+  3074  0332  3001               	movlw	1
+  3075  0333  02F5               	subwf	SPI_ReadBytes@len,f
+  3076  0334  0A75               	incf	SPI_ReadBytes@len,w
+  3077  0335  1903               	btfsc	3,2
+  3078  0336  0008               	return
+  3079                           
+  3080                           ;spi.c: 47: {
+  3081                           ;spi.c: 48: *data++ = SPI_ReadByte();
+  3082  0337  3183  2395  3183   	fcall	_SPI_ReadByte
+  3083  033A  00F4               	movwf	??_SPI_ReadBytes
+  3084  033B  0873               	movf	SPI_ReadBytes@data,w
+  3085  033C  0086               	movwf	6
+  3086  033D  0187               	clrf	7
+  3087  033E  0874               	movf	??_SPI_ReadBytes,w
+  3088  033F  0081               	movwf	1
+  3089  0340  3001               	movlw	1
+  3090  0341  00F4               	movwf	??_SPI_ReadBytes
+  3091  0342  0874               	movf	??_SPI_ReadBytes,w
+  3092  0343  07F3               	addwf	SPI_ReadBytes@data,f
+  3093  0344  2B32               	goto	l1688
+  3094  0345                     __end_of_SPI_ReadBytes:	
+  3095                           
+  3096                           	psect	text18
+  3097  0395                     __ptext18:	
+  3098 ;; *************** function _SPI_ReadByte *****************
+  3099 ;; Defined at:
+  3100 ;;		line 52 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
+  3101 ;; Parameters:    Size  Location     Type
+  3102 ;;		None
+  3103 ;; Auto vars:     Size  Location     Type
+  3104 ;;  data            1    2[COMMON] unsigned char 
+  3105 ;; Return value:  Size  Location     Type
+  3106 ;;                  1    wreg      unsigned char 
+  3107 ;; Registers used:
+  3108 ;;		wreg, status,2
+  3109 ;; Tracked objects:
+  3110 ;;		On entry : 0/0
+  3111 ;;		On exit  : 0/0
+  3112 ;;		Unchanged: 0/0
+  3113 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+  3114 ;;      Params:         0       0       0       0
+  3115 ;;      Locals:         1       0       0       0
+  3116 ;;      Temps:          1       0       0       0
+  3117 ;;      Totals:         2       0       0       0
+  3118 ;;Total ram usage:        2 bytes
+  3119 ;; Hardware stack levels used:    1
+  3120 ;; Hardware stack levels required when called:    1
+  3121 ;; This function calls:
+  3122 ;;		Nothing
+  3123 ;; This function is called by:
+  3124 ;;		_SPI_ReadBytes
+  3125 ;;		_radio_comm_GetResp
+  3126 ;; This function uses a non-reentrant model
+  3127 ;;
+  3128                           
   3129                           
-  3130                           
-  3131                           ;psect for function _SPI_ReadByte
-  3132  0393                     _SPI_ReadByte:	
-  3133                           
-  3134                           ;spi.c: 54: U8 data;
-  3135                           ;spi.c: 55: SSPBUF = 0;
-  3136                           
-  3137                           ;incstack = 0
-  3138                           ; Regs used in _SPI_ReadByte: [wreg+status,2]
-  3139  0393  0024               	movlb	4	; select bank4
-  3140  0394  0191               	clrf	17	;volatile
-  3141  0395                     l54:	
-  3142                           ;spi.c: 56: while(!SSP1IF);
-  3143                           
-  3144  0395  0020               	movlb	0	; select bank0
-  3145  0396  1D91               	btfss	17,3	;volatile
-  3146  0397  2B95               	goto	l54
-  3147                           
-  3148                           ;spi.c: 57: data = SSPBUF;
-  3149  0398  0024               	movlb	4	; select bank4
-  3150  0399  0811               	movf	17,w	;volatile
-  3151  039A  00F1               	movwf	??_SPI_ReadByte
-  3152  039B  0871               	movf	??_SPI_ReadByte,w
-  3153  039C  00F2               	movwf	SPI_ReadByte@data
-  3154                           
-  3155                           ;spi.c: 58: return data;
-  3156  039D  0872               	movf	SPI_ReadByte@data,w
-  3157  039E  0008               	return
-  3158  039F                     __end_of_SPI_ReadByte:	
-  3159                           
-  3160                           	psect	text19
-  3161  0356                     __ptext19:	
-  3162 ;; *************** function _SPI_WriteBytes *****************
-  3163 ;; Defined at:
-  3164 ;;		line 29 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
-  3165 ;; Parameters:    Size  Location     Type
-  3166 ;;  len             1    wreg     unsigned char 
-  3167 ;;  data            1    3[COMMON] PTR unsigned char 
-  3168 ;;		 -> radioCmd(16), 
-  3169 ;; Auto vars:     Size  Location     Type
-  3170 ;;  len             1    5[COMMON] unsigned char 
-  3171 ;; Return value:  Size  Location     Type
-  3172 ;;                  1    wreg      void 
-  3173 ;; Registers used:
-  3174 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
-  3175 ;; Tracked objects:
-  3176 ;;		On entry : 0/0
-  3177 ;;		On exit  : 0/0
-  3178 ;;		Unchanged: 0/0
-  3179 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-  3180 ;;      Params:         1       0       0       0
-  3181 ;;      Locals:         1       0       0       0
-  3182 ;;      Temps:          1       0       0       0
-  3183 ;;      Totals:         3       0       0       0
-  3184 ;;Total ram usage:        3 bytes
-  3185 ;; Hardware stack levels used:    1
-  3186 ;; Hardware stack levels required when called:    2
-  3187 ;; This function calls:
-  3188 ;;		_SPI_WriteByte
-  3189 ;; This function is called by:
-  3190 ;;		_radio_comm_SendCmd
-  3191 ;;		_radio_comm_WriteData
-  3192 ;; This function uses a non-reentrant model
-  3193 ;;
+  3130                           ;psect for function _SPI_ReadByte
+  3131  0395                     _SPI_ReadByte:	
+  3132                           
+  3133                           ;spi.c: 54: U8 data;
+  3134                           ;spi.c: 55: SSPBUF = 0;
+  3135                           
+  3136                           ;incstack = 0
+  3137                           ; Regs used in _SPI_ReadByte: [wreg+status,2]
+  3138  0395  0024               	movlb	4	; select bank4
+  3139  0396  0191               	clrf	17	;volatile
+  3140  0397                     l54:	
+  3141                           ;spi.c: 56: while( !SSP1IF );
+  3142                           
+  3143  0397  0020               	movlb	0	; select bank0
+  3144  0398  1D91               	btfss	17,3	;volatile
+  3145  0399  2B97               	goto	l54
+  3146                           
+  3147                           ;spi.c: 57: data = SSPBUF;
+  3148  039A  0024               	movlb	4	; select bank4
+  3149  039B  0811               	movf	17,w	;volatile
+  3150  039C  00F1               	movwf	??_SPI_ReadByte
+  3151  039D  0871               	movf	??_SPI_ReadByte,w
+  3152  039E  00F2               	movwf	SPI_ReadByte@data
+  3153                           
+  3154                           ;spi.c: 58: return 1;
+  3155  039F  3001               	movlw	1
+  3156  03A0  0008               	return
+  3157  03A1                     __end_of_SPI_ReadByte:	
+  3158                           
+  3159                           	psect	text19
+  3160  0358                     __ptext19:	
+  3161 ;; *************** function _SPI_WriteBytes *****************
+  3162 ;; Defined at:
+  3163 ;;		line 29 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
+  3164 ;; Parameters:    Size  Location     Type
+  3165 ;;  len             1    wreg     unsigned char 
+  3166 ;;  data            1    3[COMMON] PTR unsigned char 
+  3167 ;;		 -> radioCmd(16), 
+  3168 ;; Auto vars:     Size  Location     Type
+  3169 ;;  len             1    5[COMMON] unsigned char 
+  3170 ;; Return value:  Size  Location     Type
+  3171 ;;                  1    wreg      void 
+  3172 ;; Registers used:
+  3173 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+  3174 ;; Tracked objects:
+  3175 ;;		On entry : 0/0
+  3176 ;;		On exit  : 0/0
+  3177 ;;		Unchanged: 0/0
+  3178 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+  3179 ;;      Params:         1       0       0       0
+  3180 ;;      Locals:         1       0       0       0
+  3181 ;;      Temps:          1       0       0       0
+  3182 ;;      Totals:         3       0       0       0
+  3183 ;;Total ram usage:        3 bytes
+  3184 ;; Hardware stack levels used:    1
+  3185 ;; Hardware stack levels required when called:    2
+  3186 ;; This function calls:
+  3187 ;;		_SPI_WriteByte
+  3188 ;; This function is called by:
+  3189 ;;		_radio_comm_SendCmd
+  3190 ;;		_radio_comm_WriteData
+  3191 ;; This function uses a non-reentrant model
+  3192 ;;
+  3193                           
   3194                           
-  3195                           
-  3196                           ;psect for function _SPI_WriteBytes
-  3197  0356                     _SPI_WriteBytes:	
-  3198                           
-  3199                           ;incstack = 0
-  3200                           ; Regs used in _SPI_WriteBytes: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
-  3201                           ;SPI_WriteBytes@len stored from wreg
-  3202  0356  00F5               	movwf	SPI_WriteBytes@len
-  3203  0357                     l1719:	
-  3204                           ;spi.c: 31: while( len-- )
-  3205                           
-  3206  0357  3001               	movlw	1
-  3207  0358  02F5               	subwf	SPI_WriteBytes@len,f
-  3208  0359  0A75               	incf	SPI_WriteBytes@len,w
-  3209  035A  1903               	btfsc	3,2
-  3210  035B  0008               	return
-  3211                           
-  3212                           ;spi.c: 32: {
-  3213                           ;spi.c: 33: SPI_WriteByte( *data++ );
-  3214  035C  0873               	movf	SPI_WriteBytes@data,w
-  3215  035D  0086               	movwf	6
-  3216  035E  0187               	clrf	7
-  3217  035F  0801               	movf	1,w
-  3218  0360  3183  2386  3183   	fcall	_SPI_WriteByte
-  3219  0363  3001               	movlw	1
-  3220  0364  00F4               	movwf	??_SPI_WriteBytes
-  3221  0365  0874               	movf	??_SPI_WriteBytes,w
-  3222  0366  07F3               	addwf	SPI_WriteBytes@data,f
-  3223  0367  2B57               	goto	l1719
-  3224  0368                     __end_of_SPI_WriteBytes:	
-  3225                           
-  3226                           	psect	text20
-  3227  0386                     __ptext20:	
-  3228 ;; *************** function _SPI_WriteByte *****************
-  3229 ;; Defined at:
-  3230 ;;		line 37 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
-  3231 ;; Parameters:    Size  Location     Type
-  3232 ;;  data            1    wreg     unsigned char 
-  3233 ;; Auto vars:     Size  Location     Type
-  3234 ;;  data            1    2[COMMON] unsigned char 
-  3235 ;; Return value:  Size  Location     Type
-  3236 ;;                  1    wreg      void 
-  3237 ;; Registers used:
-  3238 ;;		wreg
-  3239 ;; Tracked objects:
-  3240 ;;		On entry : 0/0
-  3241 ;;		On exit  : 0/0
-  3242 ;;		Unchanged: 0/0
-  3243 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-  3244 ;;      Params:         0       0       0       0
-  3245 ;;      Locals:         1       0       0       0
-  3246 ;;      Temps:          1       0       0       0
-  3247 ;;      Totals:         2       0       0       0
-  3248 ;;Total ram usage:        2 bytes
-  3249 ;; Hardware stack levels used:    1
-  3250 ;; Hardware stack levels required when called:    1
-  3251 ;; This function calls:
-  3252 ;;		Nothing
-  3253 ;; This function is called by:
-  3254 ;;		_SPI_WriteBytes
-  3255 ;;		_radio_comm_GetResp
-  3256 ;;		_radio_comm_ReadData
-  3257 ;;		_si4355_ezconfig_check
-  3258 ;;		_radio_comm_WriteData
-  3259 ;; This function uses a non-reentrant model
-  3260 ;;
+  3195                           ;psect for function _SPI_WriteBytes
+  3196  0358                     _SPI_WriteBytes:	
+  3197                           
+  3198                           ;incstack = 0
+  3199                           ; Regs used in _SPI_WriteBytes: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+  3200                           ;SPI_WriteBytes@len stored from wreg
+  3201  0358  00F5               	movwf	SPI_WriteBytes@len
+  3202  0359                     l1728:	
+  3203                           ;spi.c: 31: while( len-- )
+  3204                           
+  3205  0359  3001               	movlw	1
+  3206  035A  02F5               	subwf	SPI_WriteBytes@len,f
+  3207  035B  0A75               	incf	SPI_WriteBytes@len,w
+  3208  035C  1903               	btfsc	3,2
+  3209  035D  0008               	return
+  3210                           
+  3211                           ;spi.c: 32: {
+  3212                           ;spi.c: 33: SPI_WriteByte( *data++ );
+  3213  035E  0873               	movf	SPI_WriteBytes@data,w
+  3214  035F  0086               	movwf	6
+  3215  0360  0187               	clrf	7
+  3216  0361  0801               	movf	1,w
+  3217  0362  3183  2388  3183   	fcall	_SPI_WriteByte
+  3218  0365  3001               	movlw	1
+  3219  0366  00F4               	movwf	??_SPI_WriteBytes
+  3220  0367  0874               	movf	??_SPI_WriteBytes,w
+  3221  0368  07F3               	addwf	SPI_WriteBytes@data,f
+  3222  0369  2B59               	goto	l1728
+  3223  036A                     __end_of_SPI_WriteBytes:	
+  3224                           
+  3225                           	psect	text20
+  3226  0388                     __ptext20:	
+  3227 ;; *************** function _SPI_WriteByte *****************
+  3228 ;; Defined at:
+  3229 ;;		line 37 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
+  3230 ;; Parameters:    Size  Location     Type
+  3231 ;;  data            1    wreg     unsigned char 
+  3232 ;; Auto vars:     Size  Location     Type
+  3233 ;;  data            1    2[COMMON] unsigned char 
+  3234 ;; Return value:  Size  Location     Type
+  3235 ;;                  1    wreg      void 
+  3236 ;; Registers used:
+  3237 ;;		wreg
+  3238 ;; Tracked objects:
+  3239 ;;		On entry : 0/0
+  3240 ;;		On exit  : 0/0
+  3241 ;;		Unchanged: 0/0
+  3242 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+  3243 ;;      Params:         0       0       0       0
+  3244 ;;      Locals:         1       0       0       0
+  3245 ;;      Temps:          1       0       0       0
+  3246 ;;      Totals:         2       0       0       0
+  3247 ;;Total ram usage:        2 bytes
+  3248 ;; Hardware stack levels used:    1
+  3249 ;; Hardware stack levels required when called:    1
+  3250 ;; This function calls:
+  3251 ;;		Nothing
+  3252 ;; This function is called by:
+  3253 ;;		_SPI_WriteBytes
+  3254 ;;		_radio_comm_GetResp
+  3255 ;;		_radio_comm_ReadData
+  3256 ;;		_si4355_ezconfig_check
+  3257 ;;		_radio_comm_WriteData
+  3258 ;; This function uses a non-reentrant model
+  3259 ;;
+  3260                           
   3261                           
-  3262                           
-  3263                           ;psect for function _SPI_WriteByte
-  3264  0386                     _SPI_WriteByte:	
-  3265                           
-  3266                           ;incstack = 0
-  3267                           ; Regs used in _SPI_WriteByte: [wreg]
-  3268                           ;SPI_WriteByte@data stored from wreg
-  3269  0386  00F2               	movwf	SPI_WriteByte@data
-  3270                           
-  3271                           ;spi.c: 39: SSPBUF = data;
-  3272  0387  0872               	movf	SPI_WriteByte@data,w
-  3273  0388  0024               	movlb	4	; select bank4
-  3274  0389  0091               	movwf	17	;volatile
-  3275  038A                     l42:	
-  3276                           ;spi.c: 40: while (!SSP1IF);
-  3277                           
-  3278  038A  0020               	movlb	0	; select bank0
-  3279  038B  1D91               	btfss	17,3	;volatile
-  3280  038C  2B8A               	goto	l42
-  3281                           
-  3282                           ;spi.c: 41: data = SSPBUF;
-  3283  038D  0024               	movlb	4	; select bank4
-  3284  038E  0811               	movf	17,w	;volatile
-  3285  038F  00F1               	movwf	??_SPI_WriteByte
-  3286  0390  0871               	movf	??_SPI_WriteByte,w
-  3287  0391  00F2               	movwf	SPI_WriteByte@data
-  3288  0392  0008               	return
-  3289  0393                     __end_of_SPI_WriteByte:	
-  3290                           
-  3291                           	psect	intentry
-  3292  0004                     __pintentry:	
-  3293 ;; *************** function _Timer0_ISR *****************
-  3294 ;; Defined at:
-  3295 ;;		line 38 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c"
-  3296 ;; Parameters:    Size  Location     Type
-  3297 ;;		None
-  3298 ;; Auto vars:     Size  Location     Type
-  3299 ;;		None
-  3300 ;; Return value:  Size  Location     Type
-  3301 ;;                  1    wreg      void 
-  3302 ;; Registers used:
-  3303 ;;		wreg
-  3304 ;; Tracked objects:
-  3305 ;;		On entry : 0/0
-  3306 ;;		On exit  : 0/0
-  3307 ;;		Unchanged: 0/0
-  3308 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-  3309 ;;      Params:         0       0       0       0
-  3310 ;;      Locals:         0       0       0       0
-  3311 ;;      Temps:          1       0       0       0
-  3312 ;;      Totals:         1       0       0       0
-  3313 ;;Total ram usage:        1 bytes
-  3314 ;; Hardware stack levels used:    1
-  3315 ;; This function calls:
-  3316 ;;		Nothing
-  3317 ;; This function is called by:
-  3318 ;;		Interrupt level 1
-  3319 ;; This function uses a non-reentrant model
-  3320 ;;
-  3321                           
-  3322  0004                     _Timer0_ISR:	
-  3323                           
-  3324                           ;incstack = 0
-  3325  0004  147E               	bsf	126,0	;set compiler interrupt flag (level 1)
-  3326                           
-  3327                           ; Regs used in _Timer0_ISR: [wreg]
-  3328  0005  3180               	pagesel	$
-  3329  0006  0020               	movlb	0	; select bank0
-  3330  0007  087F               	movf	127,w
-  3331  0008  00F0               	movwf	??_Timer0_ISR
-  3332                           
-  3333                           ;main.c: 40: TMR0IF = 0;
-  3334  0009  110B               	bcf	11,2	;volatile
-  3335                           
-  3336                           ;main.c: 41: counter++;
-  3337  000A  3001               	movlw	1
-  3338  000B  07B0               	addwf	_counter,f
-  3339  000C  3000               	movlw	0
-  3340  000D  3DB1               	addwfc	_counter+1,f
-  3341                           
-  3342                           ;main.c: 42: RA0 = counter & 1;
-  3343  000E  1C30               	btfss	_counter,0
-  3344  000F  2813               	goto	u54_20
-  3345  0010  0020               	movlb	0	; select bank0
-  3346  0011  140C               	bsf	12,0	;volatile
-  3347  0012  2815               	goto	i1l102
-  3348  0013                     u54_20:	
-  3349  0013  0020               	movlb	0	; select bank0
-  3350  0014  100C               	bcf	12,0	;volatile
-  3351  0015                     i1l102:	
-  3352  0015  0870               	movf	??_Timer0_ISR,w
-  3353  0016  00FF               	movwf	127
-  3354  0017  107E               	bcf	126,0	;clear compiler interrupt flag (level 1)
-  3355  0018  0009               	retfie
-  3356  0019                     __end_of_Timer0_ISR:	
-  3357  007E                     btemp	set	126	;btemp
-  3358  007E                     int$flags	set	126
-  3359  007E                     wtemp0	set	126
+  3262                           ;psect for function _SPI_WriteByte
+  3263  0388                     _SPI_WriteByte:	
+  3264                           
+  3265                           ;incstack = 0
+  3266                           ; Regs used in _SPI_WriteByte: [wreg]
+  3267                           ;SPI_WriteByte@data stored from wreg
+  3268  0388  00F2               	movwf	SPI_WriteByte@data
+  3269                           
+  3270                           ;spi.c: 39: SSPBUF = data;
+  3271  0389  0872               	movf	SPI_WriteByte@data,w
+  3272  038A  0024               	movlb	4	; select bank4
+  3273  038B  0091               	movwf	17	;volatile
+  3274  038C                     l42:	
+  3275                           ;spi.c: 40: while( !SSP1IF );
+  3276                           
+  3277  038C  0020               	movlb	0	; select bank0
+  3278  038D  1D91               	btfss	17,3	;volatile
+  3279  038E  2B8C               	goto	l42
+  3280                           
+  3281                           ;spi.c: 41: data = SSPBUF;
+  3282  038F  0024               	movlb	4	; select bank4
+  3283  0390  0811               	movf	17,w	;volatile
+  3284  0391  00F1               	movwf	??_SPI_WriteByte
+  3285  0392  0871               	movf	??_SPI_WriteByte,w
+  3286  0393  00F2               	movwf	SPI_WriteByte@data
+  3287  0394  0008               	return
+  3288  0395                     __end_of_SPI_WriteByte:	
+  3289                           
+  3290                           	psect	intentry
+  3291  0004                     __pintentry:	
+  3292 ;; *************** function _Timer0_ISR *****************
+  3293 ;; Defined at:
+  3294 ;;		line 38 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c"
+  3295 ;; Parameters:    Size  Location     Type
+  3296 ;;		None
+  3297 ;; Auto vars:     Size  Location     Type
+  3298 ;;		None
+  3299 ;; Return value:  Size  Location     Type
+  3300 ;;                  1    wreg      void 
+  3301 ;; Registers used:
+  3302 ;;		wreg
+  3303 ;; Tracked objects:
+  3304 ;;		On entry : 0/0
+  3305 ;;		On exit  : 0/0
+  3306 ;;		Unchanged: 0/0
+  3307 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+  3308 ;;      Params:         0       0       0       0
+  3309 ;;      Locals:         0       0       0       0
+  3310 ;;      Temps:          1       0       0       0
+  3311 ;;      Totals:         1       0       0       0
+  3312 ;;Total ram usage:        1 bytes
+  3313 ;; Hardware stack levels used:    1
+  3314 ;; This function calls:
+  3315 ;;		Nothing
+  3316 ;; This function is called by:
+  3317 ;;		Interrupt level 1
+  3318 ;; This function uses a non-reentrant model
+  3319 ;;
+  3320                           
+  3321  0004                     _Timer0_ISR:	
+  3322                           
+  3323                           ;incstack = 0
+  3324  0004  147E               	bsf	126,0	;set compiler interrupt flag (level 1)
+  3325                           
+  3326                           ; Regs used in _Timer0_ISR: [wreg]
+  3327  0005  3180               	pagesel	$
+  3328  0006  0020               	movlb	0	; select bank0
+  3329  0007  087F               	movf	127,w
+  3330  0008  00F0               	movwf	??_Timer0_ISR
+  3331                           
+  3332                           ;main.c: 40: TMR0IF = 0;
+  3333  0009  110B               	bcf	11,2	;volatile
+  3334                           
+  3335                           ;main.c: 41: counter++;
+  3336  000A  3001               	movlw	1
+  3337  000B  07B0               	addwf	_counter,f
+  3338  000C  3000               	movlw	0
+  3339  000D  3DB1               	addwfc	_counter+1,f
+  3340                           
+  3341                           ;main.c: 42: RA0 = counter & 1;
+  3342  000E  1C30               	btfss	_counter,0
+  3343  000F  2813               	goto	u54_20
+  3344  0010  0020               	movlb	0	; select bank0
+  3345  0011  140C               	bsf	12,0	;volatile
+  3346  0012  2815               	goto	i1l102
+  3347  0013                     u54_20:	
+  3348  0013  0020               	movlb	0	; select bank0
+  3349  0014  100C               	bcf	12,0	;volatile
+  3350  0015                     i1l102:	
+  3351  0015  0870               	movf	??_Timer0_ISR,w
+  3352  0016  00FF               	movwf	127
+  3353  0017  107E               	bcf	126,0	;clear compiler interrupt flag (level 1)
+  3354  0018  0009               	retfie
+  3355  0019                     __end_of_Timer0_ISR:	
+  3356  007E                     btemp	set	126	;btemp
+  3357  007E                     int$flags	set	126
+  3358  007E                     wtemp0	set	126
 
 
 Data Sizes:
@@ -3485,7 +3484,7 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 1     1      0   33792
+ (0) _main                                                 1     1      0   32831
                                              18 BANK0      1     1      0
                 _Radio_CheckReceived
                          _Radio_Init
@@ -3493,83 +3492,83 @@ Call Graph Tables:
                            _SPI_Init
                    _si4355_fifo_info
  ---------------------------------------------------------------------------------
- (1) _si4355_fifo_info                                     4     4      0    4240
+ (1) _si4355_fifo_info                                     4     4      0    4116
                                               7 BANK0      4     4      0
           _radio_comm_SendCmdGetResp
  ---------------------------------------------------------------------------------
  (1) _SPI_Init                                             0     0      0       0
  ---------------------------------------------------------------------------------
- (1) _Radio_StartRX                                        3     3      0    7075
+ (1) _Radio_StartRX                                        3     3      0    6889
                                              13 BANK0      3     3      0
               _si4355_get_int_status
                     _si4355_start_rx
  ---------------------------------------------------------------------------------
- (2) _si4355_start_rx                                      8     2      6    2126
+ (2) _si4355_start_rx                                      8     2      6    2064
                                               2 BANK0      8     2      6
                  _radio_comm_SendCmd
  ---------------------------------------------------------------------------------
- (1) _Radio_Init                                           0     0      0   15141
+ (1) _Radio_Init                                           0     0      0   14707
                       _Radio_PowerUp
           _si4355_configuration_init
               _si4355_get_int_status
  ---------------------------------------------------------------------------------
- (2) _si4355_configuration_init                            5     3      2    9473
+ (2) _si4355_configuration_init                            5     3      2    9225
                                              13 BANK0      5     3      2
           _radio_comm_SendCmdGetResp
               _si4355_get_int_status
  ---------------------------------------------------------------------------------
- (2) _Radio_PowerUp                                        4     4      0     750
+ (2) _Radio_PowerUp                                        4     4      0     688
                                               0 BANK0      4     4      0
                  _radio_comm_PollCTS
                        _si4355_reset
  ---------------------------------------------------------------------------------
  (3) _si4355_reset                                         0     0      0       0
  ---------------------------------------------------------------------------------
- (1) _Radio_CheckReceived                                  1     1      0    7336
+ (1) _Radio_CheckReceived                                  1     1      0    7119
                                              13 BANK0      1     1      0
               _si4355_get_int_status
                 _si4355_read_rx_fifo
  ---------------------------------------------------------------------------------
- (2) _si4355_read_rx_fifo                                  4     3      1    2418
+ (2) _si4355_read_rx_fifo                                  4     3      1    2325
                                               4 BANK0      4     3      1
                 _radio_comm_ReadData
  ---------------------------------------------------------------------------------
- (3) _radio_comm_ReadData                                  5     2      3    2279
+ (3) _radio_comm_ReadData                                  5     2      3    2186
                                              11 COMMON     1     1      0
                                               0 BANK0      4     1      3
                       _SPI_ReadBytes
                       _SPI_WriteByte
                  _radio_comm_PollCTS
  ---------------------------------------------------------------------------------
- (2) _si4355_get_int_status                                6     4      2    4918
+ (2) _si4355_get_int_status                                6     4      2    4794
                                               7 BANK0      6     4      2
           _radio_comm_SendCmdGetResp
  ---------------------------------------------------------------------------------
- (2) _radio_comm_SendCmdGetResp                            5     2      3    4209
+ (2) _radio_comm_SendCmdGetResp                            5     2      3    4085
                                               2 BANK0      5     2      3
                  _radio_comm_GetResp
                  _radio_comm_SendCmd
  ---------------------------------------------------------------------------------
- (3) _radio_comm_SendCmd                                   3     2      1    1524
+ (3) _radio_comm_SendCmd                                   3     2      1    1462
                                              11 COMMON     1     0      1
                                               0 BANK0      2     2      0
                      _SPI_WriteBytes
                  _radio_comm_PollCTS
  ---------------------------------------------------------------------------------
- (4) _radio_comm_PollCTS                                   0     0      0     713
+ (4) _radio_comm_PollCTS                                   0     0      0     651
                  _radio_comm_GetResp
  ---------------------------------------------------------------------------------
- (5) _radio_comm_GetResp                                   5     4      1     713
+ (5) _radio_comm_GetResp                                   5     4      1     651
                                               6 COMMON     5     4      1
                        _SPI_ReadByte
                       _SPI_ReadBytes
                       _SPI_WriteByte
  ---------------------------------------------------------------------------------
- (6) _SPI_ReadBytes                                        3     2      1     253
+ (6) _SPI_ReadBytes                                        3     2      1     222
                                               3 COMMON     3     2      1
                        _SPI_ReadByte
  ---------------------------------------------------------------------------------
- (7) _SPI_ReadByte                                         2     2      0      34
+ (7) _SPI_ReadByte                                         2     2      0       3
                                               1 COMMON     2     2      0
  ---------------------------------------------------------------------------------
  (4) _SPI_WriteBytes                                       3     2      1     253
@@ -3808,42 +3807,42 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.41 build -162212810 
-Symbol Table                                                                                   Tue Feb 07 19:08:26 2017
+Symbol Table                                                                                   Tue Feb 07 19:33:51 2017
 
-                           __CFG_CP$OFF 0000                                      l42 038A  
-                                    l54 0395                                      l96 0258  
+                           __CFG_CP$OFF 0000                                      l42 038C  
+                                    l54 0397                                      l96 025A  
      radio_comm_SendCmdGetResp@pCmdData 004D                       ?_si4355_fifo_info 0070  
                            __CFG_LVP$ON 0000                                     l183 018A  
-                                   l273 020D                                     l268 01E4  
-                                   l292 02B6                                     l285 02D8  
-                                   _CKE 10A6                                     _CKP 10AC  
-                                   _GIE 005F                                     _RA0 0060  
-                                   _RA3 0063                                     _RA5 0065  
-                   _pRadioConfiguration 005E                            __CFG_CPD$OFF 0000  
-                                   u745 029F                                     _SMP 10A7  
-    __size_of_radio_comm_SendCmdGetResp 0013                      ??_si4355_fifo_info 0052  
-                          __CFG_BORV$LO 0000                                     wreg 0009  
-                          __CFG_IESO$ON 0000                            _si4355_reset 03B8  
-                                  l1701 01EA                                    l1703 020A  
-                                  l1801 0161                                    l1731 02D1  
-                                  l1811 017B                                    l1709 0213  
-                                  l1719 0357                                    l1809 0162  
-                                  l1825 0148                                    l1683 0330  
-                                  l1827 0199                                    l1767 02B0  
-                                  l1697 0208                                    l1769 02B3  
-                                  l1785 0290                                    l1787 02A7  
-                                  l1891 0254                                    l1883 0243  
-                                  l1877 032D                                    l1885 0246  
-                                  l1893 025A                                    _TMR0 0015  
+                                   l282 02DA                                     l268 01E4  
+                                   l289 02B8                                     _CKE 10A6  
+                                   _CKP 10AC                                     _GIE 005F  
+                                   _RA0 0060                                     _RA3 0063  
+                                   _RA5 0065                     _pRadioConfiguration 005E  
+                          __CFG_CPD$OFF 0000                                     u745 02A1  
+                                   _SMP 10A7      __size_of_radio_comm_SendCmdGetResp 0013  
+                    ??_si4355_fifo_info 0052                            __CFG_BORV$LO 0000  
+                                   wreg 0009                            __CFG_IESO$ON 0000  
+                          _si4355_reset 03BA                                    l1702 0208  
+                                  l1714 0210                                    l1706 01EA  
+                                  l1810 0161                                    l1708 020A  
+                                  l1740 02D3                                    l1820 017B  
+                                  l1900 0256                                    l1718 0215  
+                                  l1902 025C                                    l1728 0359  
+                                  l1818 0162                                    l1834 0148  
+                                  l1836 0199                                    l1688 0332  
+                                  l1776 02B2                                    l1778 02B5  
+                                  l1794 0292                                    l1796 02A9  
+                                  l1892 0245                                    l1886 032F  
+                                  l1894 0248                                    _TMR0 0015  
                           __CFG_WRT$OFF 0000                           __CFG_FCMEN$ON 0000  
-                                  _main 023F                       ??_si4355_start_rx 0053  
+                                  _main 0241                       ??_si4355_start_rx 0053  
                                   fsr0h 0005                                    fsr1h 0007  
                                   indf0 0000                                    fsr0l 0004  
                                   indf1 0001                                    fsr1l 0006  
                                   btemp 007E                  __size_of_Radio_PowerUp 0020  
                          __CFG_BOREN$ON 0000                    si4355_fifo_info@FIFO 0055  
                 __size_of_Radio_StartRX 001B                                    start 0019  
-                        ?_SPI_ReadBytes 0073                           _SPI_WriteByte 0386  
+                        ?_SPI_ReadBytes 0073                           _SPI_WriteByte 0388  
                          __CFG_MCLRE$ON 0000                 ??_si4355_get_int_status 0054  
                          __CFG_PLLEN$ON 0000             si4355_read_rx_fifo@numBytes 0052  
                                  ?_main 0070             ??_si4355_configuration_init 005A  
@@ -3852,92 +3851,92 @@ Symbol Table                                                                    
                                  _STATE 0032                                   _SSPM0 10A8  
                                  _SSPM1 10A9                                   _SSPM2 10AA  
                                  _SSPM3 10AB                                   _SSPEN 10AD  
-                                 _SSSEL 08ED       __end_of_radio_comm_SendCmdGetResp 0356  
+                                 _SSSEL 08ED       __end_of_radio_comm_SendCmdGetResp 0358  
                       SPI_ReadByte@data 0072                                   _dummy 0033  
-                      __end_of_SPI_Init 0377             __end_of_radio_comm_ReadData 02C8  
+                      __end_of_SPI_Init 0379             __end_of_radio_comm_ReadData 02CA  
                       SPI_ReadBytes@len 0075                                   status 0003  
                                  wtemp0 007E             radio_comm_GetResp@byteCount 0078  
-                        ?_SPI_WriteByte 0070                          _SPI_WriteBytes 0356  
-                       __initialization 001B                            __end_of_main 0267  
-                   Radio_PowerUp@wDelay 004D                              _Radio_Init 0300  
+                        ?_SPI_WriteByte 0070                          _SPI_WriteBytes 0358  
+                       __initialization 001B                            __end_of_main 0269  
+                   Radio_PowerUp@wDelay 004D                              _Radio_Init 0302  
                                 ??_main 005D            __size_of_si4355_read_rx_fifo 000F  
-                         _Radio_PowerUp 028A                           _Radio_StartRX 02E5  
+                         _Radio_PowerUp 028C                           _Radio_StartRX 02E7  
                radio_comm_SendCmd@pData 007B                   si4355_start_rx@RX_LEN 004E  
                                 _SDOSEL 08EE               _si4355_configuration_init 0145  
                                 _TMR0IE 005D                                  _TMR0IF 005A  
                                 _SSP1IF 008B                         ??_SPI_ReadBytes 0074  
-                                _SSPBUF 0211                  __end_of_SPI_WriteBytes 0368  
+                                _SSPBUF 0211                  __end_of_SPI_WriteBytes 036A  
                         __CFG_PWRTE$OFF 0000                              _Timer0_ISR 0004  
                         __CFG_STVREN$ON 0000                          ?_Radio_PowerUp 0070  
-                        ?_Radio_StartRX 0070             __size_of_radio_comm_GetResp 0037  
+                        ?_Radio_StartRX 0070             __size_of_radio_comm_GetResp 0039  
            radio_comm_SendCmd@byteCount 004C            __size_of_Radio_CheckReceived 0017  
                      SPI_ReadBytes@data 0073             __size_of_radio_comm_SendCmd 001D  
            __size_of_radio_comm_PollCTS 0005                 __end_of__initialization 002F  
                        ??_SPI_WriteByte 0071                         ?_SPI_WriteBytes 0073  
-                        __pcstackCOMMON 0070                            __pidataBANK0 039F  
+                        __pcstackCOMMON 0070                            __pidataBANK0 03A1  
                            ?_Radio_Init 0070                             _RadioPacket 0044  
                              ?_SPI_Init 0070      si4355_get_int_status@CHIP_CLR_PEND 0053  
-                       _si4355_start_rx 0215  __end_of_Radio_Configuration_Data_Array 0145  
+                       _si4355_start_rx 0217  __end_of_Radio_Configuration_Data_Array 0145  
         _Radio_Configuration_Data_Array 0033                              __pbssBANK0 0020  
              __size_of_si4355_fifo_info 0023                             ?_Timer0_ISR 0070  
-                si4355_start_rx@CHANNEL 0054                              __pmaintext 023F  
+                si4355_start_rx@CHANNEL 0054                              __pmaintext 0241  
                             __pintentry 0004                         ??_Radio_PowerUp 004B  
                        ??_Radio_StartRX 0058          __size_of_si4355_get_int_status 0043  
          __end_of_si4355_get_int_status 01DE                si4355_start_rx@CONDITION 004D  
                             ??_SPI_Init 0071              si4355_start_rx@NEXT_STATE1 0050  
             si4355_start_rx@NEXT_STATE2 0051              si4355_start_rx@NEXT_STATE3 0052  
-                   __size_of_Radio_Init 0018                     _si4355_read_rx_fifo 0377  
+                   __size_of_Radio_Init 0018                     _si4355_read_rx_fifo 0379  
     __size_of_si4355_configuration_init 0056                       SPI_WriteByte@data 0072  
-               __end_of_si4355_start_rx 023F                       SPI_WriteBytes@len 0075  
-                               __ptext1 0267                                 __ptext2 0368  
-                               __ptext3 02E5                                 __ptext4 0215  
-                               __ptext5 0300                                 __ptext6 0145  
-                               __ptext7 028A                                 __ptext8 03B8  
-                               __ptext9 0318                    ?_si4355_read_rx_fifo 004F  
+               __end_of_si4355_start_rx 0241                       SPI_WriteBytes@len 0075  
+                               __ptext1 0269                                 __ptext2 036A  
+                               __ptext3 02E7                                 __ptext4 0217  
+                               __ptext5 0302                                 __ptext6 0145  
+                               __ptext7 028C                                 __ptext8 03BA  
+                               __ptext9 031A                    ?_si4355_read_rx_fifo 004F  
                                _counter 0030                     __size_of_Timer0_ISR 0015  
             ?_radio_comm_SendCmdGetResp 004D                  radio_comm_ReadData@cmd 004E  
-                               clrloop0 03AE                    end_of_initialization 002F  
-                               init_ram 03A7                                 initloop 03A8  
-                   _Radio_CheckReceived 0318            __size_of_radio_comm_ReadData 001E  
+                               clrloop0 03B0                    end_of_initialization 002F  
+                               init_ram 03A9                                 initloop 03AA  
+                   _Radio_CheckReceived 031A            __size_of_radio_comm_ReadData 001E  
                radio_comm_GetResp@pData 0076                            __pstringtext 0033  
      __end_of_si4355_configuration_init 019B                   ??_si4355_read_rx_fifo 0050  
                              _Si4355Cmd 0020                    ?_Radio_CheckReceived 0070  
                       __CFG_FOSC$INTOSC 0000                        ??_SPI_WriteBytes 0074  
-                      _si4355_fifo_info 0267                   __end_of_SPI_ReadBytes 0343  
+                      _si4355_fifo_info 0269                   __end_of_SPI_ReadBytes 0345  
             si4355_read_rx_fifo@pRxData 004F                           ?_SPI_ReadByte 0070  
                           ??_Radio_Init 007C                        ?_si4355_start_rx 004D  
-            __end_of_radio_comm_GetResp 0215                   ??_Radio_CheckReceived 0058  
-                     __size_of_SPI_Init 000F              __end_of_radio_comm_SendCmd 02E5  
-            __end_of_radio_comm_PollCTS 03B8                     start_initialization 001B  
-                         ?_si4355_reset 0070                      __end_of_Radio_Init 0318  
+            __end_of_radio_comm_GetResp 0217                   ??_Radio_CheckReceived 0058  
+                     __size_of_SPI_Init 000F              __end_of_radio_comm_SendCmd 02E7  
+            __end_of_radio_comm_PollCTS 03BA                     start_initialization 001B  
+                         ?_si4355_reset 0070                      __end_of_Radio_Init 031A  
           si4355_configuration_init@col 005B     si4355_get_int_status@MODEM_CLR_PEND 0052  
-                        ??_SPI_ReadByte 0071                   __end_of_SPI_WriteByte 0393  
+                        ??_SPI_ReadByte 0071                   __end_of_SPI_WriteByte 0395  
                           ??_Timer0_ISR 0070                             __pdataBANK0 005E  
                   Radio_StartRX@channel 005A                             __pbssCOMMON 007C  
                         ??_si4355_reset 0071                               ___latbits 0001  
                          __pcstackBANK0 004B                      __end_of_Timer0_ISR 0019  
-    radio_comm_SendCmdGetResp@pRespData 004F                   __end_of_Radio_PowerUp 02AA  
-                 __end_of_Radio_StartRX 0300                   _si4355_get_int_status 019B  
-                   _radio_comm_ReadData 02AA             ??_radio_comm_SendCmdGetResp 0050  
-                             clear_ram0 03AD     si4355_configuration_init@numOfBytes 005C  
-                  ?_radio_comm_ReadData 004B                __end_of_si4355_fifo_info 028A  
-                              _SPI_Init 0368                radio_comm_ReadData@pData 004D  
-                  __end_of_SPI_ReadByte 039F                             _ctsWentHigh 007C  
-                 ??_radio_comm_ReadData 007B                    __end_of_si4355_reset 03B9  
-           __end_of_si4355_read_rx_fifo 0386               _radio_comm_SendCmdGetResp 0343  
+    radio_comm_SendCmdGetResp@pRespData 004F                   __end_of_Radio_PowerUp 02AC  
+                 __end_of_Radio_StartRX 0302                   _si4355_get_int_status 019B  
+                   _radio_comm_ReadData 02AC             ??_radio_comm_SendCmdGetResp 0050  
+                             clear_ram0 03AF     si4355_configuration_init@numOfBytes 005C  
+                  ?_radio_comm_ReadData 004B                __end_of_si4355_fifo_info 028C  
+                              _SPI_Init 036A                radio_comm_ReadData@pData 004D  
+                  __end_of_SPI_ReadByte 03A1                             _ctsWentHigh 007C  
+                 ??_radio_comm_ReadData 007B                    __end_of_si4355_reset 03BB  
+           __end_of_si4355_read_rx_fifo 0388               _radio_comm_SendCmdGetResp 0345  
             ?_si4355_configuration_init 0058                  ?_si4355_get_int_status 0052  
   si4355_configuration_init@pSetPropCmd 0058                      SPI_WriteBytes@data 0073  
-            radio_comm_ReadData@pollCts 004B                                __ptext10 0377  
-                              __ptext11 02AA                                __ptext20 0386  
-                              __ptext12 019B                                __ptext13 0343  
-                              __ptext14 02C8                                __ptext15 03B3  
-                              __ptext16 01DE                                __ptext17 032F  
-                              __ptext18 0393                                __ptext19 0356  
+            radio_comm_ReadData@pollCts 004B                                __ptext10 0379  
+                              __ptext11 02AC                                __ptext20 0388  
+                              __ptext12 019B                                __ptext13 0345  
+                              __ptext14 02CA                                __ptext15 03B5  
+                              __ptext16 01DE                                __ptext17 0331  
+                              __ptext18 0395                                __ptext19 0358  
                     _radio_comm_GetResp 01DE                                _radioCmd 0034  
-                    _radio_comm_SendCmd 02C8                           __size_of_main 0028  
-                    _radio_comm_PollCTS 03B3                     ?_radio_comm_GetResp 0076  
+                    _radio_comm_SendCmd 02CA                           __size_of_main 0028  
+                    _radio_comm_PollCTS 03B5                     ?_radio_comm_GetResp 0076  
                    ?_radio_comm_SendCmd 007B                     ?_radio_comm_PollCTS 0070  
-                              int$flags 007E             __end_of_Radio_CheckReceived 032F  
+                              int$flags 007E             __end_of_Radio_CheckReceived 0331  
                   ??_radio_comm_GetResp 0077                  __size_of_SPI_ReadBytes 0014  
                   ??_radio_comm_SendCmd 004B                __size_of_si4355_start_rx 002A  
                   ??_radio_comm_PollCTS 007B            radio_comm_ReadData@byteCount 004C  
@@ -3946,5 +3945,5 @@ Symbol Table                                                                    
               radio_comm_GetResp@errCnt 0079                   __size_of_SPI_ReadByte 000C  
                             _OPTION_REG 0095  radio_comm_SendCmdGetResp@respByteCount 004E  
                 __size_of_SPI_WriteByte 000D                   __size_of_si4355_reset 0001  
-                    _RadioConfiguration 005F                           _SPI_ReadBytes 032F  
-                          _SPI_ReadByte 0393  
+                    _RadioConfiguration 005F                           _SPI_ReadBytes 0331  
+                          _SPI_ReadByte 0395  

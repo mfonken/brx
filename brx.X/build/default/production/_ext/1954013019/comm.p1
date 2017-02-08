@@ -2074,18 +2074,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 "9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radioCmd `uc ~T0 @X0 -> 16 `ui e ]
 [; ;comm.h: 9: U8 radioCmd[16u];
-[; ;comm.h: 11: BIT radio_comm_GetResp(U8 byteCount, U8* pData);
-[; ;comm.h: 12: U8 radio_comm_PollCTS(void);
-[; ;comm.h: 13: void radio_comm_SendCmd(U8 byteCount, U8* pData);
-[; ;comm.h: 14: U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
-[; ;comm.h: 15: void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
-[; ;comm.h: 16: void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+[; ;comm.h: 11: BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+[; ;comm.h: 12: U8 radio_comm_PollCTS( void );
+[; ;comm.h: 13: void radio_comm_SendCmd( U8 byteCount, U8* pData );
+[; ;comm.h: 14: U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
+[; ;comm.h: 15: void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
+[; ;comm.h: 16: void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
 [; ;spi.h: 10: void SPI_Init( void );
 [; ;spi.h: 11: void SPI_WriteBytes( U8 len, U8 * data );
 [; ;spi.h: 12: void SPI_WriteByte( U8 data );
 [; ;spi.h: 13: void SPI_ReadBytes( U8 len, U8 * data );
 [; ;spi.h: 14: U8 SPI_ReadByte( void );
-[; ;config.h: 17: extern states STATE;
+[; ;config.h: 12: extern states STATE;
 "6 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _ctsWentHigh `uc ~T0 @X0 1 e ]
 [i _ctsWentHigh
@@ -2096,7 +2096,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _radio_comm_GetResp `(uc ~T0 @X0 1 ef2`uc`*uc ]
 "9
 {
-[; ;comm.c: 8: BIT radio_comm_GetResp(U8 byteCount, U8* pData)
+[; ;comm.c: 8: BIT radio_comm_GetResp( U8 byteCount, U8* pData )
 [; ;comm.c: 9: {
 [e :U _radio_comm_GetResp ]
 "8
@@ -2108,7 +2108,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _errCnt `ui ~T0 @X0 1 a ]
 [; ;comm.c: 10: U16 errCnt = 5000;
 [e = _errCnt -> -> 5000 `i `ui ]
-[; ;comm.c: 11: while (errCnt != 0)
+[; ;comm.c: 11: while( errCnt != 0 )
 "11
 [e $U 263  ]
 [e :U 264 ]
@@ -2124,19 +2124,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;comm.c: 15: ctsWentHigh = SPI_ReadByte();
 "15
 [e = _ctsWentHigh ( _SPI_ReadByte ..  ]
-[; ;comm.c: 16: if(ctsWentHigh)
+[; ;comm.c: 16: if( ctsWentHigh )
 "16
 [e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 266  ]
 [; ;comm.c: 17: {
 "17
 {
-[; ;comm.c: 18: if(byteCount)
+[; ;comm.c: 18: if( byteCount )
 "18
 [e $ ! != -> _byteCount `i -> -> -> 0 `i `uc `i 267  ]
 [; ;comm.c: 19: {
 "19
 {
-[; ;comm.c: 20: SPI_ReadBytes(byteCount, pData);
+[; ;comm.c: 20: SPI_ReadBytes( byteCount, pData );
 "20
 [e ( _SPI_ReadBytes (2 , _byteCount _pData ]
 "21
@@ -2172,254 +2172,245 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;comm.c: 30: {
 "30
 {
-[; ;comm.c: 31: while(1)
+[; ;comm.c: 31: return 0;
 "31
-[e :U 270 ]
-[; ;comm.c: 32: {
+[e ) -> -> 0 `i `uc ]
+[e $UE 262  ]
 "32
-{
-"34
-}
-[e :U 269 ]
-"31
-[e $U 270  ]
-[e :U 271 ]
-"35
 }
 [e :U 268 ]
-[; ;comm.c: 34: }
-[; ;comm.c: 35: }
-[; ;comm.c: 37: if (ctsWentHigh)
-"37
-[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 272  ]
-[; ;comm.c: 38: {
-"38
+[; ;comm.c: 32: }
+[; ;comm.c: 34: if ( ctsWentHigh )
+"34
+[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 269  ]
+[; ;comm.c: 35: {
+"35
 {
-[; ;comm.c: 39: ctsWentHigh = 1;
-"39
+[; ;comm.c: 36: ctsWentHigh = 1;
+"36
 [e = _ctsWentHigh -> -> 1 `i `uc ]
-"40
+"37
 }
-[e :U 272 ]
-[; ;comm.c: 40: }
-[; ;comm.c: 42: return ctsWentHigh;
-"42
+[e :U 269 ]
+[; ;comm.c: 37: }
+[; ;comm.c: 39: return ctsWentHigh;
+"39
 [e ) _ctsWentHigh ]
 [e $UE 262  ]
-[; ;comm.c: 43: }
-"43
+[; ;comm.c: 40: }
+"40
 [e :UE 262 ]
 }
-"45
+"42
 [v _radio_comm_PollCTS `(uc ~T0 @X0 1 ef ]
-"46
+"43
 {
-[; ;comm.c: 45: U8 radio_comm_PollCTS(void)
-[; ;comm.c: 46: {
+[; ;comm.c: 42: U8 radio_comm_PollCTS(void)
+[; ;comm.c: 43: {
 [e :U _radio_comm_PollCTS ]
 [f ]
-[; ;comm.c: 47: return radio_comm_GetResp(0, 0);
-"47
+[; ;comm.c: 44: return radio_comm_GetResp( 0, 0 );
+"44
 [e ) ( _radio_comm_GetResp (2 , -> -> 0 `i `uc -> -> 0 `i `*uc ]
-[e $UE 273  ]
-[; ;comm.c: 48: }
-"48
-[e :UE 273 ]
+[e $UE 270  ]
+[; ;comm.c: 45: }
+"45
+[e :UE 270 ]
 }
-"50
+"47
 [v _radio_comm_SendCmd `(v ~T0 @X0 1 ef2`uc`*uc ]
-"51
+"48
 {
-[; ;comm.c: 50: void radio_comm_SendCmd(U8 byteCount, U8* pData)
-[; ;comm.c: 51: {
+[; ;comm.c: 47: void radio_comm_SendCmd( U8 byteCount, U8* pData )
+[; ;comm.c: 48: {
 [e :U _radio_comm_SendCmd ]
-"50
+"47
 [v _byteCount `uc ~T0 @X0 1 r1 ]
 [v _pData `*uc ~T0 @X0 1 r2 ]
-"51
+"48
 [f ]
-[; ;comm.c: 54: if (byteCount == 1)
-"54
-[e $ ! == -> _byteCount `i -> 1 `i 275  ]
-[; ;comm.c: 55: byteCount++;
-"55
+[; ;comm.c: 51: if ( byteCount == 1 )
+"51
+[e $ ! == -> _byteCount `i -> 1 `i 272  ]
+[; ;comm.c: 52: byteCount++;
+"52
 [e ++ _byteCount -> -> 1 `i `uc ]
-[e :U 275 ]
-[; ;comm.c: 57: while(!ctsWentHigh)
-"57
-[e $U 276  ]
-[e :U 277 ]
-[; ;comm.c: 58: {
-"58
+[e :U 272 ]
+[; ;comm.c: 54: while( !ctsWentHigh )
+"54
+[e $U 273  ]
+[e :U 274 ]
+[; ;comm.c: 55: {
+"55
 {
-[; ;comm.c: 59: radio_comm_PollCTS();
-"59
+[; ;comm.c: 56: radio_comm_PollCTS();
+"56
 [e ( _radio_comm_PollCTS ..  ]
-"60
-}
-[e :U 276 ]
 "57
-[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 277  ]
-[e :U 278 ]
-[; ;comm.c: 60: }
-[; ;comm.c: 61: RA5 = 0;
-"61
-[e = _RA5 -> -> 0 `i `b ]
-[; ;comm.c: 62: SPI_WriteBytes(byteCount, pData);
-"62
-[e ( _SPI_WriteBytes (2 , _byteCount _pData ]
-[; ;comm.c: 63: RA5 = 1;
-"63
-[e = _RA5 -> -> 1 `i `b ]
-[; ;comm.c: 64: ctsWentHigh = 0;
-"64
-[e = _ctsWentHigh -> -> 0 `i `uc ]
-[; ;comm.c: 65: }
-"65
-[e :UE 274 ]
 }
-"67
+[e :U 273 ]
+"54
+[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 274  ]
+[e :U 275 ]
+[; ;comm.c: 57: }
+[; ;comm.c: 58: RA5 = 0;
+"58
+[e = _RA5 -> -> 0 `i `b ]
+[; ;comm.c: 59: SPI_WriteBytes( byteCount, pData );
+"59
+[e ( _SPI_WriteBytes (2 , _byteCount _pData ]
+[; ;comm.c: 60: RA5 = 1;
+"60
+[e = _RA5 -> -> 1 `i `b ]
+[; ;comm.c: 61: ctsWentHigh = 0;
+"61
+[e = _ctsWentHigh -> -> 0 `i `uc ]
+[; ;comm.c: 62: }
+"62
+[e :UE 271 ]
+}
+"64
 [v _radio_comm_SendCmdGetResp `(uc ~T0 @X0 1 ef4`uc`*uc`uc`*uc ]
-"68
+"65
 {
-[; ;comm.c: 67: U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData)
-[; ;comm.c: 68: {
+[; ;comm.c: 64: U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData )
+[; ;comm.c: 65: {
 [e :U _radio_comm_SendCmdGetResp ]
-"67
+"64
 [v _cmdByteCount `uc ~T0 @X0 1 r1 ]
 [v _pCmdData `*uc ~T0 @X0 1 r2 ]
 [v _respByteCount `uc ~T0 @X0 1 r3 ]
 [v _pRespData `*uc ~T0 @X0 1 r4 ]
-"68
+"65
 [f ]
-[; ;comm.c: 69: radio_comm_SendCmd(cmdByteCount, pCmdData);
-"69
+[; ;comm.c: 66: radio_comm_SendCmd( cmdByteCount, pCmdData );
+"66
 [e ( _radio_comm_SendCmd (2 , _cmdByteCount _pCmdData ]
-[; ;comm.c: 70: return radio_comm_GetResp(respByteCount, pRespData);
-"70
+[; ;comm.c: 67: return radio_comm_GetResp( respByteCount, pRespData );
+"67
 [e ) ( _radio_comm_GetResp (2 , _respByteCount _pRespData ]
-[e $UE 279  ]
-[; ;comm.c: 71: }
-"71
-[e :UE 279 ]
+[e $UE 276  ]
+[; ;comm.c: 68: }
+"68
+[e :UE 276 ]
 }
-"73
+"70
 [v _radio_comm_ReadData `(v ~T0 @X0 1 ef4`uc`uc`uc`*uc ]
-"74
+"71
 {
-[; ;comm.c: 73: void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
-[; ;comm.c: 74: {
+[; ;comm.c: 70: void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData )
+[; ;comm.c: 71: {
 [e :U _radio_comm_ReadData ]
+"70
+[v _cmd `uc ~T0 @X0 1 r1 ]
+[v _pollCts `uc ~T0 @X0 1 r2 ]
+[v _byteCount `uc ~T0 @X0 1 r3 ]
+[v _pData `*uc ~T0 @X0 1 r4 ]
+"71
+[f ]
+[; ;comm.c: 72: if( pollCts )
+"72
+[e $ ! != -> _pollCts `i -> -> -> 0 `i `uc `i 278  ]
+[; ;comm.c: 73: {
 "73
-[v _cmd `uc ~T0 @X0 1 r1 ]
-[v _pollCts `uc ~T0 @X0 1 r2 ]
-[v _byteCount `uc ~T0 @X0 1 r3 ]
-[v _pData `*uc ~T0 @X0 1 r4 ]
+{
+[; ;comm.c: 74: while( !ctsWentHigh )
 "74
-[f ]
-[; ;comm.c: 75: if(pollCts)
+[e $U 279  ]
+[e :U 280 ]
+[; ;comm.c: 75: {
 "75
-[e $ ! != -> _pollCts `i -> -> -> 0 `i `uc `i 281  ]
-[; ;comm.c: 76: {
+{
+[; ;comm.c: 76: radio_comm_PollCTS();
 "76
-{
-[; ;comm.c: 77: while(!ctsWentHigh)
-"77
-[e $U 282  ]
-[e :U 283 ]
-[; ;comm.c: 78: {
-"78
-{
-[; ;comm.c: 79: radio_comm_PollCTS();
-"79
 [e ( _radio_comm_PollCTS ..  ]
-"80
-}
-[e :U 282 ]
 "77
-[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 283  ]
-[e :U 284 ]
-"81
 }
+[e :U 279 ]
+"74
+[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 280  ]
 [e :U 281 ]
-[; ;comm.c: 80: }
-[; ;comm.c: 81: }
-[; ;comm.c: 82: RA5 = 0;
-"82
-[e = _RA5 -> -> 0 `i `b ]
-[; ;comm.c: 83: SPI_WriteByte(cmd);
-"83
-[e ( _SPI_WriteByte (1 _cmd ]
-[; ;comm.c: 84: SPI_ReadBytes(byteCount, pData);
-"84
-[e ( _SPI_ReadBytes (2 , _byteCount _pData ]
-[; ;comm.c: 85: RA5 = 1;
-"85
-[e = _RA5 -> -> 1 `i `b ]
-[; ;comm.c: 86: ctsWentHigh = 0;
-"86
-[e = _ctsWentHigh -> -> 0 `i `uc ]
-[; ;comm.c: 87: }
-"87
-[e :UE 280 ]
+"78
 }
-"89
+[e :U 278 ]
+[; ;comm.c: 77: }
+[; ;comm.c: 78: }
+[; ;comm.c: 79: RA5 = 0;
+"79
+[e = _RA5 -> -> 0 `i `b ]
+[; ;comm.c: 80: SPI_WriteByte( cmd );
+"80
+[e ( _SPI_WriteByte (1 _cmd ]
+[; ;comm.c: 81: SPI_ReadBytes( byteCount, pData );
+"81
+[e ( _SPI_ReadBytes (2 , _byteCount _pData ]
+[; ;comm.c: 82: RA5 = 1;
+"82
+[e = _RA5 -> -> 1 `i `b ]
+[; ;comm.c: 83: ctsWentHigh = 0;
+"83
+[e = _ctsWentHigh -> -> 0 `i `uc ]
+[; ;comm.c: 84: }
+"84
+[e :UE 277 ]
+}
+"86
 [v _radio_comm_WriteData `(v ~T0 @X0 1 ef4`uc`uc`uc`*uc ]
-"90
+"87
 {
-[; ;comm.c: 89: void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
-[; ;comm.c: 90: {
+[; ;comm.c: 86: void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData )
+[; ;comm.c: 87: {
 [e :U _radio_comm_WriteData ]
-"89
+"86
 [v _cmd `uc ~T0 @X0 1 r1 ]
 [v _pollCts `uc ~T0 @X0 1 r2 ]
 [v _byteCount `uc ~T0 @X0 1 r3 ]
 [v _pData `*uc ~T0 @X0 1 r4 ]
-"90
+"87
 [f ]
-[; ;comm.c: 91: if(pollCts)
+[; ;comm.c: 88: if( pollCts )
+"88
+[e $ ! != -> _pollCts `i -> -> -> 0 `i `uc `i 283  ]
+[; ;comm.c: 89: {
+"89
+{
+[; ;comm.c: 90: while( !ctsWentHigh )
+"90
+[e $U 284  ]
+[e :U 285 ]
+[; ;comm.c: 91: {
 "91
-[e $ ! != -> _pollCts `i -> -> -> 0 `i `uc `i 286  ]
-[; ;comm.c: 92: {
+{
+[; ;comm.c: 92: radio_comm_PollCTS();
 "92
-{
-[; ;comm.c: 93: while(!ctsWentHigh)
-"93
-[e $U 287  ]
-[e :U 288 ]
-[; ;comm.c: 94: {
-"94
-{
-[; ;comm.c: 95: radio_comm_PollCTS();
-"95
 [e ( _radio_comm_PollCTS ..  ]
-"96
-}
-[e :U 287 ]
 "93
-[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 288  ]
-[e :U 289 ]
-"97
 }
+[e :U 284 ]
+"90
+[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 285  ]
 [e :U 286 ]
-[; ;comm.c: 96: }
-[; ;comm.c: 97: }
-[; ;comm.c: 98: RA5 = 0;
-"98
+"94
+}
+[e :U 283 ]
+[; ;comm.c: 93: }
+[; ;comm.c: 94: }
+[; ;comm.c: 95: RA5 = 0;
+"95
 [e = _RA5 -> -> 0 `i `b ]
-[; ;comm.c: 99: SPI_WriteByte(cmd);
-"99
+[; ;comm.c: 96: SPI_WriteByte( cmd );
+"96
 [e ( _SPI_WriteByte (1 _cmd ]
-[; ;comm.c: 100: SPI_WriteBytes(byteCount, pData);
-"100
+[; ;comm.c: 97: SPI_WriteBytes( byteCount, pData );
+"97
 [e ( _SPI_WriteBytes (2 , _byteCount _pData ]
-[; ;comm.c: 101: RA5 = 1;
-"101
+[; ;comm.c: 98: RA5 = 1;
+"98
 [e = _RA5 -> -> 1 `i `b ]
-[; ;comm.c: 102: ctsWentHigh = 0;
-"102
+[; ;comm.c: 99: ctsWentHigh = 0;
+"99
 [e = _ctsWentHigh -> -> 0 `i `uc ]
-[; ;comm.c: 103: }
-"103
-[e :UE 285 ]
+[; ;comm.c: 100: }
+"100
+[e :UE 282 ]
 }

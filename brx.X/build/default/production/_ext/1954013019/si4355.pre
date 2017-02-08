@@ -2804,12 +2804,12 @@ RECEIVING,
 # 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
 U8 radioCmd[16u];
 
-BIT radio_comm_GetResp(U8 byteCount, U8* pData);
-U8 radio_comm_PollCTS(void);
-void radio_comm_SendCmd(U8 byteCount, U8* pData);
-U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
-void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
-void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+U8 radio_comm_PollCTS( void );
+void radio_comm_SendCmd( U8 byteCount, U8* pData );
+U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
+void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
+void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
 
 # 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h"
 struct si4355_reply_GENERIC_map {
@@ -3007,37 +3007,30 @@ PATCH_FAIL,
 COMMAND_ERROR
 };
 
-U8 si4355_configuration_init(U8 * pSetPropCmd);
-
-void si4355_reset(void);
-void si4355_nop(void);
-void si4355_part_info(void);
-void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
-
-void si4355_func_info(void);
+U8 si4355_configuration_init( U8 * pSetPropCmd );
+void si4355_reset( void );
+void si4355_nop( void );
+void si4355_part_info( void );
+void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ );
+void si4355_func_info( void);
 void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
-void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
-void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
-void si4355_fifo_info(U8 FIFO);
-void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
-void si4355_ezconfig_check(U16 CHECKSUM);
-
-void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
-
-void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
-void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
-void si4355_request_device_state(void);
-void si4355_change_state(U8 NEXT_STATE1);
-void si4355_read_cmd_buff(void);
-void si4355_frr_a_read(U8 respByteCount);
-void si4355_frr_b_read(U8 respByteCount);
-void si4355_frr_c_read(U8 respByteCount);
-void si4355_frr_d_read(U8 respByteCount);
-
-void si4355_write_tx_fifo( U8 numBytes, U8* pData );
+void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP );
+void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG );
+void si4355_fifo_info( U8 FIFO);
+void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray );
+void si4355_ezconfig_check( U16 CHECKSUM);
+void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND );
+void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 );
+void si4355_request_device_state( void );
+void si4355_change_state( U8 NEXT_STATE1 );
+void si4355_read_cmd_buff( void );
+void si4355_frr_a_read( U8 respByteCount );
+void si4355_frr_b_read( U8 respByteCount );
+void si4355_frr_c_read( U8 respByteCount );
+void si4355_frr_d_read( U8 respByteCount );
 void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
 
-# 17 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h"
@@ -3051,41 +3044,41 @@ U8 SPI_ReadByte( void );
 union si4355_cmd_reply_union Si4355Cmd;
 U8 radioCmd[16u];
 
-U8 si4355_configuration_init(U8 * pSetPropCmd)
+U8 si4355_configuration_init( U8 * pSetPropCmd )
 {
 U8 col = 0;
 U8 numOfBytes = 0;
 
 
-while (*pSetPropCmd != 0x00)
+while ( *pSetPropCmd != 0x00 )
 {
 
 # 26
 numOfBytes = *pSetPropCmd++;
 
-if (numOfBytes > 16u)
+if ( numOfBytes > 16u )
 {
 
 return COMMAND_ERROR;
 }
 
-for (col = 0u; col < numOfBytes; col++)
+for ( col = 0u; col < numOfBytes; col++ )
 {
 radioCmd[col] = *pSetPropCmd;
 pSetPropCmd++;
 }
 
-if (radio_comm_SendCmdGetResp(numOfBytes, radioCmd, 0, 0) != 0xFF)
+if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
 {
 
 return CTS_TIMEOUT;
 }
 
-if (!RA3)
+if( !RA3 )
 {
 
-si4355_get_int_status(0, 0, 0);
-if (Si4355Cmd.GET_INT_STATUS.CHIP_PEND)
+si4355_get_int_status( 0u, 0u, 0u );
+if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )
 {
 return COMMAND_ERROR;
 }
@@ -3094,14 +3087,14 @@ return COMMAND_ERROR;
 return SUCCESS;
 }
 
-void si4355_reset(void)
+void si4355_reset( void )
 {
 
 
 }
 
 
-void si4355_nop(void)
+void si4355_nop( void )
 {
 radioCmd[0] = 0x00;
 
@@ -3109,7 +3102,7 @@ radio_comm_SendCmd( 1, radioCmd );
 }
 
 
-void si4355_part_info(void)
+void si4355_part_info( void )
 {
 radioCmd[0] = 0x01;
 
@@ -3130,21 +3123,21 @@ Si4355Cmd.PART_INFO.BOND = radioCmd[8];
 }
 
 
-void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ)
+void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ )
 {
 radioCmd[0] = 0x02;
 radioCmd[1] = BOOT_OPTIONS;
 radioCmd[2] = XTAL_OPTIONS;
-radioCmd[3] = (U8)(XO_FREQ >> 24);
-radioCmd[4] = (U8)(XO_FREQ >> 16);
-radioCmd[5] = (U8)(XO_FREQ >> 8);
-radioCmd[6] = (U8)(XO_FREQ);
+radioCmd[3] = ( U8 )( XO_FREQ >> 24 );
+radioCmd[4] = ( U8 )( XO_FREQ >> 16 );
+radioCmd[5] = ( U8 )( XO_FREQ >> 8 );
+radioCmd[6] = ( U8 )( XO_FREQ );
 
 radio_comm_SendCmd( 7, radioCmd );
 }
 
 
-void si4355_func_info(void)
+void si4355_func_info( void )
 {
 radioCmd[0] = 0x10;
 
@@ -3179,7 +3172,7 @@ radio_comm_SendCmd( cmdIndex, radioCmd );
 }
 
 
-void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP)
+void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP )
 {
 radioCmd[0] = 0x12;
 radioCmd[1] = GROUP;
@@ -3210,7 +3203,7 @@ Si4355Cmd.GET_PROPERTY.DATA15 = radioCmd[15];
 }
 
 
-void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG)
+void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG )
 {
 radioCmd[0] = 0x13;
 radioCmd[1] = GPIO0;
@@ -3235,7 +3228,7 @@ Si4355Cmd.GPIO_PIN_CFG.SDO = radioCmd[5];
 Si4355Cmd.GPIO_PIN_CFG.GEN_CONFIG = radioCmd[6];
 }
 
-void si4355_fifo_info(U8 FIFO)
+void si4355_fifo_info( U8 FIFO )
 {
 radioCmd[0] = 0x15;
 radioCmd[1] = FIFO;
@@ -3249,32 +3242,32 @@ Si4355Cmd.FIFO_INFO.RX_FIFO_COUNT = radioCmd[0];
 Si4355Cmd.FIFO_INFO.TX_FIFO_SPACE = radioCmd[1];
 }
 
-void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray)
+void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray )
 {
 
 }
 
-void si4355_ezconfig_check(U16 CHECKSUM)
+void si4355_ezconfig_check( U16 CHECKSUM )
 {
 
 
 RA5 = 0;
 
 
-SPI_WriteByte(0x19);
+SPI_WriteByte( 0x19 );
 
 
-SPI_WriteByte((U16) CHECKSUM >> 8u);
-SPI_WriteByte((U16) CHECKSUM & 0x00FF);
+SPI_WriteByte( ( U16 ) CHECKSUM >> 8u );
+SPI_WriteByte( ( U16 ) CHECKSUM & 0x00FF );
 
 RA5 = 1;
 
 
-radio_comm_GetResp(1u, radioCmd);
+radio_comm_GetResp( 1u, radioCmd );
 }
 
 
-void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND)
+void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND )
 {
 radioCmd[0] = 0x20;
 radioCmd[1] = PH_CLR_PEND;
@@ -3296,13 +3289,13 @@ Si4355Cmd.GET_INT_STATUS.CHIP_PEND = radioCmd[6];
 Si4355Cmd.GET_INT_STATUS.CHIP_STATUS = radioCmd[7];
 }
 
-void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3)
+void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 )
 {
 radioCmd[0] = 0x32;
 radioCmd[1] = CHANNEL;
 radioCmd[2] = CONDITION;
-radioCmd[3] = (U8)(RX_LEN >> 8);
-radioCmd[4] = (U8)(RX_LEN);
+radioCmd[3] = ( U8 )( RX_LEN >> 8 );
+radioCmd[4] = ( U8 )( RX_LEN );
 radioCmd[5] = NEXT_STATE1;
 radioCmd[6] = NEXT_STATE2;
 radioCmd[7] = NEXT_STATE3;
@@ -3325,7 +3318,7 @@ Si4355Cmd.REQUEST_DEVICE_STATE.CURRENT_CHANNEL = radioCmd[1];
 }
 
 
-void si4355_change_state(U8 NEXT_STATE1)
+void si4355_change_state( U8 NEXT_STATE1 )
 {
 radioCmd[0] = 0x34;
 radioCmd[1] = NEXT_STATE1;
@@ -3334,18 +3327,18 @@ radio_comm_SendCmd( 2, radioCmd );
 }
 
 
-void si4355_read_cmd_buff(void)
+void si4355_read_cmd_buff( void )
 {
 
 }
 
 
-void si4355_frr_a_read(U8 respByteCount)
+void si4355_frr_a_read( U8 respByteCount )
 {
-radio_comm_ReadData(0x50,
+radio_comm_ReadData( 0x50,
 0,
 respByteCount,
-radioCmd);
+radioCmd );
 
 Si4355Cmd.FRR_A_READ.FRR_A_VALUE = radioCmd[0];
 Si4355Cmd.FRR_A_READ.FRR_B_VALUE = radioCmd[1];
@@ -3354,12 +3347,12 @@ Si4355Cmd.FRR_A_READ.FRR_D_VALUE = radioCmd[3];
 }
 
 
-void si4355_frr_b_read(U8 respByteCount)
+void si4355_frr_b_read( U8 respByteCount )
 {
-radio_comm_ReadData(0x51,
+radio_comm_ReadData( 0x51,
 0,
 respByteCount,
-radioCmd);
+radioCmd );
 
 Si4355Cmd.FRR_B_READ.FRR_B_VALUE = radioCmd[0];
 Si4355Cmd.FRR_B_READ.FRR_C_VALUE = radioCmd[1];
@@ -3368,9 +3361,9 @@ Si4355Cmd.FRR_B_READ.FRR_A_VALUE = radioCmd[3];
 }
 
 
-void si4355_frr_c_read(U8 respByteCount)
+void si4355_frr_c_read( U8 respByteCount )
 {
-radio_comm_ReadData(0x53,
+radio_comm_ReadData( 0x53,
 0,
 respByteCount,
 radioCmd);
@@ -3382,12 +3375,12 @@ Si4355Cmd.FRR_C_READ.FRR_B_VALUE = radioCmd[3];
 }
 
 
-void si4355_frr_d_read(U8 respByteCount)
+void si4355_frr_d_read( U8 respByteCount )
 {
-radio_comm_ReadData(0x57,
+radio_comm_ReadData( 0x57,
 0,
 respByteCount,
-radioCmd);
+radioCmd );
 
 Si4355Cmd.FRR_D_READ.FRR_D_VALUE = radioCmd[0];
 Si4355Cmd.FRR_D_READ.FRR_A_VALUE = radioCmd[1];
@@ -3395,7 +3388,7 @@ Si4355Cmd.FRR_D_READ.FRR_B_VALUE = radioCmd[2];
 Si4355Cmd.FRR_D_READ.FRR_C_VALUE = radioCmd[3];
 }
 
-void si4355_read_rx_fifo(U8 numBytes, U8* pRxData)
+void si4355_read_rx_fifo( U8 numBytes, U8* pRxData )
 {
 radio_comm_ReadData( 0x77, 0, numBytes, pRxData );
 }

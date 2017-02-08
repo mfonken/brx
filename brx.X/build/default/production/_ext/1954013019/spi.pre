@@ -2846,7 +2846,7 @@ SPI_WriteByte( *data++ );
 void SPI_WriteByte( U8 data )
 {
 SSPBUF = data;
-while (!SSP1IF);
+while( !SSP1IF );
 data = SSPBUF;
 }
 
@@ -2862,8 +2862,8 @@ U8 SPI_ReadByte( void )
 {
 U8 data;
 SSPBUF = 0;
-while(!SSP1IF);
+while( !SSP1IF );
 data = SSPBUF;
-return data;
+return 1;
 }
 

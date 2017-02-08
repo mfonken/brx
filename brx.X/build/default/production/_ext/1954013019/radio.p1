@@ -5,16 +5,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 "39 C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h
 [s S261 `ul 1 `uc 1 `ui 1 ]
 [n S261 . ChipID Flags RollingCounter ]
-"20 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
+"19 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
 [v _si4355_reset `(v ~T0 @X0 0 ef ]
 "12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radio_comm_PollCTS `(uc ~T0 @X0 0 ef ]
-"31 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
-[c E2132 0 1 2 3 4 .. ]
-[n E2132 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
+"29 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+[c E2137 0 1 2 3 4 .. ]
+[n E2137 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
 "18 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
 [v _si4355_configuration_init `(uc ~T0 @X0 0 ef1`*uc ]
-"33
+"30
 [v _si4355_get_int_status `(v ~T0 @X0 0 ef3`uc`uc`uc ]
 "5129 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
 [v _RA3 `Vb ~T0 @X0 0 e@99 ]
@@ -74,11 +74,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S263 si4355_cmd_reply_union RAW GENERIC PART_INFO TEST_DATA FUNC_INFO GET_PROPERTY GPIO_PIN_CFG FIFO_INFO EZCONFIG_CHECK GET_INT_STATUS REQUEST_DEVICE_STATE READ_CMD_BUFF FRR_A_READ FRR_B_READ FRR_C_READ FRR_D_READ ]
 "4 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
 [v _Si4355Cmd `S263 ~T0 @X0 0 e ]
-"46
+"39
 [v _si4355_read_rx_fifo `(v ~T0 @X0 0 ef2`uc`*uc ]
-"36
-[v _si4355_start_rx `(v ~T0 @X0 0 ef6`uc`uc`ui`uc`uc`uc ]
 "31
+[v _si4355_start_rx `(v ~T0 @X0 0 ef6`uc`uc`ui`uc`uc`uc ]
+"29
 [v _si4355_ezconfig_check `(v ~T0 @X0 0 ef1`ui ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -2142,31 +2142,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 50: ARMED,
 [; ;types.h: 51: RECEIVING,
 [; ;types.h: 52: } states;
-[; ;config.h: 17: extern states STATE;
+[; ;config.h: 12: extern states STATE;
 [; ;radio.h: 10: typedef struct
 [; ;radio.h: 11: {
-[; ;radio.h: 12: U8 *Radio_ConfigurationArray;
-[; ;radio.h: 14: U8 Radio_ChannelNumber;
-[; ;radio.h: 15: U8 Radio_PacketLength;
-[; ;radio.h: 16: U8 Radio_State_After_Power_Up;
-[; ;radio.h: 18: U16 Radio_Delay_Cnt_After_Reset;
-[; ;radio.h: 19: } tRadioConfiguration;
-[; ;radio.h: 24: extern tRadioConfiguration *pRadioConfiguration;
-[; ;radio.h: 27: extern const U8 Radio_Configuration_Data_Array[];
-[; ;radio.h: 28: extern tRadioPacket RadioPacket;
-[; ;radio.h: 33: void Radio_Init(void);
-[; ;radio.h: 34: void Radio_SetChip();
-[; ;radio.h: 35: U8 Radio_CheckReceived(void);
-[; ;radio.h: 36: void Radio_StartRX(U8);
+[; ;radio.h: 12: U8 * Radio_ConfigurationArray;
+[; ;radio.h: 13: U8 Radio_ChannelNumber;
+[; ;radio.h: 14: U8 Radio_PacketLength;
+[; ;radio.h: 15: U8 Radio_State_After_Power_Up;
+[; ;radio.h: 16: U16 Radio_Delay_Cnt_After_Reset;
+[; ;radio.h: 17: } tRadioConfiguration;
+[; ;radio.h: 22: extern tRadioConfiguration * pRadioConfiguration;
+[; ;radio.h: 25: extern const U8 Radio_Configuration_Data_Array[];
+[; ;radio.h: 26: extern tRadioPacket RadioPacket;
+[; ;radio.h: 31: void Radio_Init( void );
+[; ;radio.h: 32: void Radio_SetChip( void );
+[; ;radio.h: 33: U8 Radio_CheckReceived( void );
+[; ;radio.h: 34: void Radio_StartRX( U8 );
+[; ;radio.h: 35: void Radio_PowerUp( void );
+[; ;radio.h: 36: U8 Radio_Check_Ezconfig( U16 crc );
 "9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radioCmd `uc ~T0 @X0 -> 16 `ui e ]
 [; ;comm.h: 9: U8 radioCmd[16u];
-[; ;comm.h: 11: BIT radio_comm_GetResp(U8 byteCount, U8* pData);
-[; ;comm.h: 12: U8 radio_comm_PollCTS(void);
-[; ;comm.h: 13: void radio_comm_SendCmd(U8 byteCount, U8* pData);
-[; ;comm.h: 14: U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
-[; ;comm.h: 15: void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
-[; ;comm.h: 16: void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+[; ;comm.h: 11: BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+[; ;comm.h: 12: U8 radio_comm_PollCTS( void );
+[; ;comm.h: 13: void radio_comm_SendCmd( U8 byteCount, U8* pData );
+[; ;comm.h: 14: U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
+[; ;comm.h: 15: void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
+[; ;comm.h: 16: void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
 [; ;si4355.h: 4: extern union si4355_cmd_reply_union Si4355Cmd;
 [; ;si4355.h: 5: extern U8 radioCmd[16];
 [; ;si4355.h: 9: enum
@@ -2177,30 +2179,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;si4355.h: 14: PATCH_FAIL,
 [; ;si4355.h: 15: COMMAND_ERROR
 [; ;si4355.h: 16: };
-[; ;si4355.h: 18: U8 si4355_configuration_init(U8 * pSetPropCmd);
-[; ;si4355.h: 20: void si4355_reset(void);
-[; ;si4355.h: 21: void si4355_nop(void);
-[; ;si4355.h: 22: void si4355_part_info(void);
-[; ;si4355.h: 23: void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
-[; ;si4355.h: 25: void si4355_func_info(void);
-[; ;si4355.h: 26: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
-[; ;si4355.h: 27: void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
-[; ;si4355.h: 28: void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
-[; ;si4355.h: 29: void si4355_fifo_info(U8 FIFO);
-[; ;si4355.h: 30: void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
-[; ;si4355.h: 31: void si4355_ezconfig_check(U16 CHECKSUM);
-[; ;si4355.h: 33: void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
-[; ;si4355.h: 35: void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
-[; ;si4355.h: 36: void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
-[; ;si4355.h: 37: void si4355_request_device_state(void);
-[; ;si4355.h: 38: void si4355_change_state(U8 NEXT_STATE1);
-[; ;si4355.h: 39: void si4355_read_cmd_buff(void);
-[; ;si4355.h: 40: void si4355_frr_a_read(U8 respByteCount);
-[; ;si4355.h: 41: void si4355_frr_b_read(U8 respByteCount);
-[; ;si4355.h: 42: void si4355_frr_c_read(U8 respByteCount);
-[; ;si4355.h: 43: void si4355_frr_d_read(U8 respByteCount);
-[; ;si4355.h: 45: void si4355_write_tx_fifo( U8 numBytes, U8* pData );
-[; ;si4355.h: 46: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
+[; ;si4355.h: 18: U8 si4355_configuration_init( U8 * pSetPropCmd );
+[; ;si4355.h: 19: void si4355_reset( void );
+[; ;si4355.h: 20: void si4355_nop( void );
+[; ;si4355.h: 21: void si4355_part_info( void );
+[; ;si4355.h: 22: void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ );
+[; ;si4355.h: 23: void si4355_func_info( void);
+[; ;si4355.h: 24: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
+[; ;si4355.h: 25: void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP );
+[; ;si4355.h: 26: void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG );
+[; ;si4355.h: 27: void si4355_fifo_info( U8 FIFO);
+[; ;si4355.h: 28: void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray );
+[; ;si4355.h: 29: void si4355_ezconfig_check( U16 CHECKSUM);
+[; ;si4355.h: 30: void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND );
+[; ;si4355.h: 31: void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 );
+[; ;si4355.h: 32: void si4355_request_device_state( void );
+[; ;si4355.h: 33: void si4355_change_state( U8 NEXT_STATE1 );
+[; ;si4355.h: 34: void si4355_read_cmd_buff( void );
+[; ;si4355.h: 35: void si4355_frr_a_read( U8 respByteCount );
+[; ;si4355.h: 36: void si4355_frr_b_read( U8 respByteCount );
+[; ;si4355.h: 37: void si4355_frr_c_read( U8 respByteCount );
+[; ;si4355.h: 38: void si4355_frr_d_read( U8 respByteCount );
+[; ;si4355.h: 39: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
 [; ;si4355_defs.h: 14: struct si4355_reply_GENERIC_map {
 [; ;si4355_defs.h: 15: U8 REPLY1;
 [; ;si4355_defs.h: 16: U8 REPLY2;
@@ -2667,25 +2667,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 "12
 [v _RadioPacket `S261 ~T0 @X0 1 e ]
 [; ;radio.c: 12: tRadioPacket RadioPacket;
-[; ;radio.c: 13: void Radio_PowerUp(void);
-[; ;radio.c: 14: U8 bRadio_Check_Ezconfig(U16);
-"16
+"14
 [v _Radio_PowerUp `(v ~T0 @X0 1 ef ]
-"17
+"15
 {
-[; ;radio.c: 16: void Radio_PowerUp(void)
-[; ;radio.c: 17: {
+[; ;radio.c: 14: void Radio_PowerUp( void )
+[; ;radio.c: 15: {
 [e :U _Radio_PowerUp ]
 [f ]
-"18
+"16
 [v _wDelay `ui ~T0 @X0 1 a ]
-[; ;radio.c: 18: U16 wDelay = 0u;
+[; ;radio.c: 16: U16 wDelay = 0u;
 [e = _wDelay -> 0 `ui ]
-[; ;radio.c: 20: si4355_reset();
-"20
+[; ;radio.c: 18: si4355_reset();
+"18
 [e ( _si4355_reset ..  ]
-[; ;radio.c: 21: for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
-"21
+[; ;radio.c: 19: for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
+"19
 {
 [e $U 283  ]
 [e :U 280 ]
@@ -2694,137 +2692,137 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < _wDelay . *U _pRadioConfiguration 4 280  ]
 [e :U 281 ]
 }
-[; ;radio.c: 22: radio_comm_PollCTS();
-"22
+[; ;radio.c: 20: radio_comm_PollCTS();
+"20
 [e ( _radio_comm_PollCTS ..  ]
-[; ;radio.c: 23: }
-"23
+[; ;radio.c: 21: }
+"21
 [e :UE 279 ]
 }
-"25
+"23
 [v _Radio_Init `(v ~T0 @X0 1 ef ]
-"26
+"24
 {
-[; ;radio.c: 25: void Radio_Init(void)
-[; ;radio.c: 26: {
+[; ;radio.c: 23: void Radio_Init( void )
+[; ;radio.c: 24: {
 [e :U _Radio_Init ]
 [f ]
-[; ;radio.c: 28: Radio_PowerUp();
-"28
+[; ;radio.c: 26: Radio_PowerUp();
+"26
 [e ( _Radio_PowerUp ..  ]
-[; ;radio.c: 31: while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
-"31
+[; ;radio.c: 29: while( SUCCESS != si4355_configuration_init( pRadioConfiguration->Radio_ConfigurationArray ) )
+"29
 [e $U 285  ]
 [e :U 286 ]
-[; ;radio.c: 32: {
-"32
+[; ;radio.c: 30: {
+"30
 {
-[; ;radio.c: 34: Radio_PowerUp();
-"34
+[; ;radio.c: 32: Radio_PowerUp();
+"32
 [e ( _Radio_PowerUp ..  ]
-"35
+"33
 }
 [e :U 285 ]
-"31
-[e $ != -> . `E2132 0 `i -> ( _si4355_configuration_init (1 . *U _pRadioConfiguration 0 `i 286  ]
+"29
+[e $ != -> . `E2137 0 `i -> ( _si4355_configuration_init (1 . *U _pRadioConfiguration 0 `i 286  ]
 [e :U 287 ]
-[; ;radio.c: 35: }
-[; ;radio.c: 38: si4355_get_int_status(0u, 0u, 0u);
-"38
+[; ;radio.c: 33: }
+[; ;radio.c: 36: si4355_get_int_status(0u, 0u, 0u);
+"36
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
-[; ;radio.c: 39: }
-"39
+[; ;radio.c: 37: }
+"37
 [e :UE 284 ]
 }
-"41
+"39
 [v _Radio_CheckReceived `(uc ~T0 @X0 1 ef ]
-"42
+"40
 {
-[; ;radio.c: 41: U8 Radio_CheckReceived(void)
-[; ;radio.c: 42: {
+[; ;radio.c: 39: U8 Radio_CheckReceived( void )
+[; ;radio.c: 40: {
 [e :U _Radio_CheckReceived ]
 [f ]
-[; ;radio.c: 43: if( !RA3 )
-"43
+[; ;radio.c: 41: if( !RA3 )
+"41
 [e $ ! ! _RA3 289  ]
-[; ;radio.c: 44: {
+[; ;radio.c: 42: {
+"42
+{
+[; ;radio.c: 44: si4355_get_int_status(0u, 0u, 0u);
 "44
-{
-[; ;radio.c: 46: si4355_get_int_status(0u, 0u, 0u);
-"46
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
-[; ;radio.c: 49: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
-"49
+[; ;radio.c: 47: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
+"47
 [e $ ! != & -> . . _Si4355Cmd 9 2 `i -> 16 `i -> 0 `i 290  ]
-[; ;radio.c: 50: {
-"50
+[; ;radio.c: 48: {
+"48
 {
-[; ;radio.c: 52: si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
-"52
+[; ;radio.c: 50: si4355_read_rx_fifo( sizeof( tRadioPacket ), ( U8 * ) &RadioPacket );
+"50
 [e ( _si4355_read_rx_fifo (2 , -> -> # `S261 `ui `uc -> &U _RadioPacket `*uc ]
-[; ;radio.c: 54: return 1;
-"54
+[; ;radio.c: 51: return 1;
+"51
 [e ) -> -> 1 `i `uc ]
 [e $UE 288  ]
-"55
+"52
 }
 [e :U 290 ]
-"56
+"53
 }
 [e :U 289 ]
-[; ;radio.c: 55: }
-[; ;radio.c: 56: }
-[; ;radio.c: 57: return 0;
-"57
+[; ;radio.c: 52: }
+[; ;radio.c: 53: }
+[; ;radio.c: 54: return 0;
+"54
 [e ) -> -> 0 `i `uc ]
 [e $UE 288  ]
-[; ;radio.c: 58: }
-"58
+[; ;radio.c: 55: }
+"55
 [e :UE 288 ]
 }
-"60
+"57
 [v _Radio_StartRX `(v ~T0 @X0 1 ef1`uc ]
-"61
+"58
 {
-[; ;radio.c: 60: void Radio_StartRX(U8 channel)
-[; ;radio.c: 61: {
+[; ;radio.c: 57: void Radio_StartRX( U8 channel )
+[; ;radio.c: 58: {
 [e :U _Radio_StartRX ]
-"60
+"57
 [v _channel `uc ~T0 @X0 1 r1 ]
-"61
+"58
 [f ]
-[; ;radio.c: 63: si4355_get_int_status(0u, 0u, 0u);
-"63
+[; ;radio.c: 60: si4355_get_int_status( 0u, 0u, 0u );
+"60
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
-[; ;radio.c: 66: si4355_start_rx(channel, 0u, 0u,
-[; ;radio.c: 67: 8,
-[; ;radio.c: 68: 1,
-[; ;radio.c: 69: 8 );
-"69
+[; ;radio.c: 63: si4355_start_rx( channel, 0u, 0u,
+[; ;radio.c: 64: 8,
+[; ;radio.c: 65: 1,
+[; ;radio.c: 66: 8 );
+"66
 [e ( _si4355_start_rx (4 , , , , , _channel -> -> 0 `ui `uc -> 0 `ui -> -> 8 `i `uc -> -> 1 `i `uc -> -> 8 `i `uc ]
-[; ;radio.c: 70: }
-"70
+[; ;radio.c: 67: }
+"67
 [e :UE 291 ]
 }
-"72
+"69
 [v _Radio_Check_Ezconfig `(uc ~T0 @X0 1 ef1`ui ]
-"73
+"70
 {
-[; ;radio.c: 72: U8 Radio_Check_Ezconfig(U16 crc)
-[; ;radio.c: 73: {
+[; ;radio.c: 69: U8 Radio_Check_Ezconfig( U16 crc )
+[; ;radio.c: 70: {
 [e :U _Radio_Check_Ezconfig ]
-"72
+"69
 [v _crc `ui ~T0 @X0 1 r1 ]
-"73
+"70
 [f ]
-[; ;radio.c: 74: si4355_ezconfig_check(crc);
-"74
+[; ;radio.c: 71: si4355_ezconfig_check( crc );
+"71
 [e ( _si4355_ezconfig_check (1 _crc ]
-[; ;radio.c: 76: return radioCmd[0u];
-"76
+[; ;radio.c: 73: return radioCmd[0u];
+"73
 [e ) *U + &U _radioCmd * -> -> 0 `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [e $UE 292  ]
-[; ;radio.c: 77: }
-"77
+[; ;radio.c: 74: }
+"74
 [e :UE 292 ]
 }

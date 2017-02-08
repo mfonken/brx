@@ -26,20 +26,20 @@ typedef union UU16
 
 typedef union UU32
 {
-    U32 U32;
-    S32 S32;
-    UU16 UU16[2];
-    U16 U16[2];
-    S16 S16[2];
-    U8 U8[4];
-    S8 S8[4];
+    U32     U32;
+    S32     S32;
+    UU16    UU16[2];
+    U16     U16[2];
+    S16     S16[2];
+    U8      U8[4];
+    S8      S8[4];
 } UU32;
 
 typedef struct
 {
-  U32         ChipID;
-  U8          Flags;          /* 4 bit - Buttons */
-  U16         RollingCounter;
+  U32       ChipID;
+  U8        Flags;          /* 4 bit - Buttons */
+  U16       RollingCounter;
 } tRadioPacket;
 
 typedef bool BIT;

@@ -5,19 +5,19 @@
 
 BIT ctsWentHigh = 0;
 
-BIT radio_comm_GetResp(U8 byteCount, U8* pData)
+BIT radio_comm_GetResp( U8 byteCount, U8* pData )
 {
     U16 errCnt = RADIO_CTS_TIMEOUT;
-    while (errCnt != 0)      //wait until radio IC is ready with the data
+    while( errCnt != 0 )      //wait until radio IC is ready with the data
     {
         SS_PIN = 0;
         SPI_WriteByte( 0x44 );    //read CMD buffer
         ctsWentHigh = SPI_ReadByte();
-        if(ctsWentHigh)
+        if( ctsWentHigh )
         {
-            if(byteCount)
+            if( byteCount )
             {
-                SPI_ReadBytes(byteCount, pData);
+                SPI_ReadBytes( byteCount, pData );
             }
             SS_PIN = 1;
             break;
@@ -28,13 +28,10 @@ BIT radio_comm_GetResp(U8 byteCount, U8* pData)
 
     if( errCnt == 0 )
     {
-        while(1)
-        {
-            /* ERROR!!!!  CTS should never take this long. */
-        }
+        return 0;
     }
 
-    if (ctsWentHigh)
+    if ( ctsWentHigh )
     {
         ctsWentHigh = 1;
     }
@@ -44,60 +41,60 @@ BIT radio_comm_GetResp(U8 byteCount, U8* pData)
 
 U8 radio_comm_PollCTS(void)
 {
-    return radio_comm_GetResp(0, 0);
+    return radio_comm_GetResp( 0, 0 );
 }
 
-void radio_comm_SendCmd(U8 byteCount, U8* pData)
+void radio_comm_SendCmd( U8 byteCount, U8* pData )
 {
     /* There was a bug in A1 hardware that will not handle 1 byte commands. 
        It was supposedly fixed in B0 but the fix didn't make it at the last minute, so here we go again */
-    if (byteCount == 1)
+    if ( byteCount == 1 )
         byteCount++;
 
-    while(!ctsWentHigh)
+    while( !ctsWentHigh )
     {
         radio_comm_PollCTS();
     }
     SS_PIN = 0;
-    SPI_WriteBytes(byteCount, pData);
+    SPI_WriteBytes( byteCount, pData );
     SS_PIN = 1;
     ctsWentHigh = 0;
 }
                    
-U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData)
+U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData )
 {
-    radio_comm_SendCmd(cmdByteCount, pCmdData);
-    return radio_comm_GetResp(respByteCount, pRespData);
+    radio_comm_SendCmd( cmdByteCount, pCmdData );
+    return radio_comm_GetResp( respByteCount, pRespData );
 }
 
-void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
+void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData )
 {
-    if(pollCts)
+    if( pollCts )
     {
-        while(!ctsWentHigh)
+        while( !ctsWentHigh )
         {
             radio_comm_PollCTS();
         }
     }
     SS_PIN = 0;
-    SPI_WriteByte(cmd);
-    SPI_ReadBytes(byteCount, pData);
+    SPI_WriteByte( cmd );
+    SPI_ReadBytes( byteCount, pData );
     SS_PIN = 1;
     ctsWentHigh = 0;
 }
 
-void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
+void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData )
 {
-    if(pollCts)
+    if( pollCts )
     {
-        while(!ctsWentHigh)
+        while( !ctsWentHigh )
         {
             radio_comm_PollCTS();
         }
     }
     SS_PIN = 0;
-    SPI_WriteByte(cmd);
-    SPI_WriteBytes(byteCount, pData);
+    SPI_WriteByte( cmd );
+    SPI_WriteBytes( byteCount, pData );
     SS_PIN = 1;
     ctsWentHigh = 0;
 }

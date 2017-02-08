@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.41\dat\en_msgs.txt -cs \
   -h+dist/default/production\brx.X.production.sym \
   --cmf=dist/default/production\brx.X.production.cmf -z -Q12LF1840 \
-  -oC:\Users\MATTHE~1\AppData\Local\Temp\sdpg.2 \
+  -oC:\Users\MATTHE~1\AppData\Local\Temp\s25g.2 \
   -Mdist/default/production/brx.X.production.map -E1 -ver=XC8 \
   -ASTACK=02046h-020efh -pstack=STACK -ACODE=00h-07FFhx2 \
   -ASTRCODE=00h-0FFFh -ASTRING=00h-0FFhx16 -ACONST=00h-0FFhx16 \
@@ -27,7 +27,7 @@ Linker command line:
   -pfunctab=CODE -ACONFIG=08007h-08008h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/0F000h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
-  -DENTRY=2 -k C:\Users\MATTHE~1\AppData\Local\Temp\sdpg.obj \
+  -DENTRY=2 -k C:\Users\MATTHE~1\AppData\Local\Temp\s25g.obj \
   dist/default/production\brx.X.production.obj 
 
 Object code version is 3.11
@@ -37,43 +37,43 @@ Machine type is 12LF1840
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\MATTHE~1\AppData\Local\Temp\sdpg.obj
+C:\Users\MATTHE~1\AppData\Local\Temp\s25g.obj
                 end_init                             19       19        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        2    1000E       0
 dist/default/production\brx.X.production.obj
                 cinit                                1B       1B       18        8       0
                 intentry                              4        4       15        8       0
-                text20                              386      386        D      28A       0
-                text19                              356      356       12      28A       0
-                text18                              393      393        C      28A       0
-                text17                              32F      32F       14      28A       0
-                text16                              1DE      1DE       37      28A       0
-                text15                              3B3      3B3        5      28A       0
-                text14                              2C8      2C8       1D      28A       0
-                text13                              343      343       13      28A       0
+                text20                              388      388        D      28A       0
+                text19                              358      358       12      28A       0
+                text18                              395      395        C      28A       0
+                text17                              331      331       14      28A       0
+                text16                              1DE      1DE       39      28A       0
+                text15                              3B5      3B5        5      28A       0
+                text14                              2CA      2CA       1D      28A       0
+                text13                              345      345       13      28A       0
                 text12                              19B      19B       43      28A       0
-                text11                              2AA      2AA       1E      28A       0
-                text10                              377      377        F      28A       0
-                text9                               318      318       17      28A       0
-                text8                               3B8      3B8        1      28A       0
-                text7                               28A      28A       20      28A       0
+                text11                              2AC      2AC       1E      28A       0
+                text10                              379      379        F      28A       0
+                text9                               31A      31A       17      28A       0
+                text8                               3BA      3BA        1      28A       0
+                text7                               28C      28C       20      28A       0
                 text6                               145      145       56      28A       0
-                text5                               300      300       18      28A       0
-                text4                               215      215       2A      28A       0
-                text3                               2E5      2E5       1B      28A       0
-                text2                               368      368        F      28A       0
-                text1                               267      267       23      28A       0
-                maintext                            23F      23F       28      28A       0
+                text5                               302      302       18      28A       0
+                text4                               217      217       2A      28A       0
+                text3                               2E7      2E7       1B      28A       0
+                text2                               36A      36A        F      28A       0
+                text1                               269      269       23      28A       0
+                maintext                            241      241       28      28A       0
                 cstackBANK0                          4B       4B       13       20       1
                 cstackCOMMON                         70       70        C       70       1
-                clrtext                             3AD      3AD        6      28A       0
-                inittext                            3A7      3A7        6      28A       0
+                clrtext                             3AF      3AF        6      28A       0
+                inittext                            3A9      3A9        6      28A       0
                 dataBANK0                            5E       5E        8       20       1
                 bssBANK0                             20       20       2B       20       1
                 bssCOMMON                            7C       7C        1       70       1
                 stringtext                           33       33      112       66       0
-                idataBANK0                          39F      39F        8      28A       0
+                idataBANK0                          3A1      3A1        8      28A       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -83,30 +83,30 @@ TOTAL           Name                               Link     Load   Length     Sp
                 cinit                                1B       1B       18         0
                 intentry                              4        4       15         0
                 reset_vec                             0        0        2         0
-                text20                              386      386        D         0
-                text19                              356      356       12         0
-                text18                              393      393        C         0
-                text17                              32F      32F       14         0
-                text16                              1DE      1DE       37         0
-                text15                              3B3      3B3        5         0
-                text14                              2C8      2C8       1D         0
-                text13                              343      343       13         0
+                text20                              388      388        D         0
+                text19                              358      358       12         0
+                text18                              395      395        C         0
+                text17                              331      331       14         0
+                text16                              1DE      1DE       39         0
+                text15                              3B5      3B5        5         0
+                text14                              2CA      2CA       1D         0
+                text13                              345      345       13         0
                 text12                              19B      19B       43         0
-                text11                              2AA      2AA       1E         0
-                text10                              377      377        F         0
-                text9                               318      318       17         0
-                text8                               3B8      3B8        1         0
-                text7                               28A      28A       20         0
+                text11                              2AC      2AC       1E         0
+                text10                              379      379        F         0
+                text9                               31A      31A       17         0
+                text8                               3BA      3BA        1         0
+                text7                               28C      28C       20         0
                 text6                               145      145       56         0
-                text5                               300      300       18         0
-                text4                               215      215       2A         0
-                text3                               2E5      2E5       1B         0
-                text2                               368      368        F         0
-                text1                               267      267       23         0
-                maintext                            23F      23F       28         0
-                clrtext                             3AD      3AD        6         0
-                inittext                            3A7      3A7        6         0
-                idataBANK0                          39F      39F        8         0
+                text5                               302      302       18         0
+                text4                               217      217       2A         0
+                text3                               2E7      2E7       1B         0
+                text2                               36A      36A        F         0
+                text1                               269      269       23         0
+                maintext                            241      241       28         0
+                clrtext                             3AF      3AF        6         0
+                inittext                            3A9      3A9        6         0
+                idataBANK0                          3A1      3A1        8         0
 
         CLASS   STRCODE        
                 stringtext                           33       33      112         0
@@ -275,7 +275,7 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
                 bssBANK0                       000020  000046  000066        20       1  BANK0       1
                 stringtext                     000033  000112  000145        66       0  STRCODE     2
                 cstackCOMMON                   000070  00000D  00007D        70       1  COMMON      1
-                text6                          000145  000274  0003B9       28A       0  CODE        2
+                text6                          000145  000276  0003BB       28A       0  CODE        2
                 config                         008007  000002  008009     1000E       0  CONFIG      2
 
 
@@ -287,13 +287,13 @@ UNUSED ADDRESS RANGES
         BANK2            00120-0016F              50           1
         BIGRAM           02000-020EF              F0           1
         CODE             00002-00003               2           2
-                         003B9-00FFF             447
+                         003BB-00FFF             445
         COMMON           0007D-0007D               1           1
         CONST            00002-00003               2           2
-                         003B9-00FFF             100
+                         003BB-00FFF             100
         EEDATA           0F000-0F0FF             100           2
         ENTRY            00002-00003               2           2
-                         003B9-00FFF             100
+                         003BB-00FFF             100
         IDLOC            08000-08003               4           2
         RAM              00066-0006F               A           1
                          000A0-000EF              50
@@ -332,9 +332,9 @@ UNUSED ADDRESS RANGES
         SFR9             00480-004EF              70           1
         STACK            02046-020EF              AA           1
         STRCODE          00002-00003               2           2
-                         003B9-00FFF             C47
+                         003BB-00FFF             C45
         STRING           00002-00003               2           2
-                         003B9-00FFF             100
+                         003BB-00FFF             100
 
                                   Symbol Table
 
@@ -355,18 +355,18 @@ _RA3                                    (abs)        00063
 _RA5                                    (abs)        00065
 _RadioConfiguration                     dataBANK0    0005F
 _RadioPacket                            bssBANK0     00044
-_Radio_CheckReceived                    text9        00318
+_Radio_CheckReceived                    text9        0031A
 _Radio_Configuration_Data_Array         stringtext   00033
-_Radio_Init                             text5        00300
-_Radio_PowerUp                          text7        0028A
-_Radio_StartRX                          text3        002E5
+_Radio_Init                             text5        00302
+_Radio_PowerUp                          text7        0028C
+_Radio_StartRX                          text3        002E7
 _SDOSEL                                 (abs)        008EE
 _SMP                                    (abs)        010A7
-_SPI_Init                               text2        00368
-_SPI_ReadByte                           text18       00393
-_SPI_ReadBytes                          text17       0032F
-_SPI_WriteByte                          text20       00386
-_SPI_WriteBytes                         text19       00356
+_SPI_Init                               text2        0036A
+_SPI_ReadByte                           text18       00395
+_SPI_ReadBytes                          text17       00331
+_SPI_WriteByte                          text20       00388
+_SPI_WriteBytes                         text19       00358
 _SSP1IF                                 (abs)        0008B
 _SSPBUF                                 (abs)        00211
 _SSPEN                                  (abs)        010AD
@@ -595,60 +595,60 @@ __S3                                    (abs)        00000
 ___int_sp                               stack        00000
 ___latbits                              (abs)        00001
 ___sp                                   stack        00000
-__end_of_Radio_CheckReceived            text9        0032F
+__end_of_Radio_CheckReceived            text9        00331
 __end_of_Radio_Configuration_Data_Array stringtext   00145
-__end_of_Radio_Init                     text5        00318
-__end_of_Radio_PowerUp                  text7        002AA
-__end_of_Radio_StartRX                  text3        00300
-__end_of_SPI_Init                       text2        00377
-__end_of_SPI_ReadByte                   text18       0039F
-__end_of_SPI_ReadBytes                  text17       00343
-__end_of_SPI_WriteByte                  text20       00393
-__end_of_SPI_WriteBytes                 text19       00368
+__end_of_Radio_Init                     text5        0031A
+__end_of_Radio_PowerUp                  text7        002AC
+__end_of_Radio_StartRX                  text3        00302
+__end_of_SPI_Init                       text2        00379
+__end_of_SPI_ReadByte                   text18       003A1
+__end_of_SPI_ReadBytes                  text17       00345
+__end_of_SPI_WriteByte                  text20       00395
+__end_of_SPI_WriteBytes                 text19       0036A
 __end_of_Timer0_ISR                     intentry     00019
 __end_of__initialization                cinit        0002F
-__end_of_main                           maintext     00267
-__end_of_radio_comm_GetResp             text16       00215
-__end_of_radio_comm_PollCTS             text15       003B8
-__end_of_radio_comm_ReadData            text11       002C8
-__end_of_radio_comm_SendCmd             text14       002E5
-__end_of_radio_comm_SendCmdGetResp      text13       00356
+__end_of_main                           maintext     00269
+__end_of_radio_comm_GetResp             text16       00217
+__end_of_radio_comm_PollCTS             text15       003BA
+__end_of_radio_comm_ReadData            text11       002CA
+__end_of_radio_comm_SendCmd             text14       002E7
+__end_of_radio_comm_SendCmdGetResp      text13       00358
 __end_of_si4355_configuration_init      text6        0019B
-__end_of_si4355_fifo_info               text1        0028A
+__end_of_si4355_fifo_info               text1        0028C
 __end_of_si4355_get_int_status          text12       001DE
-__end_of_si4355_read_rx_fifo            text10       00386
-__end_of_si4355_reset                   text8        003B9
-__end_of_si4355_start_rx                text4        0023F
+__end_of_si4355_read_rx_fifo            text10       00388
+__end_of_si4355_reset                   text8        003BB
+__end_of_si4355_start_rx                text4        00241
 __initialization                        cinit        0001B
 __pbssBANK0                             bssBANK0     00020
 __pbssCOMMON                            bssCOMMON    0007C
 __pcstackBANK0                          cstackBANK0  0004B
 __pcstackCOMMON                         cstackCOMMON 00070
 __pdataBANK0                            dataBANK0    0005E
-__pidataBANK0                           idataBANK0   0039F
+__pidataBANK0                           idataBANK0   003A1
 __pintentry                             intentry     00004
-__pmaintext                             maintext     0023F
+__pmaintext                             maintext     00241
 __pstringtext                           stringtext   00033
-__ptext1                                text1        00267
-__ptext10                               text10       00377
-__ptext11                               text11       002AA
+__ptext1                                text1        00269
+__ptext10                               text10       00379
+__ptext11                               text11       002AC
 __ptext12                               text12       0019B
-__ptext13                               text13       00343
-__ptext14                               text14       002C8
-__ptext15                               text15       003B3
+__ptext13                               text13       00345
+__ptext14                               text14       002CA
+__ptext15                               text15       003B5
 __ptext16                               text16       001DE
-__ptext17                               text17       0032F
-__ptext18                               text18       00393
-__ptext19                               text19       00356
-__ptext2                                text2        00368
-__ptext20                               text20       00386
-__ptext3                                text3        002E5
-__ptext4                                text4        00215
-__ptext5                                text5        00300
+__ptext17                               text17       00331
+__ptext18                               text18       00395
+__ptext19                               text19       00358
+__ptext2                                text2        0036A
+__ptext20                               text20       00388
+__ptext3                                text3        002E7
+__ptext4                                text4        00217
+__ptext5                                text5        00302
 __ptext6                                text6        00145
-__ptext7                                text7        0028A
-__ptext8                                text8        003B8
-__ptext9                                text9        00318
+__ptext7                                text7        0028C
+__ptext8                                text8        003BA
+__ptext9                                text9        0031A
 __size_of_Radio_CheckReceived           (abs)        00000
 __size_of_Radio_Init                    (abs)        00000
 __size_of_Radio_PowerUp                 (abs)        00000
@@ -673,24 +673,24 @@ __size_of_si4355_reset                  (abs)        00000
 __size_of_si4355_start_rx               (abs)        00000
 _counter                                bssBANK0     00030
 _ctsWentHigh                            bssCOMMON    0007C
-_main                                   maintext     0023F
+_main                                   maintext     00241
 _pRadioConfiguration                    dataBANK0    0005E
 _radioCmd                               bssBANK0     00034
 _radio_comm_GetResp                     text16       001DE
-_radio_comm_PollCTS                     text15       003B3
-_radio_comm_ReadData                    text11       002AA
-_radio_comm_SendCmd                     text14       002C8
-_radio_comm_SendCmdGetResp              text13       00343
+_radio_comm_PollCTS                     text15       003B5
+_radio_comm_ReadData                    text11       002AC
+_radio_comm_SendCmd                     text14       002CA
+_radio_comm_SendCmdGetResp              text13       00345
 _si4355_configuration_init              text6        00145
-_si4355_fifo_info                       text1        00267
+_si4355_fifo_info                       text1        00269
 _si4355_get_int_status                  text12       0019B
-_si4355_read_rx_fifo                    text10       00377
-_si4355_reset                           text8        003B8
-_si4355_start_rx                        text4        00215
+_si4355_read_rx_fifo                    text10       00379
+_si4355_reset                           text8        003BA
+_si4355_start_rx                        text4        00217
 btemp                                   (abs)        0007E
-clear_ram0                              clrtext      003AD
+clear_ram0                              clrtext      003AF
 end_of_initialization                   cinit        0002F
-init_ram                                inittext     003A7
+init_ram                                inittext     003A9
 int$flags                               (abs)        0007E
 intlevel0                               functab      00000
 intlevel1                               functab      00000
@@ -831,7 +831,7 @@ Total ram usage:        0 bytes
 
  *************** function _Radio_StartRX *****************
  Defined at:
-		line 60 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+		line 57 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
  Parameters:    Size  Location     Type
   channel         1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -897,7 +897,7 @@ Total ram usage:        8 bytes
 
  *************** function _Radio_Init *****************
  Defined at:
-		line 25 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+		line 23 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -962,7 +962,7 @@ Total ram usage:        5 bytes
 
  *************** function _Radio_PowerUp *****************
  Defined at:
-		line 16 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+		line 14 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1023,7 +1023,7 @@ Total ram usage:        0 bytes
 
  *************** function _Radio_CheckReceived *****************
  Defined at:
-		line 41 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+		line 39 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1086,7 +1086,7 @@ Total ram usage:        4 bytes
 
  *************** function _radio_comm_ReadData *****************
  Defined at:
-		line 73 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+		line 70 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
  Parameters:    Size  Location     Type
   cmd             1    wreg     unsigned char 
   pollCts         1    0[BANK0 ] unsigned char 
@@ -1161,7 +1161,7 @@ Total ram usage:        6 bytes
 
  *************** function _radio_comm_SendCmdGetResp *****************
  Defined at:
-		line 67 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+		line 64 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
  Parameters:    Size  Location     Type
   cmdByteCount    1    wreg     unsigned char 
   pCmdData        1    2[BANK0 ] PTR unsigned char 
@@ -1204,7 +1204,7 @@ Total ram usage:        5 bytes
 
  *************** function _radio_comm_SendCmd *****************
  Defined at:
-		line 50 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+		line 47 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
  Parameters:    Size  Location     Type
   byteCount       1    wreg     unsigned char 
   pData           1   11[COMMON] PTR unsigned char 
@@ -1242,7 +1242,7 @@ Total ram usage:        3 bytes
 
  *************** function _radio_comm_PollCTS *****************
  Defined at:
-		line 45 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+		line 42 in file "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1475,29 +1475,29 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c
-		_SPI_WriteByte 		CODE           	0386	0000	14
-		_SPI_Init      		CODE           	0368	0000	16
-		_SPI_ReadByte  		CODE           	0393	0000	13
-		_SPI_WriteBytes		CODE           	0356	0000	19
-		_SPI_ReadBytes 		CODE           	032F	0000	21
+		_SPI_WriteByte 		CODE           	0388	0000	14
+		_SPI_Init      		CODE           	036A	0000	16
+		_SPI_ReadByte  		CODE           	0395	0000	13
+		_SPI_WriteBytes		CODE           	0358	0000	19
+		_SPI_ReadBytes 		CODE           	0331	0000	21
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c estimated size: 83
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
-		_si4355_fifo_info		CODE           	0267	0000	36
-		_si4355_read_rx_fifo		CODE           	0377	0000	16
+		_si4355_fifo_info		CODE           	0269	0000	36
+		_si4355_read_rx_fifo		CODE           	0379	0000	16
 		_si4355_get_int_status		CODE           	019B	0000	68
-		_si4355_start_rx		CODE           	0215	0000	43
+		_si4355_start_rx		CODE           	0217	0000	43
 		_si4355_configuration_init		CODE           	0145	0000	87
-		_si4355_reset  		CODE           	03B8	0000	2
+		_si4355_reset  		CODE           	03BA	0000	2
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c estimated size: 252
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
-		_Radio_CheckReceived		CODE           	0318	0000	24
-		_Radio_PowerUp 		CODE           	028A	0000	33
-		_Radio_StartRX 		CODE           	02E5	0000	28
-		_Radio_Init    		CODE           	0300	0000	25
+		_Radio_CheckReceived		CODE           	031A	0000	24
+		_Radio_PowerUp 		CODE           	028C	0000	33
+		_Radio_StartRX 		CODE           	02E7	0000	28
+		_Radio_Init    		CODE           	0302	0000	25
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c estimated size: 110
 
@@ -1508,17 +1508,17 @@ shared
 shared estimated size: 296
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
-		_radio_comm_ReadData		CODE           	02AA	0000	31
-		_radio_comm_PollCTS		CODE           	03B3	0000	6
-		_radio_comm_SendCmdGetResp		CODE           	0343	0000	20
-		_radio_comm_GetResp		CODE           	01DE	0000	56
-		_radio_comm_SendCmd		CODE           	02C8	0000	30
+		_radio_comm_ReadData		CODE           	02AC	0000	31
+		_radio_comm_PollCTS		CODE           	03B5	0000	6
+		_radio_comm_SendCmdGetResp		CODE           	0345	0000	20
+		_radio_comm_GetResp		CODE           	01DE	0000	58
+		_radio_comm_SendCmd		CODE           	02CA	0000	30
 
-C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c estimated size: 143
+C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c estimated size: 145
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c
 		_Timer0_ISR    		CODE           	0004	0000	22
-		_main          		CODE           	023F	0000	41
+		_main          		CODE           	0241	0000	41
 
 C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c estimated size: 63
 

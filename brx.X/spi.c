@@ -37,7 +37,7 @@ void SPI_WriteBytes( U8 len, U8 * data )
 void SPI_WriteByte( U8 data )
 {   
     SSPBUF = data; 
-    while (!SSP1IF);  //wait for transmission complete 
+    while( !SSP1IF );  //wait for transmission complete 
     data = SSPBUF; 
 }
 
@@ -53,9 +53,9 @@ U8 SPI_ReadByte( void )
 {   
     U8 data;
 	SSPBUF = 0;				// write out to buffer
-    while(!SSP1IF);				// wait for flag
+    while( !SSP1IF );				// wait for flag
     data = SSPBUF;
-    return data;
+    return 1;
 }
 
 

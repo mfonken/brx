@@ -2801,43 +2801,43 @@ ARMED,
 RECEIVING,
 } states;
 
-# 17 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h"
 typedef struct
 {
-U8 *Radio_ConfigurationArray;
-
+U8 * Radio_ConfigurationArray;
 U8 Radio_ChannelNumber;
 U8 Radio_PacketLength;
 U8 Radio_State_After_Power_Up;
-
 U16 Radio_Delay_Cnt_After_Reset;
 } tRadioConfiguration;
 
-# 24
-extern tRadioConfiguration *pRadioConfiguration;
+# 22
+extern tRadioConfiguration * pRadioConfiguration;
 
 
 extern const U8 Radio_Configuration_Data_Array[];
 extern tRadioPacket RadioPacket;
 
-# 33
-void Radio_Init(void);
-void Radio_SetChip();
-U8 Radio_CheckReceived(void);
-void Radio_StartRX(U8);
+# 31
+void Radio_Init( void );
+void Radio_SetChip( void );
+U8 Radio_CheckReceived( void );
+void Radio_StartRX( U8 );
+void Radio_PowerUp( void );
+U8 Radio_Check_Ezconfig( U16 crc );
 
 # 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
 U8 radioCmd[16u];
 
-BIT radio_comm_GetResp(U8 byteCount, U8* pData);
-U8 radio_comm_PollCTS(void);
-void radio_comm_SendCmd(U8 byteCount, U8* pData);
-U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
-void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
-void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+U8 radio_comm_PollCTS( void );
+void radio_comm_SendCmd( U8 byteCount, U8* pData );
+U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
+void radio_comm_ReadData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
+void radio_comm_WriteData( U8 cmd, BIT pollCts, U8 byteCount, U8* pData );
 
 # 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h"
 extern union si4355_cmd_reply_union Si4355Cmd;
@@ -2854,34 +2854,27 @@ PATCH_FAIL,
 COMMAND_ERROR
 };
 
-U8 si4355_configuration_init(U8 * pSetPropCmd);
-
-void si4355_reset(void);
-void si4355_nop(void);
-void si4355_part_info(void);
-void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
-
-void si4355_func_info(void);
+U8 si4355_configuration_init( U8 * pSetPropCmd );
+void si4355_reset( void );
+void si4355_nop( void );
+void si4355_part_info( void );
+void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ );
+void si4355_func_info( void);
 void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
-void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
-void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
-void si4355_fifo_info(U8 FIFO);
-void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
-void si4355_ezconfig_check(U16 CHECKSUM);
-
-void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
-
-void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
-void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
-void si4355_request_device_state(void);
-void si4355_change_state(U8 NEXT_STATE1);
-void si4355_read_cmd_buff(void);
-void si4355_frr_a_read(U8 respByteCount);
-void si4355_frr_b_read(U8 respByteCount);
-void si4355_frr_c_read(U8 respByteCount);
-void si4355_frr_d_read(U8 respByteCount);
-
-void si4355_write_tx_fifo( U8 numBytes, U8* pData );
+void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP );
+void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG );
+void si4355_fifo_info( U8 FIFO);
+void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray );
+void si4355_ezconfig_check( U16 CHECKSUM);
+void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND );
+void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 );
+void si4355_request_device_state( void );
+void si4355_change_state( U8 NEXT_STATE1 );
+void si4355_read_cmd_buff( void );
+void si4355_frr_a_read( U8 respByteCount );
+void si4355_frr_b_read( U8 respByteCount );
+void si4355_frr_c_read( U8 respByteCount );
+void si4355_frr_d_read( U8 respByteCount );
 void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
 
 # 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h"
@@ -3070,25 +3063,23 @@ U8 const Radio_Configuration_Data_Array[] = { 0x07, 0x02, 0x01, 0x00, 0x01, 0xC9
 tRadioConfiguration RadioConfiguration = { Radio_Configuration_Data_Array, 0x00, 0x07, 0x03, 0xF000 };
 tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 tRadioPacket RadioPacket;
-void Radio_PowerUp(void);
-U8 bRadio_Check_Ezconfig(U16);
 
-void Radio_PowerUp(void)
+void Radio_PowerUp( void )
 {
 U16 wDelay = 0u;
 
 si4355_reset();
-for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
+for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
 radio_comm_PollCTS();
 }
 
-void Radio_Init(void)
+void Radio_Init( void )
 {
 
 Radio_PowerUp();
 
 
-while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
+while( SUCCESS != si4355_configuration_init( pRadioConfiguration->Radio_ConfigurationArray ) )
 {
 
 Radio_PowerUp();
@@ -3098,7 +3089,7 @@ Radio_PowerUp();
 si4355_get_int_status(0u, 0u, 0u);
 }
 
-U8 Radio_CheckReceived(void)
+U8 Radio_CheckReceived( void )
 {
 if( !RA3 )
 {
@@ -3109,29 +3100,28 @@ si4355_get_int_status(0u, 0u, 0u);
 if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
 {
 
-si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
-
+si4355_read_rx_fifo( sizeof( tRadioPacket ), ( U8 * ) &RadioPacket );
 return 1;
 }
 }
 return 0;
 }
 
-void Radio_StartRX(U8 channel)
+void Radio_StartRX( U8 channel )
 {
 
-si4355_get_int_status(0u, 0u, 0u);
+si4355_get_int_status( 0u, 0u, 0u );
 
 
-si4355_start_rx(channel, 0u, 0u,
+si4355_start_rx( channel, 0u, 0u,
 8,
 1,
 8 );
 }
 
-U8 Radio_Check_Ezconfig(U16 crc)
+U8 Radio_Check_Ezconfig( U16 crc )
 {
-si4355_ezconfig_check(crc);
+si4355_ezconfig_check( crc );
 
 return radioCmd[0u];
 }

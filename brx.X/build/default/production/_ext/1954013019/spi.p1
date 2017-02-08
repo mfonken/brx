@@ -2189,7 +2189,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi.c: 39: SSPBUF = data;
 "39
 [e = _SSPBUF _data ]
-[; ;spi.c: 40: while (!SSP1IF);
+[; ;spi.c: 40: while( !SSP1IF );
 "40
 [e $U 268  ]
 [e :U 269 ]
@@ -2250,7 +2250,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi.c: 55: SSPBUF = 0;
 "55
 [e = _SSPBUF -> -> 0 `i `uc ]
-[; ;spi.c: 56: while(!SSP1IF);
+[; ;spi.c: 56: while( !SSP1IF );
 "56
 [e $U 276  ]
 [e :U 277 ]
@@ -2260,9 +2260,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi.c: 57: data = SSPBUF;
 "57
 [e = _data _SSPBUF ]
-[; ;spi.c: 58: return data;
+[; ;spi.c: 58: return 1;
 "58
-[e ) _data ]
+[e ) -> -> 1 `i `uc ]
 [e $UE 275  ]
 [; ;spi.c: 59: }
 "59
