@@ -39,7 +39,7 @@ U8 si4355_configuration_init( U8 * pSetPropCmd )
 
     if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
     {
-      /* Timeout occured */
+      /* Timeout occurred */
       return CTS_TIMEOUT;
     }
 
