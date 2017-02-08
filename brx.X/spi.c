@@ -41,7 +41,7 @@ void SPI_WriteBytes( U8 len, U8 * data )
     }
 }
 
-void SPI_WriteByte( U8 data)
+void SPI_WriteByte( U8 data )
 {   
     SSPBUF = data; 
     while (!SSP1IF);  //wait for transmission complete 
@@ -125,7 +125,7 @@ void Comm_IF_Spi1WriteBitsBitbang(U8 data_in, U8 nmbr_bit)
         {
             MCU_MOSI = FALSE;
         }
-        /* clock pulse to sample */
+        / * clock pulse to sample * /
         MCU_SCK = TRUE;
         lMask >>= 1u;
     }

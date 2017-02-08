@@ -1,0 +1,1 @@
+ build/default/production/_ext/1605507550/comm.d  build/default/production/_ext/1605507550/comm.p1:  C:/Users/Matthew\ Fonken/MPLABXProjects/brx.X/comm.c C:/Users/Matthew\ Fonken/MPLABXProjects/brx.X/types.h C:/Users/Matthew\ Fonken/MPLABXProjects/brx.X/comm.h

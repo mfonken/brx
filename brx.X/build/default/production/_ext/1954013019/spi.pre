@@ -1,5 +1,5 @@
 
-# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 1 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -2753,106 +2753,63 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdint.h"
-typedef signed char int8_t;
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdbool.h"
+typedef unsigned char bool;
 
-# 20
-typedef signed int int16_t;
-
-# 28
-typedef signed short long int int24_t;
-
-# 36
-typedef signed long int int32_t;
-
-# 43
-typedef unsigned char uint8_t;
-
-# 49
-typedef unsigned int uint16_t;
-
-# 56
-typedef unsigned short long int uint24_t;
-
-# 63
-typedef unsigned long int uint32_t;
-
-# 71
-typedef signed char int_least8_t;
-
-# 78
-typedef signed int int_least16_t;
-
-# 90
-typedef signed short long int int_least24_t;
-
-# 98
-typedef signed long int int_least32_t;
-
-# 105
-typedef unsigned char uint_least8_t;
-
-# 111
-typedef unsigned int uint_least16_t;
-
-# 121
-typedef unsigned short long int uint_least24_t;
-
-# 128
-typedef unsigned long int uint_least32_t;
-
-# 137
-typedef signed char int_fast8_t;
-
-# 144
-typedef signed int int_fast16_t;
-
-# 156
-typedef signed short long int int_fast24_t;
-
-# 164
-typedef signed long int int_fast32_t;
-
-# 171
-typedef unsigned char uint_fast8_t;
-
-# 177
-typedef unsigned int uint_fast16_t;
-
-# 187
-typedef unsigned short long int uint_fast24_t;
-
-# 194
-typedef unsigned long int uint_fast32_t;
-
-# 200
-typedef int32_t intmax_t;
-
-
-
-
-typedef uint32_t uintmax_t;
-
-
-
-
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-
-# 37 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/types.h"
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h"
 typedef unsigned char U8;
+typedef unsigned char U8;
+typedef unsigned int U16;
+typedef unsigned long U32;
+
+typedef signed char S8;
+typedef signed int S16;
+typedef signed long S32;
+
+typedef union UU16
+{
+U16 U16;
+S16 S16;
+U8 U8[2];
+S8 S8[2];
+} UU16;
+
+typedef union UU32
+{
+U32 U32;
+S32 S32;
+UU16 UU16[2];
+U16 U16[2];
+S16 S16[2];
+U8 U8[4];
+S8 S8[4];
+} UU32;
+
+typedef struct
+{
+U32 ChipID;
+U8 Flags;
+U16 RollingCounter;
+} tRadioPacket;
+
 typedef bool BIT;
 
-# 15 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h"
-void SPI_Init( void );
-void SPI_Write(unsigned char data);
-unsigned char SPI_Read( void );
+typedef enum
+{
+STARTUP,
+ARMED,
+RECEIVING,
+} states;
 
-# 3 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h"
+void SPI_Init( void );
+void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata );
+void SPI_WriteBytes( U8 len, U8 * data );
+void SPI_WriteByte( U8 data );
+void SPI_ReadBytes( U8 len, U8 * data );
+U8 SPI_ReadByte( void );
+
+# 3 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
 U8 dummy;
 
 void SPI_Init( void )
@@ -2879,18 +2836,42 @@ SSPM3 = 0;
 SSPEN = 1;
 }
 
-void SPI_Write(unsigned char data)
+
+void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata )
+{
+SPI_WriteBytes( wlen, wdata );
+SPI_ReadBytes( rlen, rdata );
+}
+
+void SPI_WriteBytes( U8 len, U8 * data )
+{
+while( len-- )
+{
+SPI_WriteByte( *data++ );
+}
+}
+
+void SPI_WriteByte( U8 data )
 {
 SSPBUF = data;
 while (!SSP1IF);
 data = SSPBUF;
 }
 
-unsigned char SPI_Read( void )
+void SPI_ReadBytes( U8 len, U8 * data )
 {
-unsigned char data;
+while( len-- )
+{
+*data++ = SPI_ReadByte();
+}
+}
+
+U8 SPI_ReadByte( void )
+{
+U8 data;
 SSPBUF = 0;
-while(!BF);
+while(!SSP1IF);
 data = SSPBUF;
 return data;
 }
+

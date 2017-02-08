@@ -1,5 +1,5 @@
 
-# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/comm.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -2847,50 +2847,124 @@ typedef uint16_t uintptr_t;
 typedef unsigned char U8;
 typedef bool BIT;
 
-# 15 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h"
-void SPI_Init( void );
-void SPI_Write(unsigned char data);
-unsigned char SPI_Read( void );
+# 7 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/comm.h"
+extern SEGMENT_VARIABLE(radioCmd[16u], U8, SEG_XDATA);
 
-# 3 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
-U8 dummy;
+U8 radio_comm_GetResp(U8 byteCount, U8* pData);
+U8 radio_comm_PollCTS(void);
+void radio_comm_SendCmd(U8 byteCount, U8* pData);
+U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
+void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
 
-void SPI_Init( void )
+# 4 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/comm.c"
+BIT ctsWentHigh = 0;
+
+# 14
+U8 radio_comm_GetResp(U8 byteCount, U8* pData)
 {
+SEGMENT_VARIABLE(ctsVal = 0, U8, SEG_DATA);
+SEGMENT_VARIABLE(errCnt = 5000, U16, SEG_DATA);
 
-SSPEN = 0;
-
-SDOSEL = 1;
-SSSEL = 0;
-
-SMP = 0;
-
-CKE = 0;
-
-CKP = 0;
-
-SSPM0 = 0;
-SSPM1 = 0;
-SSPM2 = 0;
-SSPM3 = 0;
-
-
-
-SSPEN = 1;
+while (errCnt != 0)
+{
+radio_hal_ClearNsel();
+radio_hal_SpiWriteByte(0x44);
+ctsVal = radio_hal_SpiReadByte();
+if(ctsVal == 0xFF)
+{
+if(byteCount)
+{
+radio_hal_SpiReadData(byteCount, pData);
+}
+radio_hal_SetNsel();
+break;
+}
+radio_hal_SetNsel();
+errCnt--;
 }
 
-void SPI_Write(unsigned char data)
+if( errCnt == 0 )
 {
-SSPBUF = data;
-while (!SSP1IF);
-data = SSPBUF;
+while(1)
+{
+
+}
 }
 
-unsigned char SPI_Read( void )
+if (ctsVal == 0xFF)
 {
-unsigned char data;
-SSPBUF = 0;
-while(!BF);
-data = SSPBUF;
-return data;
+ctsWentHigh = 1;
 }
+
+return ctsVal;
+}
+
+# 60
+U8 radio_comm_PollCTS(void)
+{
+
+# 70
+return radio_comm_GetResp(0, 0);
+
+}
+
+# 80
+void radio_comm_SendCmd(U8 byteCount, U8* pData)
+{
+
+# 84
+if (byteCount == 1)
+byteCount++;
+
+while(!ctsWentHigh)
+{
+radio_comm_PollCTS();
+}
+radio_hal_ClearNsel();
+radio_hal_SpiWriteData(byteCount, pData);
+radio_hal_SetNsel();
+ctsWentHigh = 0;
+}
+
+# 107
+U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData)
+{
+radio_comm_SendCmd(cmdByteCount, pCmdData);
+return radio_comm_GetResp(respByteCount, pRespData);
+}
+
+# 122
+void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
+{
+if(pollCts)
+{
+while(!ctsWentHigh)
+{
+radio_comm_PollCTS();
+}
+}
+radio_hal_ClearNsel();
+radio_hal_SpiWriteByte(cmd);
+radio_hal_SpiReadData(byteCount, pData);
+radio_hal_SetNsel();
+ctsWentHigh = 0;
+}
+
+# 147
+void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
+{
+if(pollCts)
+{
+while(!ctsWentHigh)
+{
+radio_comm_PollCTS();
+}
+}
+radio_hal_ClearNsel();
+radio_hal_SpiWriteByte(cmd);
+radio_hal_SpiWriteData(byteCount, pData);
+radio_hal_SetNsel();
+ctsWentHigh = 0;
+}
+

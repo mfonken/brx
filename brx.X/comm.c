@@ -1,28 +1,28 @@
 #include "types.h"
-#include "radio_hal.h"
 #include "comm.h"
 #include "spi.h"
+#include "config.h"
 
 BIT ctsWentHigh = 0;
 
-U8 radio_comm_GetResp(U8 byteCount, U8* pData)
+BIT radio_comm_GetResp(U8 byteCount, U8* pData)
 {
     U16 errCnt = RADIO_CTS_TIMEOUT;
     while (errCnt != 0)      //wait until radio IC is ready with the data
     {
-        SS = 0;
-        SPI_WriteByte(0x44);    //read CMD buffer
-        ctsVal = SPI_ReadByte(();
-        if(ctsVal == 0xFF)
+        SS_PIN = 0;
+        SPI_WriteByte( 0x44 );    //read CMD buffer
+        ctsWentHigh = SPI_ReadByte();
+        if(ctsWentHigh)
         {
             if(byteCount)
             {
                 SPI_ReadBytes(byteCount, pData);
             }
-            SS = 1;
+            SS_PIN = 1;
             break;
         }
-        SS = 1;
+        SS_PIN = 1;
         errCnt--;
     }
 
@@ -34,12 +34,12 @@ U8 radio_comm_GetResp(U8 byteCount, U8* pData)
         }
     }
 
-    if (ctsVal == 0xFF)
+    if (ctsWentHigh)
     {
         ctsWentHigh = 1;
     }
 
-    return ctsVal;
+    return ctsWentHigh;
 }
 
 U8 radio_comm_PollCTS(void)
@@ -58,9 +58,9 @@ void radio_comm_SendCmd(U8 byteCount, U8* pData)
     {
         radio_comm_PollCTS();
     }
-    SS = 0;
-    SPI_WriteBytes((byteCount, pData);
-    SS = 1;
+    SS_PIN = 0;
+    SPI_WriteBytes(byteCount, pData);
+    SS_PIN = 1;
     ctsWentHigh = 0;
 }
                    
@@ -79,10 +79,10 @@ void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
             radio_comm_PollCTS();
         }
     }
-    SS = 0;
+    SS_PIN = 0;
     SPI_WriteByte(cmd);
     SPI_ReadBytes(byteCount, pData);
-    SS = 1;
+    SS_PIN = 1;
     ctsWentHigh = 0;
 }
 
@@ -95,10 +95,10 @@ void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData)
             radio_comm_PollCTS();
         }
     }
-    SS = 0;
+    SS_PIN = 0;
     SPI_WriteByte(cmd);
-    SPI_WriteBytes((byteCount, pData);
-    SS = 1;
+    SPI_WriteBytes(byteCount, pData);
+    SS_PIN = 1;
     ctsWentHigh = 0;
 }
 

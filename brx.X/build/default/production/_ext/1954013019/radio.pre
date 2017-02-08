@@ -1,5 +1,5 @@
 
-# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 1 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -2753,144 +2753,474 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdint.h"
-typedef signed char int8_t;
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdbool.h"
+typedef unsigned char bool;
 
-# 20
-typedef signed int int16_t;
-
-# 28
-typedef signed short long int int24_t;
-
-# 36
-typedef signed long int int32_t;
-
-# 43
-typedef unsigned char uint8_t;
-
-# 49
-typedef unsigned int uint16_t;
-
-# 56
-typedef unsigned short long int uint24_t;
-
-# 63
-typedef unsigned long int uint32_t;
-
-# 71
-typedef signed char int_least8_t;
-
-# 78
-typedef signed int int_least16_t;
-
-# 90
-typedef signed short long int int_least24_t;
-
-# 98
-typedef signed long int int_least32_t;
-
-# 105
-typedef unsigned char uint_least8_t;
-
-# 111
-typedef unsigned int uint_least16_t;
-
-# 121
-typedef unsigned short long int uint_least24_t;
-
-# 128
-typedef unsigned long int uint_least32_t;
-
-# 137
-typedef signed char int_fast8_t;
-
-# 144
-typedef signed int int_fast16_t;
-
-# 156
-typedef signed short long int int_fast24_t;
-
-# 164
-typedef signed long int int_fast32_t;
-
-# 171
-typedef unsigned char uint_fast8_t;
-
-# 177
-typedef unsigned int uint_fast16_t;
-
-# 187
-typedef unsigned short long int uint_fast24_t;
-
-# 194
-typedef unsigned long int uint_fast32_t;
-
-# 200
-typedef int32_t intmax_t;
-
-
-
-
-typedef uint32_t uintmax_t;
-
-
-
-
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-
-# 37 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/types.h"
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h"
 typedef unsigned char U8;
+typedef unsigned char U8;
+typedef unsigned int U16;
+typedef unsigned long U32;
+
+typedef signed char S8;
+typedef signed int S16;
+typedef signed long S32;
+
+typedef union UU16
+{
+U16 U16;
+S16 S16;
+U8 U8[2];
+S8 S8[2];
+} UU16;
+
+typedef union UU32
+{
+U32 U32;
+S32 S32;
+UU16 UU16[2];
+U16 U16[2];
+S16 S16[2];
+U8 U8[4];
+S8 S8[4];
+} UU32;
+
+typedef struct
+{
+U32 ChipID;
+U8 Flags;
+U16 RollingCounter;
+} tRadioPacket;
+
 typedef bool BIT;
 
-# 15 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h"
-void SPI_Init( void );
-void SPI_Write(unsigned char data);
-unsigned char SPI_Read( void );
-
-# 3 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
-U8 dummy;
-
-void SPI_Init( void )
+typedef enum
 {
+STARTUP,
+ARMED,
+RECEIVING,
+} states;
 
-SSPEN = 0;
+# 17 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+extern states STATE;
 
-SDOSEL = 1;
-SSSEL = 0;
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h"
+typedef struct
+{
+U8 Radio_Configuration[202u];
+U16 Radio_Configuration_CRC;
 
-SMP = 0;
+U8 Radio_BOOT_OPTIONS;
+U8 Radio_XTAL_OPTIONS;
+U32 Radio_XO_FREQ;
 
-CKE = 0;
+U8 Radio_INT_CTL_ENABLE;
+U8 Radio_INT_CTL_PH_ENABLE;
+U8 Radio_INT_CTL_MODEM_ENABLE;
+U8 Radio_INT_CTL_CHIP_ENABLE;
 
-CKP = 0;
+U8 Radio_FRR_CTL_A_MODE;
+U8 Radio_FRR_CTL_B_MODE;
+U8 Radio_FRR_CTL_C_MODE;
+U8 Radio_FRR_CTL_D_MODE;
 
-SSPM0 = 0;
-SSPM1 = 0;
-SSPM2 = 0;
-SSPM3 = 0;
+U8 Radio_SYNC_BITS_31_24;
+U8 Radio_SYNC_BITS_23_16;
+
+U8 Radio_PA_PWR_LVL;
+
+U8 Radio_EZCONFIG_MODULATION;
+U8 Radio_EZCONFIG_XO_TUNE;
+
+U8 Radio_FREQ_CONTROL_INTE;
+U8 Radio_FREQ_CONTROL_FRAC_2;
+U8 Radio_FREQ_CONTROL_FRAC_1;
+U8 Radio_FREQ_CONTROL_FRAC_0;
+
+U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_1;
+U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_0;
+
+U8 Radio_GPIO0_PIN_CFG;
+U8 Radio_GPIO1_PIN_CFG;
+U8 Radio_GPIO2_PIN_CFG;
+U8 Radio_GPIO3_PIN_CFG;
+U8 Radio_GPIO_NIRQ_MODE;
+U8 Radio_GPIO_SDO_MODE;
+U8 Radio_GPIO_GEN_CONFIG;
+
+U8 Radio_Mode_After_Power_Up;
+
+U16 Radio_Delay_Cnt_After_Reset;
+} tEzConfigArray;
+
+extern tEzConfigArray config;
+extern tRadioPacket RadioPacket;
+
+# 64
+void Radio_Init(void);
+void Radio_SetChip();
+U8 Radio_CheckReceived(void);
+void Radio_StartRX(U8);
+
+# 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
+U8 radioCmd[16u];
+
+BIT radio_comm_GetResp(U8 byteCount, U8* pData);
+U8 radio_comm_PollCTS(void);
+void radio_comm_SendCmd(U8 byteCount, U8* pData);
+U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
+void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+
+# 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h"
+extern union si4355_cmd_reply_union Si4355Cmd;
+extern U8 radioCmd[16];
 
 
 
-SSPEN = 1;
+enum
+{
+SI4355_SUCCESS,
+SI4355_NO_PATCH,
+SI4355_CTS_TIMEOUT,
+SI4355_PATCH_FAIL,
+SI4355_COMMAND_ERROR
+};
+
+
+void si4355_reset(void);
+void si4355_nop(void);
+void si4355_part_info(void);
+void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
+
+void si4355_func_info(void);
+void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
+void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
+void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
+void si4355_fifo_info(U8 FIFO);
+void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
+void si4355_ezconfig_check(U16 CHECKSUM);
+
+void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
+
+void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
+void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
+void si4355_request_device_state(void);
+void si4355_change_state(U8 NEXT_STATE1);
+void si4355_read_cmd_buff(void);
+void si4355_frr_a_read(U8 respByteCount);
+void si4355_frr_b_read(U8 respByteCount);
+void si4355_frr_c_read(U8 respByteCount);
+void si4355_frr_d_read(U8 respByteCount);
+
+void si4355_write_tx_fifo( U8 numBytes, U8* pData );
+void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
+
+# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h"
+struct si4355_reply_GENERIC_map {
+U8 REPLY1;
+U8 REPLY2;
+U8 REPLY3;
+U8 REPLY4;
+U8 REPLY5;
+U8 REPLY6;
+U8 REPLY7;
+U8 REPLY8;
+U8 REPLY9;
+U8 REPLY10;
+U8 REPLY11;
+U8 REPLY12;
+U8 REPLY13;
+U8 REPLY14;
+U8 REPLY15;
+U8 REPLY16;
+};
+
+struct si4355_reply_PART_INFO_map {
+U8 CHIPREV;
+UU16 PART;
+U8 PBUILD;
+UU16 ID;
+U8 CUSTOMER;
+U8 ROMID;
+U8 BOND;
+};
+
+struct si4355_reply_TEST_DATA_map {
+U8 TEST0;
+U8 TEST1;
+U8 TEST2;
+U8 TEST3;
+U8 TEST4;
+U8 TEST5;
+U8 TEST6;
+U8 TEST7;
+U8 TEST8;
+U8 TEST9;
+U8 TESTA;
+U8 TESTB;
+U8 TESTC;
+U8 TESTD;
+U8 TESTE;
+U8 TESTF;
+};
+
+struct si4355_reply_FUNC_INFO_map {
+U8 REVEXT;
+U8 REVBRANCH;
+U8 REVINT;
+UU16 PATCH;
+U8 FUNC;
+U8 SVNFLAGS;
+UU32 SVNREV;
+};
+
+struct si4355_reply_GET_PROPERTY_map {
+U8 DATA0;
+U8 DATA1;
+U8 DATA2;
+U8 DATA3;
+U8 DATA4;
+U8 DATA5;
+U8 DATA6;
+U8 DATA7;
+U8 DATA8;
+U8 DATA9;
+U8 DATA10;
+U8 DATA11;
+U8 DATA12;
+U8 DATA13;
+U8 DATA14;
+U8 DATA15;
+};
+
+struct si4355_reply_GPIO_PIN_CFG_map {
+U8 GPIO0;
+U8 GPIO1;
+U8 GPIO2;
+U8 GPIO3;
+U8 NIRQ;
+U8 SDO;
+U8 GEN_CONFIG;
+};
+
+struct si4355_reply_FIFO_INFO_map {
+U8 RX_FIFO_COUNT;
+U8 TX_FIFO_SPACE;
+};
+
+struct si4355_reply_EZCONFIG_CHECK_map {
+U8 RESULT;
+};
+
+struct si4355_reply_GET_INT_STATUS_map {
+U8 INT_PEND;
+U8 INT_STATUS;
+U8 PH_PEND;
+U8 PH_STATUS;
+U8 MODEM_PEND;
+U8 MODEM_STATUS;
+U8 CHIP_PEND;
+U8 CHIP_STATUS;
+};
+
+struct si4355_reply_REQUEST_DEVICE_STATE_map {
+U8 CURR_STATE;
+U8 CURRENT_CHANNEL;
+};
+
+struct si4355_reply_READ_CMD_BUFF_map {
+U8 CMD_BUFF0;
+U8 CMD_BUFF1;
+U8 CMD_BUFF2;
+U8 CMD_BUFF3;
+U8 CMD_BUFF4;
+U8 CMD_BUFF5;
+U8 CMD_BUFF6;
+U8 CMD_BUFF7;
+U8 CMD_BUFF8;
+U8 CMD_BUFF9;
+U8 CMD_BUFF10;
+U8 CMD_BUFF11;
+U8 CMD_BUFF12;
+U8 CMD_BUFF13;
+U8 CMD_BUFF14;
+U8 CMD_BUFF15;
+};
+
+struct si4355_reply_FRR_A_READ_map {
+U8 FRR_A_VALUE;
+U8 FRR_B_VALUE;
+U8 FRR_C_VALUE;
+U8 FRR_D_VALUE;
+};
+
+struct si4355_reply_FRR_B_READ_map {
+U8 FRR_B_VALUE;
+U8 FRR_C_VALUE;
+U8 FRR_D_VALUE;
+U8 FRR_A_VALUE;
+};
+
+struct si4355_reply_FRR_C_READ_map {
+U8 FRR_C_VALUE;
+U8 FRR_D_VALUE;
+U8 FRR_A_VALUE;
+U8 FRR_B_VALUE;
+};
+
+struct si4355_reply_FRR_D_READ_map {
+U8 FRR_D_VALUE;
+U8 FRR_A_VALUE;
+U8 FRR_B_VALUE;
+U8 FRR_C_VALUE;
+};
+
+
+
+union si4355_cmd_reply_union {
+U8 RAW[16];
+struct si4355_reply_GENERIC_map GENERIC;
+struct si4355_reply_PART_INFO_map PART_INFO;
+struct si4355_reply_TEST_DATA_map TEST_DATA;
+struct si4355_reply_FUNC_INFO_map FUNC_INFO;
+struct si4355_reply_GET_PROPERTY_map GET_PROPERTY;
+struct si4355_reply_GPIO_PIN_CFG_map GPIO_PIN_CFG;
+struct si4355_reply_FIFO_INFO_map FIFO_INFO;
+struct si4355_reply_EZCONFIG_CHECK_map EZCONFIG_CHECK;
+struct si4355_reply_GET_INT_STATUS_map GET_INT_STATUS;
+struct si4355_reply_REQUEST_DEVICE_STATE_map REQUEST_DEVICE_STATE;
+struct si4355_reply_READ_CMD_BUFF_map READ_CMD_BUFF;
+struct si4355_reply_FRR_A_READ_map FRR_A_READ;
+struct si4355_reply_FRR_B_READ_map FRR_B_READ;
+struct si4355_reply_FRR_C_READ_map FRR_C_READ;
+struct si4355_reply_FRR_D_READ_map FRR_D_READ;
+};
+
+# 13 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+tEzConfigArray config;
+tRadioPacket RadioPacket;
+void Radio_PowerUp(void);
+U8 bRadio_Check_Ezconfig(U16);
+
+void Radio_PowerUp(void)
+{
+U16 wDelay = 0u;
+
+si4355_reset();
+for (; wDelay < config.Radio_Delay_Cnt_After_Reset; wDelay++);
+
+si4355_power_up(config.Radio_BOOT_OPTIONS,
+config.Radio_XTAL_OPTIONS,
+config.Radio_XO_FREQ);
+
+radio_comm_PollCTS();
 }
 
-void SPI_Write(unsigned char data)
+void Radio_Init(void)
 {
-SSPBUF = data;
-while (!SSP1IF);
-data = SSPBUF;
+config = EZCONFIG_ARRAY_DATA;
+Radio_SetChip();
 }
 
-unsigned char SPI_Read( void )
+void Radio_SetChip()
 {
-unsigned char data;
-SSPBUF = 0;
-while(!BF);
-data = SSPBUF;
-return data;
+U8 lTemp;
+
+do
+{
+
+Radio_PowerUp();
+
+
+si4355_write_ezconfig_array(128u, config.Radio_Configuration);
+
+si4355_write_ezconfig_array(202u - 128u, (U8 *) config.Radio_Configuration + 128u);
+
+lTemp = bRadio_Check_Ezconfig(config.Radio_Configuration_CRC);
+
+} while(lTemp != 0u);
+
+
+si4355_get_int_status(0u, 0u, 0u);
+
+
+si4355_set_property(
+1,
+4,
+0,
+(U8) config.Radio_INT_CTL_ENABLE,
+(U8) config.Radio_INT_CTL_PH_ENABLE,
+(U8) config.Radio_INT_CTL_MODEM_ENABLE,
+(U8) config.Radio_INT_CTL_CHIP_ENABLE
+);
+
+
+si4355_set_property(
+2,
+4,
+0,
+(U8) config.Radio_FRR_CTL_A_MODE,
+(U8) config.Radio_FRR_CTL_B_MODE,
+(U8) config.Radio_FRR_CTL_C_MODE,
+(U8) config.Radio_FRR_CTL_D_MODE
+);
+
+
+si4355_gpio_pin_cfg(
+(U8) config.Radio_GPIO0_PIN_CFG,
+(U8) config.Radio_GPIO1_PIN_CFG,
+(U8) config.Radio_GPIO2_PIN_CFG,
+(U8) config.Radio_GPIO3_PIN_CFG,
+(U8) config.Radio_GPIO_NIRQ_MODE,
+(U8) config.Radio_GPIO_SDO_MODE,
+(U8) config.Radio_GPIO_GEN_CONFIG
+);
+
+
+si4355_change_state(config.Radio_Mode_After_Power_Up);
+
+
+si4355_get_int_status(0u, 0u, 0u);
+
+
+si4355_part_info();
+}
+
+U8 gRadio_CheckReceived(void)
+{
+if( !RA3 )
+{
+
+si4355_get_int_status(0u, 0u, 0u);
+
+
+if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
+{
+
+si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
+
+return 1;
+}
+}
+return 0;
+}
+
+void Radio_StartRX(U8 channel)
+{
+
+si4355_get_int_status(0u, 0u, 0u);
+
+
+si4355_start_rx(channel, 0u, 0u,
+8,
+1,
+8 );
+}
+
+U8 bRadio_Check_Ezconfig(U16 crc)
+{
+si4355_ezconfig_check(crc);
+
+return radioCmd[0u];
 }

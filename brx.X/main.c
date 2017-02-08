@@ -6,6 +6,7 @@
 #include "config.h"
 #include "timer.h"
 #include "radio.h"
+#include "si4355.h"
 
 states STATE = STARTUP;
 int counter = 0;

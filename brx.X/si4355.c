@@ -1,6 +1,9 @@
-#include <stdarg.h>
+#include "comm.h"
 #include "si4355_defs.h"
-#include "si4355h"
+#include "si4355.h"
+#include "types.h"
+#include "config.h"
+#include "spi.h"
 
 #define SI4355_XTAL_FREQ 30000000L
 
@@ -73,33 +76,20 @@ void si4355_func_info(void)
     Si4355Cmd.FUNC_INFO.PATCH.U8[LSB]   = radioCmd[4];
     Si4355Cmd.FUNC_INFO.FUNC            = radioCmd[5];
     Si4355Cmd.FUNC_INFO.SVNFLAGS        = radioCmd[6];
-    Si4355Cmd.FUNC_INFO.SVNREV.U8[b3]   = radioCmd[7];
-    Si4355Cmd.FUNC_INFO.SVNREV.U8[b2]   = radioCmd[8];
-    Si4355Cmd.FUNC_INFO.SVNREV.U8[b1]   = radioCmd[9];
-    Si4355Cmd.FUNC_INFO.SVNREV.U8[b0]   = radioCmd[10];
+    Si4355Cmd.FUNC_INFO.SVNREV.U8[3]    = radioCmd[7];
+    Si4355Cmd.FUNC_INFO.SVNREV.U8[2]    = radioCmd[8];
+    Si4355Cmd.FUNC_INFO.SVNREV.U8[1]    = radioCmd[9];
+    Si4355Cmd.FUNC_INFO.SVNREV.U8[0]    = radioCmd[10];
 }
 
-#ifdef __C51__
-#pragma maxargs (13)  /* allow 13 bytes for parameters */
-#endif
 void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... )
 {
-    va_list argList;
     U8 cmdIndex;
 
     radioCmd[0] = SI4355_CMD_ID_SET_PROPERTY;
     radioCmd[1] = GROUP;
     radioCmd[2] = NUM_PROPS;
     radioCmd[3] = START_PROP;
-
-    va_start (argList, START_PROP);
-    cmdIndex = 4;
-    while(NUM_PROPS--)
-    {
-        radioCmd[cmdIndex] = va_arg (argList, U8);
-        cmdIndex++;
-    }
-    va_end(argList);
 
     radio_comm_SendCmd( cmdIndex, radioCmd );
 }
@@ -177,14 +167,14 @@ void si4355_fifo_info(U8 FIFO)
 
 void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray)
 {
-  radio_comm_WriteData(SI4355_CMD_ID_WRITE_TX_FIFO, 1, numBytes, pEzConfigArray);
+  //radio_comm_WriteData(SI4355_CMD_ID_WRITE_TX_FIFO, 1, numBytes, pEzConfigArray);
 }
 
 void si4355_ezconfig_check(U16 CHECKSUM)
 {
   /* Do not check CTS */
 
-  SS = 0;
+  SS_PIN = 0;
 
   /* Command byte */
   SPI_WriteByte(SI4355_CMD_ID_EZCONFIG_CHECK);
@@ -193,7 +183,7 @@ void si4355_ezconfig_check(U16 CHECKSUM)
   SPI_WriteByte((U16) CHECKSUM >> 8u);
   SPI_WriteByte((U16) CHECKSUM & 0x00FF);
 
-  SS = 1;
+  SS_PIN = 1;
 
   /* Get the respoonse from the radio chip */
   radio_comm_GetResp(1u, radioCmd);
@@ -221,19 +211,6 @@ void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND)
     Si4355Cmd.GET_INT_STATUS.CHIP_PEND      = radioCmd[6];
     Si4355Cmd.GET_INT_STATUS.CHIP_STATUS    = radioCmd[7];
 }
-
-
-void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN)
-{
-    radioCmd[0] = SI4355_CMD_ID_START_TX;
-    radioCmd[1] = CHANNEL;
-    radioCmd[2] = CONDITION;
-    radioCmd[3] = (U8)(TX_LEN >> 8);
-    radioCmd[4] = (U8)(TX_LEN);
-
-    radio_comm_SendCmd( SI4355_CMD_ARG_COUNT_START_TX, radioCmd );
-}
-
 
 void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3)
 {
@@ -332,12 +309,6 @@ void si4355_frr_d_read(U8 respByteCount)
     Si4355Cmd.FRR_D_READ.FRR_A_VALUE = radioCmd[1];
     Si4355Cmd.FRR_D_READ.FRR_B_VALUE = radioCmd[2];
     Si4355Cmd.FRR_D_READ.FRR_C_VALUE = radioCmd[3];
-}
-
-
-void si4355_write_tx_fifo(U8 numBytes, U8* pTxData)
-{
-    radio_comm_WriteData( SI4355_CMD_ID_WRITE_TX_FIFO, 0, numBytes, pTxData );
 }
 
 void si4355_read_rx_fifo(U8 numBytes, U8* pRxData)

@@ -8,6 +8,7 @@
 #ifndef _SI4355_DEFS_H_
 #define _SI4355_DEFS_H_
 
+#include "types.h"
 
 /* This section contains command map declarations */
 struct si4355_reply_GENERIC_map {

@@ -19,12 +19,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SSPM2 `Vb ~T0 @X0 0 e@4266 ]
 "5227
 [v _SSPM3 `Vb ~T0 @X0 0 e@4267 ]
-"2940
+"12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
+[v _SPI_WriteBytes `(v ~T0 @X0 0 ef2`uc`*uc ]
+"14
+[v _SPI_ReadBytes `(v ~T0 @X0 0 ef2`uc`*uc ]
+"13
+[v _SPI_WriteByte `(v ~T0 @X0 0 ef1`uc ]
+"2940 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
 [v _SSPBUF `Vuc ~T0 @X0 0 e@529 ]
 "5217
 [v _SSP1IF `Vb ~T0 @X0 0 e@139 ]
-"4755
-[v _BF `Vb ~T0 @X0 0 e@4256 ]
+"15 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
+[v _SPI_ReadByte `(uc ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2049,11 +2055,51 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
-[; ;types.h: 36: typedef unsigned char U8;
-[; ;spi.h: 15: void SPI_Init( void );
-[; ;spi.h: 16: void SPI_Write(unsigned char data);
-[; ;spi.h: 17: unsigned char SPI_Read( void );
-"3 C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;types.h: 10: typedef unsigned char U8;
+[; ;types.h: 11: typedef unsigned char U8;
+[; ;types.h: 12: typedef unsigned int U16;
+[; ;types.h: 13: typedef unsigned long U32;
+[; ;types.h: 15: typedef signed char S8;
+[; ;types.h: 16: typedef signed int S16;
+[; ;types.h: 17: typedef signed long S32;
+[; ;types.h: 19: typedef union UU16
+[; ;types.h: 20: {
+[; ;types.h: 21: U16 U16;
+[; ;types.h: 22: S16 S16;
+[; ;types.h: 23: U8 U8[2];
+[; ;types.h: 24: S8 S8[2];
+[; ;types.h: 25: } UU16;
+[; ;types.h: 27: typedef union UU32
+[; ;types.h: 28: {
+[; ;types.h: 29: U32 U32;
+[; ;types.h: 30: S32 S32;
+[; ;types.h: 31: UU16 UU16[2];
+[; ;types.h: 32: U16 U16[2];
+[; ;types.h: 33: S16 S16[2];
+[; ;types.h: 34: U8 U8[4];
+[; ;types.h: 35: S8 S8[4];
+[; ;types.h: 36: } UU32;
+[; ;types.h: 38: typedef struct
+[; ;types.h: 39: {
+[; ;types.h: 40: U32 ChipID;
+[; ;types.h: 41: U8 Flags;
+[; ;types.h: 42: U16 RollingCounter;
+[; ;types.h: 43: } tRadioPacket;
+[; ;types.h: 45: typedef bool BIT;
+[; ;types.h: 47: typedef enum
+[; ;types.h: 48: {
+[; ;types.h: 49: STARTUP,
+[; ;types.h: 50: ARMED,
+[; ;types.h: 51: RECEIVING,
+[; ;types.h: 52: } states;
+[; ;spi.h: 10: void SPI_Init( void );
+[; ;spi.h: 11: void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata );
+[; ;spi.h: 12: void SPI_WriteBytes( U8 len, U8 * data );
+[; ;spi.h: 13: void SPI_WriteByte( U8 data );
+[; ;spi.h: 14: void SPI_ReadBytes( U8 len, U8 * data );
+[; ;spi.h: 15: U8 SPI_ReadByte( void );
+"3 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c
 [v _dummy `uc ~T0 @X0 1 e ]
 [; ;spi.c: 3: U8 dummy;
 "5
@@ -2099,65 +2145,155 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _SSPEN -> -> 1 `i `b ]
 [; ;spi.c: 27: }
 "27
-[e :UE 259 ]
+[e :UE 262 ]
 }
-"29
-[v _SPI_Write `(v ~T0 @X0 1 ef1`uc ]
 "30
-{
-[; ;spi.c: 29: void SPI_Write(unsigned char data)
-[; ;spi.c: 30: {
-[e :U _SPI_Write ]
-"29
-[v _data `uc ~T0 @X0 1 r1 ]
-"30
-[f ]
-[; ;spi.c: 31: SSPBUF = data;
+[v _SPI_WriteReadBytes `(v ~T0 @X0 1 ef4`uc`*uc`uc`*uc ]
 "31
-[e = _SSPBUF _data ]
-[; ;spi.c: 32: while (!SSP1IF);
+{
+[; ;spi.c: 30: void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata )
+[; ;spi.c: 31: {
+[e :U _SPI_WriteReadBytes ]
+"30
+[v _wlen `uc ~T0 @X0 1 r1 ]
+[v _wdata `*uc ~T0 @X0 1 r2 ]
+[v _rlen `uc ~T0 @X0 1 r3 ]
+[v _rdata `*uc ~T0 @X0 1 r4 ]
+"31
+[f ]
+[; ;spi.c: 32: SPI_WriteBytes( wlen, wdata );
 "32
-[e $U 261  ]
-[e :U 262 ]
-[e :U 261 ]
-[e $ ! _SSP1IF 262  ]
-[e :U 263 ]
-[; ;spi.c: 33: data = SSPBUF;
+[e ( _SPI_WriteBytes (2 , _wlen _wdata ]
+[; ;spi.c: 33: SPI_ReadBytes( rlen, rdata );
 "33
-[e = _data _SSPBUF ]
+[e ( _SPI_ReadBytes (2 , _rlen _rdata ]
 [; ;spi.c: 34: }
 "34
-[e :UE 260 ]
+[e :UE 263 ]
 }
 "36
-[v _SPI_Read `(uc ~T0 @X0 1 ef ]
+[v _SPI_WriteBytes `(v ~T0 @X0 1 ef2`uc`*uc ]
 "37
 {
-[; ;spi.c: 36: unsigned char SPI_Read( void )
+[; ;spi.c: 36: void SPI_WriteBytes( U8 len, U8 * data )
 [; ;spi.c: 37: {
-[e :U _SPI_Read ]
+[e :U _SPI_WriteBytes ]
+"36
+[v _len `uc ~T0 @X0 1 r1 ]
+[v _data `*uc ~T0 @X0 1 r2 ]
+"37
 [f ]
+[; ;spi.c: 38: while( len-- )
 "38
-[v _data `uc ~T0 @X0 1 a ]
-[; ;spi.c: 38: unsigned char data;
-[; ;spi.c: 39: SSPBUF = 0;
-"39
-[e = _SSPBUF -> -> 0 `i `uc ]
-[; ;spi.c: 40: while(!BF);
-"40
 [e $U 265  ]
 [e :U 266 ]
-[e :U 265 ]
-[e $ ! _BF 266  ]
-[e :U 267 ]
-[; ;spi.c: 41: data = SSPBUF;
+[; ;spi.c: 39: {
+"39
+{
+[; ;spi.c: 40: SPI_WriteByte( *data++ );
+"40
+[e ( _SPI_WriteByte (1 *U ++ _data * -> -> 1 `i `x -> -> # *U _data `i `x ]
 "41
-[e = _data _SSPBUF ]
-[; ;spi.c: 42: return data;
+}
+[e :U 265 ]
+"38
+[e $ != -> -- _len -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 266  ]
+[e :U 267 ]
+[; ;spi.c: 41: }
+[; ;spi.c: 42: }
 "42
-[e ) _data ]
-[e $UE 264  ]
-[; ;spi.c: 43: }
-"43
 [e :UE 264 ]
+}
+"44
+[v _SPI_WriteByte `(v ~T0 @X0 1 ef1`uc ]
+"45
+{
+[; ;spi.c: 44: void SPI_WriteByte( U8 data )
+[; ;spi.c: 45: {
+[e :U _SPI_WriteByte ]
+"44
+[v _data `uc ~T0 @X0 1 r1 ]
+"45
+[f ]
+[; ;spi.c: 46: SSPBUF = data;
+"46
+[e = _SSPBUF _data ]
+[; ;spi.c: 47: while (!SSP1IF);
+"47
+[e $U 269  ]
+[e :U 270 ]
+[e :U 269 ]
+[e $ ! _SSP1IF 270  ]
+[e :U 271 ]
+[; ;spi.c: 48: data = SSPBUF;
+"48
+[e = _data _SSPBUF ]
+[; ;spi.c: 49: }
+"49
+[e :UE 268 ]
+}
+"51
+[v _SPI_ReadBytes `(v ~T0 @X0 1 ef2`uc`*uc ]
+"52
+{
+[; ;spi.c: 51: void SPI_ReadBytes( U8 len, U8 * data )
+[; ;spi.c: 52: {
+[e :U _SPI_ReadBytes ]
+"51
+[v _len `uc ~T0 @X0 1 r1 ]
+[v _data `*uc ~T0 @X0 1 r2 ]
+"52
+[f ]
+[; ;spi.c: 53: while( len-- )
+"53
+[e $U 273  ]
+[e :U 274 ]
+[; ;spi.c: 54: {
+"54
+{
+[; ;spi.c: 55: *data++ = SPI_ReadByte();
+"55
+[e = *U ++ _data * -> -> 1 `i `x -> -> # *U _data `i `x ( _SPI_ReadByte ..  ]
+"56
+}
+[e :U 273 ]
+"53
+[e $ != -> -- _len -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 274  ]
+[e :U 275 ]
+[; ;spi.c: 56: }
+[; ;spi.c: 57: }
+"57
+[e :UE 272 ]
+}
+"59
+[v _SPI_ReadByte `(uc ~T0 @X0 1 ef ]
+"60
+{
+[; ;spi.c: 59: U8 SPI_ReadByte( void )
+[; ;spi.c: 60: {
+[e :U _SPI_ReadByte ]
+[f ]
+"61
+[v _data `uc ~T0 @X0 1 a ]
+[; ;spi.c: 61: U8 data;
+[; ;spi.c: 62: SSPBUF = 0;
+"62
+[e = _SSPBUF -> -> 0 `i `uc ]
+[; ;spi.c: 63: while(!SSP1IF);
+"63
+[e $U 277  ]
+[e :U 278 ]
+[e :U 277 ]
+[e $ ! _SSP1IF 278  ]
+[e :U 279 ]
+[; ;spi.c: 64: data = SSPBUF;
+"64
+[e = _data _SSPBUF ]
+[; ;spi.c: 65: return data;
+"65
+[e ) _data ]
+[e $UE 276  ]
+[; ;spi.c: 66: }
+"66
+[e :UE 276 ]
 }

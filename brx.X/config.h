@@ -7,12 +7,12 @@ extern "C" {
 
 // PIN CONFIGURATION
 
-#define LED     RA0
-#define SCK     RA1
-#define SDI     RA2
-#define IRQ     RA3
-#define SDO     RA4
-#define SS      RA5
+#define LED_PIN     RA0
+#define SCK_PIN     RA1
+#define SDI_PIN     RA2
+#define IRQ_PIN     RA3
+#define SDO_PIN     RA4
+#define SS_PIN      RA5
     
 extern states STATE;
 

@@ -1,15 +1,147 @@
 
-# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 1 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c"
 
-# 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
-extern const char __xc8_OPTIM_SPEED;
+# 4 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\__size_t.h"
+typedef unsigned size_t;
 
-extern double __fpnormalize(double);
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdlib.h"
+typedef unsigned short wchar_t;
+
+# 15
+typedef struct {
+int rem;
+int quot;
+} div_t;
+typedef struct {
+unsigned rem;
+unsigned quot;
+} udiv_t;
+typedef struct {
+long quot;
+long rem;
+} ldiv_t;
+typedef struct {
+unsigned long quot;
+unsigned long rem;
+} uldiv_t;
+
+# 53
+extern double atof(const char *);
+extern double strtod(const char *, const char **);
+extern int atoi(const char *);
+extern unsigned xtoi(const char *);
+extern long atol(const char *);
+extern long strtol(const char *, char **, int);
+
+extern int rand(void);
+extern void srand(unsigned int);
+extern void * calloc(size_t, size_t);
+extern div_t div(int numer, int denom);
+extern udiv_t udiv(unsigned numer, unsigned denom);
+extern ldiv_t ldiv(long numer, long denom);
+extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+extern unsigned long _lrotl(unsigned long value, unsigned int shift);
+extern unsigned long _lrotr(unsigned long value, unsigned int shift);
+extern unsigned int _rotl(unsigned int value, unsigned int shift);
+extern unsigned int _rotr(unsigned int value, unsigned int shift);
+
+
+
+
+extern void * malloc(size_t);
+extern void free(void *);
+extern void * realloc(void *, size_t);
 
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
+
+# 86 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdlib.h"
+extern int atexit(void (*)(void));
+extern char * getenv(const char *);
+extern char ** environ;
+extern int system(char *);
+extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
+extern int abs(int);
+extern long labs(long);
+
+extern char * itoa(char * buf, int val, int base);
+extern char * utoa(char * buf, unsigned val, int base);
+
+
+
+
+extern char * ltoa(char * buf, long val, int base);
+extern char * ultoa(char * buf, unsigned long val, int base);
+
+extern char * ftoa(float f, int * status);
+
+# 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
+extern const char __xc8_OPTIM_SPEED;
+
+extern double __fpnormalize(double);
 
 # 49 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h"
 extern volatile unsigned char INDF0 @ 0x000;
@@ -2753,144 +2885,214 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdint.h"
-typedef signed char int8_t;
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdbool.h"
+typedef unsigned char bool;
 
-# 20
-typedef signed int int16_t;
-
-# 28
-typedef signed short long int int24_t;
-
-# 36
-typedef signed long int int32_t;
-
-# 43
-typedef unsigned char uint8_t;
-
-# 49
-typedef unsigned int uint16_t;
-
-# 56
-typedef unsigned short long int uint24_t;
-
-# 63
-typedef unsigned long int uint32_t;
-
-# 71
-typedef signed char int_least8_t;
-
-# 78
-typedef signed int int_least16_t;
-
-# 90
-typedef signed short long int int_least24_t;
-
-# 98
-typedef signed long int int_least32_t;
-
-# 105
-typedef unsigned char uint_least8_t;
-
-# 111
-typedef unsigned int uint_least16_t;
-
-# 121
-typedef unsigned short long int uint_least24_t;
-
-# 128
-typedef unsigned long int uint_least32_t;
-
-# 137
-typedef signed char int_fast8_t;
-
-# 144
-typedef signed int int_fast16_t;
-
-# 156
-typedef signed short long int int_fast24_t;
-
-# 164
-typedef signed long int int_fast32_t;
-
-# 171
-typedef unsigned char uint_fast8_t;
-
-# 177
-typedef unsigned int uint_fast16_t;
-
-# 187
-typedef unsigned short long int uint_fast24_t;
-
-# 194
-typedef unsigned long int uint_fast32_t;
-
-# 200
-typedef int32_t intmax_t;
-
-
-
-
-typedef uint32_t uintmax_t;
-
-
-
-
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-
-# 37 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/types.h"
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h"
 typedef unsigned char U8;
+typedef unsigned char U8;
+typedef unsigned int U16;
+typedef unsigned long U32;
+
+typedef signed char S8;
+typedef signed int S16;
+typedef signed long S32;
+
+typedef union UU16
+{
+U16 U16;
+S16 S16;
+U8 U8[2];
+S8 S8[2];
+} UU16;
+
+typedef union UU32
+{
+U32 U32;
+S32 S32;
+UU16 UU16[2];
+U16 U16[2];
+S16 S16[2];
+U8 U8[4];
+S8 S8[4];
+} UU32;
+
+typedef struct
+{
+U32 ChipID;
+U8 Flags;
+U16 RollingCounter;
+} tRadioPacket;
+
 typedef bool BIT;
 
-# 15 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h"
-void SPI_Init( void );
-void SPI_Write(unsigned char data);
-unsigned char SPI_Read( void );
-
-# 3 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
-U8 dummy;
-
-void SPI_Init( void )
+typedef enum
 {
-
-SSPEN = 0;
-
-SDOSEL = 1;
-SSSEL = 0;
-
-SMP = 0;
-
-CKE = 0;
-
-CKP = 0;
-
-SSPM0 = 0;
-SSPM1 = 0;
-SSPM2 = 0;
-SSPM3 = 0;
+STARTUP,
+ARMED,
+RECEIVING,
+} states;
 
 
+# 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config_bits.h"
+#pragma config FOSC = INTOSC
+#pragma config WDTE = OFF
+#pragma config PWRTE = OFF
+#pragma config MCLRE = ON
+#pragma config CP = OFF
+#pragma config CPD = OFF
+#pragma config BOREN = ON
+#pragma config CLKOUTEN = OFF
+#pragma config IESO = ON
+#pragma config FCMEN = ON
 
-SSPEN = 1;
+
+#pragma config WRT = OFF
+#pragma config PLLEN = ON
+#pragma config STVREN = ON
+#pragma config BORV = LO
+#pragma config LVP = ON
+
+# 17 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+extern states STATE;
+
+# 6 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/timer.h"
+void TMR_Init( U8 psa, U8 value );
+
+# 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h"
+typedef struct
+{
+U8 Radio_Configuration[202u];
+U16 Radio_Configuration_CRC;
+
+U8 Radio_BOOT_OPTIONS;
+U8 Radio_XTAL_OPTIONS;
+U32 Radio_XO_FREQ;
+
+U8 Radio_INT_CTL_ENABLE;
+U8 Radio_INT_CTL_PH_ENABLE;
+U8 Radio_INT_CTL_MODEM_ENABLE;
+U8 Radio_INT_CTL_CHIP_ENABLE;
+
+U8 Radio_FRR_CTL_A_MODE;
+U8 Radio_FRR_CTL_B_MODE;
+U8 Radio_FRR_CTL_C_MODE;
+U8 Radio_FRR_CTL_D_MODE;
+
+U8 Radio_SYNC_BITS_31_24;
+U8 Radio_SYNC_BITS_23_16;
+
+U8 Radio_PA_PWR_LVL;
+
+U8 Radio_EZCONFIG_MODULATION;
+U8 Radio_EZCONFIG_XO_TUNE;
+
+U8 Radio_FREQ_CONTROL_INTE;
+U8 Radio_FREQ_CONTROL_FRAC_2;
+U8 Radio_FREQ_CONTROL_FRAC_1;
+U8 Radio_FREQ_CONTROL_FRAC_0;
+
+U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_1;
+U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_0;
+
+U8 Radio_GPIO0_PIN_CFG;
+U8 Radio_GPIO1_PIN_CFG;
+U8 Radio_GPIO2_PIN_CFG;
+U8 Radio_GPIO3_PIN_CFG;
+U8 Radio_GPIO_NIRQ_MODE;
+U8 Radio_GPIO_SDO_MODE;
+U8 Radio_GPIO_GEN_CONFIG;
+
+U8 Radio_Mode_After_Power_Up;
+
+U16 Radio_Delay_Cnt_After_Reset;
+} tEzConfigArray;
+
+extern tEzConfigArray config;
+extern tRadioPacket RadioPacket;
+
+# 64
+void Radio_Init(void);
+void Radio_SetChip();
+U8 Radio_CheckReceived(void);
+void Radio_StartRX(U8);
+
+# 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h"
+extern union si4355_cmd_reply_union Si4355Cmd;
+extern U8 radioCmd[16];
+
+
+
+enum
+{
+SI4355_SUCCESS,
+SI4355_NO_PATCH,
+SI4355_CTS_TIMEOUT,
+SI4355_PATCH_FAIL,
+SI4355_COMMAND_ERROR
+};
+
+
+void si4355_reset(void);
+void si4355_nop(void);
+void si4355_part_info(void);
+void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
+
+void si4355_func_info(void);
+void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
+void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
+void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
+void si4355_fifo_info(U8 FIFO);
+void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
+void si4355_ezconfig_check(U16 CHECKSUM);
+
+void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
+
+void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
+void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
+void si4355_request_device_state(void);
+void si4355_change_state(U8 NEXT_STATE1);
+void si4355_read_cmd_buff(void);
+void si4355_frr_a_read(U8 respByteCount);
+void si4355_frr_b_read(U8 respByteCount);
+void si4355_frr_c_read(U8 respByteCount);
+void si4355_frr_d_read(U8 respByteCount);
+
+void si4355_write_tx_fifo( U8 numBytes, U8* pData );
+void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
+
+# 11 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/main.c"
+states STATE = STARTUP;
+int counter = 0;
+
+void main( void )
+{
+while (1)
+{
+switch( STATE )
+{
+case STARTUP:
+Radio_Init();
+case ARMED:
+Radio_StartRX(0u);
+
+si4355_fifo_info(0x02);
+STATE = RECEIVING;
+break;
+case RECEIVING:
+if(Radio_CheckReceived());
+STATE = ARMED;
+break;
+default:
+STATE = ARMED;
+}
+}
+return;
 }
 
-void SPI_Write(unsigned char data)
+void interrupt Timer0_ISR(void)
 {
-SSPBUF = data;
-while (!SSP1IF);
-data = SSPBUF;
-}
-
-unsigned char SPI_Read( void )
-{
-unsigned char data;
-SSPBUF = 0;
-while(!BF);
-data = SSPBUF;
-return data;
+TMR0IF = 0;
+counter++;
+RA0 = counter & 1;
 }

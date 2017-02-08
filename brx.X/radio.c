@@ -1,5 +1,9 @@
 #include "types.h"
+#include "config.h"
 #include "radio.h"
+#include "comm.h"
+#include "si4355.h"
+#include "si4355_defs.h"
 
 /* Get configuration for config file */
 #define RADIO_MULTIPLE_CONFIG_NO_3
@@ -7,7 +11,7 @@
 #define INIT_CONFIG( t ) tEzConfigArray t = EZCONFIG_ARRAY_DATA
 
 tEzConfigArray config;
-
+tRadioPacket RadioPacket;
 void Radio_PowerUp(void);
 U8 bRadio_Check_Ezconfig(U16);
 
@@ -16,18 +20,18 @@ void Radio_PowerUp(void)
     U16 wDelay = 0u;
     
     si4355_reset();
-    for (; wDelay < config->Radio_Delay_Cnt_After_Reset; wDelay++);
+    for (; wDelay < config.Radio_Delay_Cnt_After_Reset; wDelay++);
     
-    si4355_power_up(config->Radio_BOOT_OPTIONS,
-                    config->Radio_XTAL_OPTIONS,
-                    config->Radio_XO_FREQ);
+    si4355_power_up(config.Radio_BOOT_OPTIONS,
+                    config.Radio_XTAL_OPTIONS,
+                    config.Radio_XO_FREQ);
     
     radio_comm_PollCTS();
 }
 
 void Radio_Init(void)
 {
-    INIT_CONFIG( config );
+    config = ;
     Radio_SetChip();
 }
 
@@ -41,11 +45,11 @@ void Radio_SetChip()
         Radio_PowerUp();
         
         /* Load the 1st part of the configuration array (128 bytes) */
-        si4355_write_ezconfig_array(128u, config->Radio_Configuration);
+        si4355_write_ezconfig_array(128u, config.Radio_Configuration);
         /* Load the final part of the configuration array (128 bytes) */
-        si4355_write_ezconfig_array(EZCONFIG_RADIO_CFG_SIZE - 128u, (U8 *) config->Radio_Configuration + 128u);
+        si4355_write_ezconfig_array(EZCONFIG_RADIO_CFG_SIZE - 128u, (U8 *) config.Radio_Configuration + 128u);
         
-        lTemp = bRadio_Check_Ezconfig(config->Radio_Configuration_CRC);
+        lTemp = bRadio_Check_Ezconfig(config.Radio_Configuration_CRC);
         
     } while(lTemp != 0u);
     
@@ -57,10 +61,10 @@ void Radio_SetChip()
                         SI4355_PROP_GRP_ID_INT_CTL,
                         SI4355_PROP_GRP_LEN_INT_CTL,
                         SI4355_PROP_GRP_INDEX_INT_CTL_ENABLE,
-                        (U8) config->Radio_INT_CTL_ENABLE,
-                        (U8) config->Radio_INT_CTL_PH_ENABLE,
-                        (U8) config->Radio_INT_CTL_MODEM_ENABLE,
-                        (U8) config->Radio_INT_CTL_CHIP_ENABLE
+                        (U8) config.Radio_INT_CTL_ENABLE,
+                        (U8) config.Radio_INT_CTL_PH_ENABLE,
+                        (U8) config.Radio_INT_CTL_MODEM_ENABLE,
+                        (U8) config.Radio_INT_CTL_CHIP_ENABLE
                         );
     
     // Configure Fast response registers
@@ -68,25 +72,25 @@ void Radio_SetChip()
                         SI4355_PROP_GRP_ID_FRR_CTL,
                         SI4355_PROP_GRP_LEN_FRR_CTL,
                         SI4355_PROP_GRP_INDEX_FRR_CTL_A_MODE,
-                        (U8) config->Radio_FRR_CTL_A_MODE,
-                        (U8) config->Radio_FRR_CTL_B_MODE,
-                        (U8) config->Radio_FRR_CTL_C_MODE,
-                        (U8) config->Radio_FRR_CTL_D_MODE
+                        (U8) config.Radio_FRR_CTL_A_MODE,
+                        (U8) config.Radio_FRR_CTL_B_MODE,
+                        (U8) config.Radio_FRR_CTL_C_MODE,
+                        (U8) config.Radio_FRR_CTL_D_MODE
                         );
     
     // Configure GPIO pins
     si4355_gpio_pin_cfg(
-                        (U8) config->Radio_GPIO0_PIN_CFG,
-                        (U8) config->Radio_GPIO1_PIN_CFG,
-                        (U8) config->Radio_GPIO2_PIN_CFG,
-                        (U8) config->Radio_GPIO3_PIN_CFG,
-                        (U8) config->Radio_GPIO_NIRQ_MODE,
-                        (U8) config->Radio_GPIO_SDO_MODE,
-                        (U8) config->Radio_GPIO_GEN_CONFIG
+                        (U8) config.Radio_GPIO0_PIN_CFG,
+                        (U8) config.Radio_GPIO1_PIN_CFG,
+                        (U8) config.Radio_GPIO2_PIN_CFG,
+                        (U8) config.Radio_GPIO3_PIN_CFG,
+                        (U8) config.Radio_GPIO_NIRQ_MODE,
+                        (U8) config.Radio_GPIO_SDO_MODE,
+                        (U8) config.Radio_GPIO_GEN_CONFIG
                         );
     
     // Put the Radio into SLEEP state
-    si4355_change_state(config->Radio_Mode_After_Power_Up);
+    si4355_change_state(config.Radio_Mode_After_Power_Up);
     
     // Read ITs, clear pending ones
     si4355_get_int_status(0u, 0u, 0u);
@@ -97,7 +101,7 @@ void Radio_SetChip()
 
 U8 gRadio_CheckReceived(void)
 {
-    if (RF_NIRQ == FALSE)
+    if( !IRQ_PIN )
     {
         /* Read ITs, clear pending ones */
         si4355_get_int_status(0u, 0u, 0u);
@@ -107,15 +111,11 @@ U8 gRadio_CheckReceived(void)
         {
             /* Packet RX */
             si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
-            
-            /* Generate beep */
-            ReceiverDemo_InternalData.ReceiverDemo_BeepLength = 128u;
-            StartTimer3(0xD025);  /* ~1kHz */
-            
-            return TRUE;
+
+            return 1;
         }
-        return FALSE;
     }
+    return 0;
 }
 
 void Radio_StartRX(U8 channel)

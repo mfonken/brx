@@ -1,13 +1,5 @@
-//
-//  radio.h
-//  
-//
-//  Created by Matthew Fonken on 2/7/17.
-//
-//
-
-#ifndef radio_h
-#define radio_h
+#ifndef RADIO_H
+#define RADIO_H
 
 #define EZCONFIG_ARRAY_SIZE     256u
 #define EZCONFIG_RADIO_CFG_SIZE 202u
@@ -64,6 +56,7 @@ typedef struct
 } tEzConfigArray;
 
 extern tEzConfigArray config;
+extern tRadioPacket RadioPacket;
 
 /*****************************************************************************
  *  Global Function Declarations

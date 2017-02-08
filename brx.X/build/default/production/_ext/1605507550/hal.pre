@@ -1,5 +1,5 @@
 
-# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
+# 1 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/hal.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -2846,51 +2846,3 @@ typedef uint16_t uintptr_t;
 # 37 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/types.h"
 typedef unsigned char U8;
 typedef bool BIT;
-
-# 15 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h"
-void SPI_Init( void );
-void SPI_Write(unsigned char data);
-unsigned char SPI_Read( void );
-
-# 3 "C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.c"
-U8 dummy;
-
-void SPI_Init( void )
-{
-
-SSPEN = 0;
-
-SDOSEL = 1;
-SSSEL = 0;
-
-SMP = 0;
-
-CKE = 0;
-
-CKP = 0;
-
-SSPM0 = 0;
-SSPM1 = 0;
-SSPM2 = 0;
-SSPM3 = 0;
-
-
-
-SSPEN = 1;
-}
-
-void SPI_Write(unsigned char data)
-{
-SSPBUF = data;
-while (!SSP1IF);
-data = SSPBUF;
-}
-
-unsigned char SPI_Read( void )
-{
-unsigned char data;
-SSPBUF = 0;
-while(!BF);
-data = SSPBUF;
-return data;
-}
