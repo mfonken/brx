@@ -1,18 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "types.h"
 #include "config_bits.h"
 #include "config.h"
 #include "timer.h"
 #include "radio.h"
 #include "si4355.h"
+#include "spi.h"
 
 states STATE = STARTUP;
 int counter = 0;
 
 void main( void )
 {
+    SPI_Init();
     while (1)
     {
         switch( STATE )

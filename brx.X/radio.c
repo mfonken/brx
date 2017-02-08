@@ -4,13 +4,11 @@
 #include "comm.h"
 #include "si4355.h"
 #include "si4355_defs.h"
-
-/* Get configuration for config file */
-#define RADIO_MULTIPLE_CONFIG_NO_3
 #include "radio_config.h"
-#define INIT_CONFIG( t ) tEzConfigArray t = EZCONFIG_ARRAY_DATA
 
-tEzConfigArray config;
+U8 const Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
+tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
+tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 tRadioPacket RadioPacket;
 void Radio_PowerUp(void);
 U8 bRadio_Check_Ezconfig(U16);
@@ -20,86 +18,27 @@ void Radio_PowerUp(void)
     U16 wDelay = 0u;
     
     si4355_reset();
-    for (; wDelay < config.Radio_Delay_Cnt_After_Reset; wDelay++);
-    
-    si4355_power_up(config.Radio_BOOT_OPTIONS,
-                    config.Radio_XTAL_OPTIONS,
-                    config.Radio_XO_FREQ);
-    
+    for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
     radio_comm_PollCTS();
 }
 
 void Radio_Init(void)
 {
-    config = ;
-    Radio_SetChip();
+  /* Power Up the radio chip */
+  Radio_PowerUp();
+
+  /* Load radio configuration */
+  while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
+  {
+    /* Power Up the radio chip */
+    Radio_PowerUp();
+  }
+
+  // Read ITs, clear pending ones
+  si4355_get_int_status(0u, 0u, 0u);
 }
 
-void Radio_SetChip()
-{
-    U8 lTemp;
-    
-    do
-    {
-        /* Power Up the radio chip */
-        Radio_PowerUp();
-        
-        /* Load the 1st part of the configuration array (128 bytes) */
-        si4355_write_ezconfig_array(128u, config.Radio_Configuration);
-        /* Load the final part of the configuration array (128 bytes) */
-        si4355_write_ezconfig_array(EZCONFIG_RADIO_CFG_SIZE - 128u, (U8 *) config.Radio_Configuration + 128u);
-        
-        lTemp = bRadio_Check_Ezconfig(config.Radio_Configuration_CRC);
-        
-    } while(lTemp != 0u);
-    
-    // Read ITs, clear pending ones
-    si4355_get_int_status(0u, 0u, 0u);
-    
-    /* Enable ITs */
-    si4355_set_property(
-                        SI4355_PROP_GRP_ID_INT_CTL,
-                        SI4355_PROP_GRP_LEN_INT_CTL,
-                        SI4355_PROP_GRP_INDEX_INT_CTL_ENABLE,
-                        (U8) config.Radio_INT_CTL_ENABLE,
-                        (U8) config.Radio_INT_CTL_PH_ENABLE,
-                        (U8) config.Radio_INT_CTL_MODEM_ENABLE,
-                        (U8) config.Radio_INT_CTL_CHIP_ENABLE
-                        );
-    
-    // Configure Fast response registers
-    si4355_set_property(
-                        SI4355_PROP_GRP_ID_FRR_CTL,
-                        SI4355_PROP_GRP_LEN_FRR_CTL,
-                        SI4355_PROP_GRP_INDEX_FRR_CTL_A_MODE,
-                        (U8) config.Radio_FRR_CTL_A_MODE,
-                        (U8) config.Radio_FRR_CTL_B_MODE,
-                        (U8) config.Radio_FRR_CTL_C_MODE,
-                        (U8) config.Radio_FRR_CTL_D_MODE
-                        );
-    
-    // Configure GPIO pins
-    si4355_gpio_pin_cfg(
-                        (U8) config.Radio_GPIO0_PIN_CFG,
-                        (U8) config.Radio_GPIO1_PIN_CFG,
-                        (U8) config.Radio_GPIO2_PIN_CFG,
-                        (U8) config.Radio_GPIO3_PIN_CFG,
-                        (U8) config.Radio_GPIO_NIRQ_MODE,
-                        (U8) config.Radio_GPIO_SDO_MODE,
-                        (U8) config.Radio_GPIO_GEN_CONFIG
-                        );
-    
-    // Put the Radio into SLEEP state
-    si4355_change_state(config.Radio_Mode_After_Power_Up);
-    
-    // Read ITs, clear pending ones
-    si4355_get_int_status(0u, 0u, 0u);
-    
-    // Get part info
-    si4355_part_info();
-}
-
-U8 gRadio_CheckReceived(void)
+U8 Radio_CheckReceived(void)
 {
     if( !IRQ_PIN )
     {
@@ -130,7 +69,7 @@ void Radio_StartRX(U8 channel)
                     SI4355_CMD_START_RX_ARG_RXINVALID_STATE_ENUM_RX );
 }
 
-U8 bRadio_Check_Ezconfig(U16 crc)
+U8 Radio_Check_Ezconfig(U16 crc)
 {
     si4355_ezconfig_check(crc);
     

@@ -10,6 +10,52 @@
 union si4355_cmd_reply_union Si4355Cmd;
 U8 radioCmd[16u];
 
+U8 si4355_configuration_init(U8 * pSetPropCmd)
+{
+  U8 col = 0;
+  U8 numOfBytes = 0;
+
+  /* While cycle as far as the pointer points to a command */
+  while (*pSetPropCmd != 0x00)
+  {
+    /* Commands structure in the array:
+     * --------------------------------
+     * LEN | <LEN length of data>
+     */
+
+    numOfBytes = *pSetPropCmd++;
+
+    if (numOfBytes > 16u)
+    {
+      /* Number of command bytes exceeds maximal allowable length */
+      return COMMAND_ERROR;
+    }
+
+    for (col = 0u; col < numOfBytes; col++)
+    {
+      radioCmd[col] = *pSetPropCmd;
+      pSetPropCmd++;
+    }
+
+    if (radio_comm_SendCmdGetResp(numOfBytes, radioCmd, 0, 0) != 0xFF)
+    {
+      /* Timeout occured */
+      return CTS_TIMEOUT;
+    }
+
+    if (!IRQ_PIN)
+    {
+      /* Get and clear all interrupts.  An error has occured... */
+      si4355_get_int_status(0, 0, 0);
+      if (Si4355Cmd.GET_INT_STATUS.CHIP_PEND)// & SI4355_CMD_GET_CHIP_STATUS_REP_CMD_ERROR_PEND_MASK)
+      {
+        return COMMAND_ERROR;
+      }
+    }
+  }
+  return SUCCESS;
+}
+
 void si4355_reset(void)
 {
     /* No access to SDN pin */
@@ -84,7 +130,7 @@ void si4355_func_info(void)
 
 void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... )
 {
-    U8 cmdIndex;
+    U8 cmdIndex = 0;
 
     radioCmd[0] = SI4355_CMD_ID_SET_PROPERTY;
     radioCmd[1] = GROUP;

@@ -1,25 +1,85 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"1120 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
-[v _OPTION_REG `Vuc ~T0 @X0 0 e@149 ]
-"561
-[v _TMR0 `Vuc ~T0 @X0 0 e@21 ]
-"5297
-[v _TMR0IE `Vb ~T0 @X0 0 e@93 ]
-"4935
-[v _GIE `Vb ~T0 @X0 0 e@95 ]
-[p mainexit ]
-"971
-[v _TRISA `Vuc ~T0 @X0 0 e@140 ]
-"14 C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h
-[v _SPI_Init `(v ~T0 @X0 0 ef ]
-"16
-[v _SPI_Write `(v ~T0 @X0 0 ef1`uc ]
-"5299 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
-[v _TMR0IF `Vb ~T0 @X0 0 e@90 ]
-"5123
-[v _RA0 `Vb ~T0 @X0 0 e@96 ]
-"17 C:/Users/Matthew Fonken/MPLABXProjects/brx.X/spi.h
-[v _SPI_Read `(uc ~T0 @X0 0 ef ]
+"11 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h
+[s S262 `*uc 1 `uc 1 `uc 1 `uc 1 `ui 1 ]
+[n S262 . Radio_ConfigurationArray Radio_ChannelNumber Radio_PacketLength Radio_State_After_Power_Up Radio_Delay_Cnt_After_Reset ]
+"39 C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h
+[s S261 `ul 1 `uc 1 `ui 1 ]
+[n S261 . ChipID Flags RollingCounter ]
+"20 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
+[v _si4355_reset `(v ~T0 @X0 0 ef ]
+"12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
+[v _radio_comm_PollCTS `(uc ~T0 @X0 0 ef ]
+"31 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+[c E2132 0 1 2 3 4 .. ]
+[n E2132 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
+"18 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
+[v _si4355_configuration_init `(uc ~T0 @X0 0 ef1`*uc ]
+"33
+[v _si4355_get_int_status `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"5129 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
+[v _RA3 `Vb ~T0 @X0 0 e@99 ]
+"14 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h
+[s S264 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S264 si4355_reply_GENERIC_map REPLY1 REPLY2 REPLY3 REPLY4 REPLY5 REPLY6 REPLY7 REPLY8 REPLY9 REPLY10 REPLY11 REPLY12 REPLY13 REPLY14 REPLY15 REPLY16 ]
+"19 C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h
+[u S259 `ui 1 `i 1 `uc -> 2 `i `c -> 2 `i ]
+[n S259 UU16 U16 S16 U8 S8 ]
+"33 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h
+[s S265 `uc 1 `S259 1 `uc 1 `S259 1 `uc 1 `uc 1 `uc 1 ]
+[n S265 si4355_reply_PART_INFO_map CHIPREV PART PBUILD ID CUSTOMER ROMID BOND ]
+"43
+[s S266 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S266 si4355_reply_TEST_DATA_map TEST0 TEST1 TEST2 TEST3 TEST4 TEST5 TEST6 TEST7 TEST8 TEST9 TESTA TESTB TESTC TESTD TESTE TESTF ]
+"27 C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h
+[u S260 `ul 1 `l 1 `S259 -> 2 `i `ui -> 2 `i `i -> 2 `i `uc -> 4 `i `c -> 4 `i ]
+[n S260 UU32 U32 S32 UU16 U16 S16 U8 S8 ]
+"62 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355_defs.h
+[s S267 `uc 1 `uc 1 `uc 1 `S259 1 `uc 1 `uc 1 `S260 1 ]
+[n S267 si4355_reply_FUNC_INFO_map REVEXT REVBRANCH REVINT PATCH FUNC SVNFLAGS SVNREV ]
+"72
+[s S268 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S268 si4355_reply_GET_PROPERTY_map DATA0 DATA1 DATA2 DATA3 DATA4 DATA5 DATA6 DATA7 DATA8 DATA9 DATA10 DATA11 DATA12 DATA13 DATA14 DATA15 ]
+"91
+[s S269 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S269 si4355_reply_GPIO_PIN_CFG_map GPIO0 GPIO1 GPIO2 GPIO3 NIRQ SDO GEN_CONFIG ]
+"101
+[s S270 `uc 1 `uc 1 ]
+[n S270 si4355_reply_FIFO_INFO_map RX_FIFO_COUNT TX_FIFO_SPACE ]
+"106
+[s S271 `uc 1 ]
+[n S271 si4355_reply_EZCONFIG_CHECK_map RESULT ]
+"110
+[s S272 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S272 si4355_reply_GET_INT_STATUS_map INT_PEND INT_STATUS PH_PEND PH_STATUS MODEM_PEND MODEM_STATUS CHIP_PEND CHIP_STATUS ]
+"121
+[s S273 `uc 1 `uc 1 ]
+[n S273 si4355_reply_REQUEST_DEVICE_STATE_map CURR_STATE CURRENT_CHANNEL ]
+"126
+[s S274 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S274 si4355_reply_READ_CMD_BUFF_map CMD_BUFF0 CMD_BUFF1 CMD_BUFF2 CMD_BUFF3 CMD_BUFF4 CMD_BUFF5 CMD_BUFF6 CMD_BUFF7 CMD_BUFF8 CMD_BUFF9 CMD_BUFF10 CMD_BUFF11 CMD_BUFF12 CMD_BUFF13 CMD_BUFF14 CMD_BUFF15 ]
+"145
+[s S275 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S275 si4355_reply_FRR_A_READ_map FRR_A_VALUE FRR_B_VALUE FRR_C_VALUE FRR_D_VALUE ]
+"152
+[s S276 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S276 si4355_reply_FRR_B_READ_map FRR_B_VALUE FRR_C_VALUE FRR_D_VALUE FRR_A_VALUE ]
+"159
+[s S277 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S277 si4355_reply_FRR_C_READ_map FRR_C_VALUE FRR_D_VALUE FRR_A_VALUE FRR_B_VALUE ]
+"166
+[s S278 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S278 si4355_reply_FRR_D_READ_map FRR_D_VALUE FRR_A_VALUE FRR_B_VALUE FRR_C_VALUE ]
+"175
+[u S263 `uc -> 16 `i `S264 1 `S265 1 `S266 1 `S267 1 `S268 1 `S269 1 `S270 1 `S271 1 `S272 1 `S273 1 `S274 1 `S275 1 `S276 1 `S277 1 `S278 1 ]
+[n S263 si4355_cmd_reply_union RAW GENERIC PART_INFO TEST_DATA FUNC_INFO GET_PROPERTY GPIO_PIN_CFG FIFO_INFO EZCONFIG_CHECK GET_INT_STATUS REQUEST_DEVICE_STATE READ_CMD_BUFF FRR_A_READ FRR_B_READ FRR_C_READ FRR_D_READ ]
+"4 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
+[v _Si4355Cmd `S263 ~T0 @X0 0 e ]
+"46
+[v _si4355_read_rx_fifo `(v ~T0 @X0 0 ef2`uc`*uc ]
+"36
+[v _si4355_start_rx `(v ~T0 @X0 0 ef6`uc`uc`ui`uc`uc`uc ]
+"31
+[v _si4355_ezconfig_check `(v ~T0 @X0 0 ef1`ui ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2044,237 +2104,727 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
-[; ;__size_t.h: 4: typedef unsigned size_t;
-[; ;stdarg.h: 7: typedef void * va_list[1];
-[; ;stdarg.h: 10: extern void * __va_start(void);
-[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
-[; ;stdio.h: 43: struct __prbuf
-[; ;stdio.h: 44: {
-[; ;stdio.h: 45: char * ptr;
-[; ;stdio.h: 46: void (* func)(char);
-[; ;stdio.h: 47: };
-[; ;errno.h: 29: extern int errno;
-[; ;conio.h: 12: extern void init_uart(void);
-[; ;conio.h: 14: extern char getch(void);
-[; ;conio.h: 15: extern char getche(void);
-[; ;conio.h: 16: extern void putch(char);
-[; ;conio.h: 17: extern void ungetch(char);
-[; ;conio.h: 19: extern __bit kbhit(void);
-[; ;conio.h: 23: extern char * cgets(char *);
-[; ;conio.h: 24: extern void cputs(const char *);
-[; ;stdio.h: 88: extern int cprintf(char *, ...);
-[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-[; ;stdio.h: 183: extern char * gets(char *);
-[; ;stdio.h: 184: extern int puts(const char *);
-[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
-[; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;stdlib.h: 7: typedef unsigned short wchar_t;
-[; ;stdlib.h: 15: typedef struct {
-[; ;stdlib.h: 16: int rem;
-[; ;stdlib.h: 17: int quot;
-[; ;stdlib.h: 18: } div_t;
-[; ;stdlib.h: 19: typedef struct {
-[; ;stdlib.h: 20: unsigned rem;
-[; ;stdlib.h: 21: unsigned quot;
-[; ;stdlib.h: 22: } udiv_t;
-[; ;stdlib.h: 23: typedef struct {
-[; ;stdlib.h: 24: long quot;
-[; ;stdlib.h: 25: long rem;
-[; ;stdlib.h: 26: } ldiv_t;
-[; ;stdlib.h: 27: typedef struct {
-[; ;stdlib.h: 28: unsigned long quot;
-[; ;stdlib.h: 29: unsigned long rem;
-[; ;stdlib.h: 30: } uldiv_t;
-[; ;stdlib.h: 53: extern double atof(const char *);
-[; ;stdlib.h: 54: extern double strtod(const char *, const char **);
-[; ;stdlib.h: 55: extern int atoi(const char *);
-[; ;stdlib.h: 56: extern unsigned xtoi(const char *);
-[; ;stdlib.h: 57: extern long atol(const char *);
-[; ;stdlib.h: 58: extern long strtol(const char *, char **, int);
-[; ;stdlib.h: 60: extern int rand(void);
-[; ;stdlib.h: 61: extern void srand(unsigned int);
-[; ;stdlib.h: 62: extern void * calloc(size_t, size_t);
-[; ;stdlib.h: 63: extern div_t div(int numer, int denom);
-[; ;stdlib.h: 64: extern udiv_t udiv(unsigned numer, unsigned denom);
-[; ;stdlib.h: 65: extern ldiv_t ldiv(long numer, long denom);
-[; ;stdlib.h: 66: extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
-[; ;stdlib.h: 67: extern unsigned long _lrotl(unsigned long value, unsigned int shift);
-[; ;stdlib.h: 68: extern unsigned long _lrotr(unsigned long value, unsigned int shift);
-[; ;stdlib.h: 69: extern unsigned int _rotl(unsigned int value, unsigned int shift);
-[; ;stdlib.h: 70: extern unsigned int _rotr(unsigned int value, unsigned int shift);
-[; ;stdlib.h: 75: extern void * malloc(size_t);
-[; ;stdlib.h: 76: extern void free(void *);
-[; ;stdlib.h: 77: extern void * realloc(void *, size_t);
-[; ;stdlib.h: 86: extern int atexit(void (*)(void));
-[; ;stdlib.h: 87: extern char * getenv(const char *);
-[; ;stdlib.h: 88: extern char ** environ;
-[; ;stdlib.h: 89: extern int system(char *);
-[; ;stdlib.h: 90: extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
-[; ;stdlib.h: 91: extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
-[; ;stdlib.h: 92: extern int abs(int);
-[; ;stdlib.h: 93: extern long labs(long);
-[; ;stdlib.h: 95: extern char * itoa(char * buf, int val, int base);
-[; ;stdlib.h: 96: extern char * utoa(char * buf, unsigned val, int base);
-[; ;stdlib.h: 101: extern char * ltoa(char * buf, long val, int base);
-[; ;stdlib.h: 102: extern char * ultoa(char * buf, unsigned long val, int base);
-[; ;stdlib.h: 104: extern char * ftoa(float f, int * status);
-[; ;spi.h: 14: void SPI_Init( void );
-[; ;spi.h: 15: void SPI_Write_Enable(void);
-[; ;spi.h: 16: void SPI_Write(unsigned char data);
-[; ;spi.h: 17: unsigned char SPI_Read( void );
-"8 C:/Users/Matthew Fonken/MPLABXProjects/brx.X/main.c
-[p x FOSC=INTOSC ]
-"9
-[p x WDTE=OFF ]
-"10
-[p x PWRTE=OFF ]
-"11
-[p x MCLRE=ON ]
-"12
-[p x CP=OFF ]
-"13
-[p x CPD=OFF ]
-"14
-[p x BOREN=ON ]
-"15
-[p x CLKOUTEN=OFF ]
-"16
-[p x IESO=ON ]
-"17
-[p x FCMEN=ON ]
-"20
-[p x WRT=OFF ]
-"21
-[p x PLLEN=ON ]
-"22
-[p x STVREN=ON ]
-"23
-[p x BORV=LO ]
-"24
-[p x LVP=ON ]
-"33
-[v _counter `i ~T0 @X0 1 e ]
-[i _counter
--> 0 `i
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;types.h: 10: typedef unsigned char U8;
+[; ;types.h: 11: typedef unsigned char U8;
+[; ;types.h: 12: typedef unsigned int U16;
+[; ;types.h: 13: typedef unsigned long U32;
+[; ;types.h: 15: typedef signed char S8;
+[; ;types.h: 16: typedef signed int S16;
+[; ;types.h: 17: typedef signed long S32;
+[; ;types.h: 19: typedef union UU16
+[; ;types.h: 20: {
+[; ;types.h: 21: U16 U16;
+[; ;types.h: 22: S16 S16;
+[; ;types.h: 23: U8 U8[2];
+[; ;types.h: 24: S8 S8[2];
+[; ;types.h: 25: } UU16;
+[; ;types.h: 27: typedef union UU32
+[; ;types.h: 28: {
+[; ;types.h: 29: U32 U32;
+[; ;types.h: 30: S32 S32;
+[; ;types.h: 31: UU16 UU16[2];
+[; ;types.h: 32: U16 U16[2];
+[; ;types.h: 33: S16 S16[2];
+[; ;types.h: 34: U8 U8[4];
+[; ;types.h: 35: S8 S8[4];
+[; ;types.h: 36: } UU32;
+[; ;types.h: 38: typedef struct
+[; ;types.h: 39: {
+[; ;types.h: 40: U32 ChipID;
+[; ;types.h: 41: U8 Flags;
+[; ;types.h: 42: U16 RollingCounter;
+[; ;types.h: 43: } tRadioPacket;
+[; ;types.h: 45: typedef bool BIT;
+[; ;types.h: 47: typedef enum
+[; ;types.h: 48: {
+[; ;types.h: 49: STARTUP,
+[; ;types.h: 50: ARMED,
+[; ;types.h: 51: RECEIVING,
+[; ;types.h: 52: } states;
+[; ;config.h: 17: extern states STATE;
+[; ;radio.h: 10: typedef struct
+[; ;radio.h: 11: {
+[; ;radio.h: 12: U8 *Radio_ConfigurationArray;
+[; ;radio.h: 14: U8 Radio_ChannelNumber;
+[; ;radio.h: 15: U8 Radio_PacketLength;
+[; ;radio.h: 16: U8 Radio_State_After_Power_Up;
+[; ;radio.h: 18: U16 Radio_Delay_Cnt_After_Reset;
+[; ;radio.h: 19: } tRadioConfiguration;
+[; ;radio.h: 24: extern tRadioConfiguration *pRadioConfiguration;
+[; ;radio.h: 27: extern const U8 Radio_Configuration_Data_Array[];
+[; ;radio.h: 28: extern tRadioPacket RadioPacket;
+[; ;radio.h: 33: void Radio_Init(void);
+[; ;radio.h: 34: void Radio_SetChip();
+[; ;radio.h: 35: U8 Radio_CheckReceived(void);
+[; ;radio.h: 36: void Radio_StartRX(U8);
+"9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
+[v _radioCmd `uc ~T0 @X0 -> 16 `ui e ]
+[; ;comm.h: 9: U8 radioCmd[16u];
+[; ;comm.h: 11: BIT radio_comm_GetResp(U8 byteCount, U8* pData);
+[; ;comm.h: 12: U8 radio_comm_PollCTS(void);
+[; ;comm.h: 13: void radio_comm_SendCmd(U8 byteCount, U8* pData);
+[; ;comm.h: 14: U8 radio_comm_SendCmdGetResp(U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData);
+[; ;comm.h: 15: void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+[; ;comm.h: 16: void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
+[; ;si4355.h: 4: extern union si4355_cmd_reply_union Si4355Cmd;
+[; ;si4355.h: 5: extern U8 radioCmd[16];
+[; ;si4355.h: 9: enum
+[; ;si4355.h: 10: {
+[; ;si4355.h: 11: SUCCESS,
+[; ;si4355.h: 12: NO_PATCH,
+[; ;si4355.h: 13: CTS_TIMEOUT,
+[; ;si4355.h: 14: PATCH_FAIL,
+[; ;si4355.h: 15: COMMAND_ERROR
+[; ;si4355.h: 16: };
+[; ;si4355.h: 18: U8 si4355_configuration_init(U8 * pSetPropCmd);
+[; ;si4355.h: 20: void si4355_reset(void);
+[; ;si4355.h: 21: void si4355_nop(void);
+[; ;si4355.h: 22: void si4355_part_info(void);
+[; ;si4355.h: 23: void si4355_power_up(U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ);
+[; ;si4355.h: 25: void si4355_func_info(void);
+[; ;si4355.h: 26: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
+[; ;si4355.h: 27: void si4355_get_property(U8 GROUP, U8 NUM_PROPS, U8 START_PROP);
+[; ;si4355.h: 28: void si4355_gpio_pin_cfg(U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG);
+[; ;si4355.h: 29: void si4355_fifo_info(U8 FIFO);
+[; ;si4355.h: 30: void si4355_write_ezconfig_array(U8 numBytes, U8* pEzConfigArray);
+[; ;si4355.h: 31: void si4355_ezconfig_check(U16 CHECKSUM);
+[; ;si4355.h: 33: void si4355_get_int_status(U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND);
+[; ;si4355.h: 35: void si4355_start_tx(U8 CHANNEL, U8 CONDITION, U16 TX_LEN);
+[; ;si4355.h: 36: void si4355_start_rx(U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3);
+[; ;si4355.h: 37: void si4355_request_device_state(void);
+[; ;si4355.h: 38: void si4355_change_state(U8 NEXT_STATE1);
+[; ;si4355.h: 39: void si4355_read_cmd_buff(void);
+[; ;si4355.h: 40: void si4355_frr_a_read(U8 respByteCount);
+[; ;si4355.h: 41: void si4355_frr_b_read(U8 respByteCount);
+[; ;si4355.h: 42: void si4355_frr_c_read(U8 respByteCount);
+[; ;si4355.h: 43: void si4355_frr_d_read(U8 respByteCount);
+[; ;si4355.h: 45: void si4355_write_tx_fifo( U8 numBytes, U8* pData );
+[; ;si4355.h: 46: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
+[; ;si4355_defs.h: 14: struct si4355_reply_GENERIC_map {
+[; ;si4355_defs.h: 15: U8 REPLY1;
+[; ;si4355_defs.h: 16: U8 REPLY2;
+[; ;si4355_defs.h: 17: U8 REPLY3;
+[; ;si4355_defs.h: 18: U8 REPLY4;
+[; ;si4355_defs.h: 19: U8 REPLY5;
+[; ;si4355_defs.h: 20: U8 REPLY6;
+[; ;si4355_defs.h: 21: U8 REPLY7;
+[; ;si4355_defs.h: 22: U8 REPLY8;
+[; ;si4355_defs.h: 23: U8 REPLY9;
+[; ;si4355_defs.h: 24: U8 REPLY10;
+[; ;si4355_defs.h: 25: U8 REPLY11;
+[; ;si4355_defs.h: 26: U8 REPLY12;
+[; ;si4355_defs.h: 27: U8 REPLY13;
+[; ;si4355_defs.h: 28: U8 REPLY14;
+[; ;si4355_defs.h: 29: U8 REPLY15;
+[; ;si4355_defs.h: 30: U8 REPLY16;
+[; ;si4355_defs.h: 31: };
+[; ;si4355_defs.h: 33: struct si4355_reply_PART_INFO_map {
+[; ;si4355_defs.h: 34: U8 CHIPREV;
+[; ;si4355_defs.h: 35: UU16 PART;
+[; ;si4355_defs.h: 36: U8 PBUILD;
+[; ;si4355_defs.h: 37: UU16 ID;
+[; ;si4355_defs.h: 38: U8 CUSTOMER;
+[; ;si4355_defs.h: 39: U8 ROMID;
+[; ;si4355_defs.h: 40: U8 BOND;
+[; ;si4355_defs.h: 41: };
+[; ;si4355_defs.h: 43: struct si4355_reply_TEST_DATA_map {
+[; ;si4355_defs.h: 44: U8 TEST0;
+[; ;si4355_defs.h: 45: U8 TEST1;
+[; ;si4355_defs.h: 46: U8 TEST2;
+[; ;si4355_defs.h: 47: U8 TEST3;
+[; ;si4355_defs.h: 48: U8 TEST4;
+[; ;si4355_defs.h: 49: U8 TEST5;
+[; ;si4355_defs.h: 50: U8 TEST6;
+[; ;si4355_defs.h: 51: U8 TEST7;
+[; ;si4355_defs.h: 52: U8 TEST8;
+[; ;si4355_defs.h: 53: U8 TEST9;
+[; ;si4355_defs.h: 54: U8 TESTA;
+[; ;si4355_defs.h: 55: U8 TESTB;
+[; ;si4355_defs.h: 56: U8 TESTC;
+[; ;si4355_defs.h: 57: U8 TESTD;
+[; ;si4355_defs.h: 58: U8 TESTE;
+[; ;si4355_defs.h: 59: U8 TESTF;
+[; ;si4355_defs.h: 60: };
+[; ;si4355_defs.h: 62: struct si4355_reply_FUNC_INFO_map {
+[; ;si4355_defs.h: 63: U8 REVEXT;
+[; ;si4355_defs.h: 64: U8 REVBRANCH;
+[; ;si4355_defs.h: 65: U8 REVINT;
+[; ;si4355_defs.h: 66: UU16 PATCH;
+[; ;si4355_defs.h: 67: U8 FUNC;
+[; ;si4355_defs.h: 68: U8 SVNFLAGS;
+[; ;si4355_defs.h: 69: UU32 SVNREV;
+[; ;si4355_defs.h: 70: };
+[; ;si4355_defs.h: 72: struct si4355_reply_GET_PROPERTY_map {
+[; ;si4355_defs.h: 73: U8 DATA0;
+[; ;si4355_defs.h: 74: U8 DATA1;
+[; ;si4355_defs.h: 75: U8 DATA2;
+[; ;si4355_defs.h: 76: U8 DATA3;
+[; ;si4355_defs.h: 77: U8 DATA4;
+[; ;si4355_defs.h: 78: U8 DATA5;
+[; ;si4355_defs.h: 79: U8 DATA6;
+[; ;si4355_defs.h: 80: U8 DATA7;
+[; ;si4355_defs.h: 81: U8 DATA8;
+[; ;si4355_defs.h: 82: U8 DATA9;
+[; ;si4355_defs.h: 83: U8 DATA10;
+[; ;si4355_defs.h: 84: U8 DATA11;
+[; ;si4355_defs.h: 85: U8 DATA12;
+[; ;si4355_defs.h: 86: U8 DATA13;
+[; ;si4355_defs.h: 87: U8 DATA14;
+[; ;si4355_defs.h: 88: U8 DATA15;
+[; ;si4355_defs.h: 89: };
+[; ;si4355_defs.h: 91: struct si4355_reply_GPIO_PIN_CFG_map {
+[; ;si4355_defs.h: 92: U8 GPIO0;
+[; ;si4355_defs.h: 93: U8 GPIO1;
+[; ;si4355_defs.h: 94: U8 GPIO2;
+[; ;si4355_defs.h: 95: U8 GPIO3;
+[; ;si4355_defs.h: 96: U8 NIRQ;
+[; ;si4355_defs.h: 97: U8 SDO;
+[; ;si4355_defs.h: 98: U8 GEN_CONFIG;
+[; ;si4355_defs.h: 99: };
+[; ;si4355_defs.h: 101: struct si4355_reply_FIFO_INFO_map {
+[; ;si4355_defs.h: 102: U8 RX_FIFO_COUNT;
+[; ;si4355_defs.h: 103: U8 TX_FIFO_SPACE;
+[; ;si4355_defs.h: 104: };
+[; ;si4355_defs.h: 106: struct si4355_reply_EZCONFIG_CHECK_map {
+[; ;si4355_defs.h: 107: U8 RESULT;
+[; ;si4355_defs.h: 108: };
+[; ;si4355_defs.h: 110: struct si4355_reply_GET_INT_STATUS_map {
+[; ;si4355_defs.h: 111: U8 INT_PEND;
+[; ;si4355_defs.h: 112: U8 INT_STATUS;
+[; ;si4355_defs.h: 113: U8 PH_PEND;
+[; ;si4355_defs.h: 114: U8 PH_STATUS;
+[; ;si4355_defs.h: 115: U8 MODEM_PEND;
+[; ;si4355_defs.h: 116: U8 MODEM_STATUS;
+[; ;si4355_defs.h: 117: U8 CHIP_PEND;
+[; ;si4355_defs.h: 118: U8 CHIP_STATUS;
+[; ;si4355_defs.h: 119: };
+[; ;si4355_defs.h: 121: struct si4355_reply_REQUEST_DEVICE_STATE_map {
+[; ;si4355_defs.h: 122: U8 CURR_STATE;
+[; ;si4355_defs.h: 123: U8 CURRENT_CHANNEL;
+[; ;si4355_defs.h: 124: };
+[; ;si4355_defs.h: 126: struct si4355_reply_READ_CMD_BUFF_map {
+[; ;si4355_defs.h: 127: U8 CMD_BUFF0;
+[; ;si4355_defs.h: 128: U8 CMD_BUFF1;
+[; ;si4355_defs.h: 129: U8 CMD_BUFF2;
+[; ;si4355_defs.h: 130: U8 CMD_BUFF3;
+[; ;si4355_defs.h: 131: U8 CMD_BUFF4;
+[; ;si4355_defs.h: 132: U8 CMD_BUFF5;
+[; ;si4355_defs.h: 133: U8 CMD_BUFF6;
+[; ;si4355_defs.h: 134: U8 CMD_BUFF7;
+[; ;si4355_defs.h: 135: U8 CMD_BUFF8;
+[; ;si4355_defs.h: 136: U8 CMD_BUFF9;
+[; ;si4355_defs.h: 137: U8 CMD_BUFF10;
+[; ;si4355_defs.h: 138: U8 CMD_BUFF11;
+[; ;si4355_defs.h: 139: U8 CMD_BUFF12;
+[; ;si4355_defs.h: 140: U8 CMD_BUFF13;
+[; ;si4355_defs.h: 141: U8 CMD_BUFF14;
+[; ;si4355_defs.h: 142: U8 CMD_BUFF15;
+[; ;si4355_defs.h: 143: };
+[; ;si4355_defs.h: 145: struct si4355_reply_FRR_A_READ_map {
+[; ;si4355_defs.h: 146: U8 FRR_A_VALUE;
+[; ;si4355_defs.h: 147: U8 FRR_B_VALUE;
+[; ;si4355_defs.h: 148: U8 FRR_C_VALUE;
+[; ;si4355_defs.h: 149: U8 FRR_D_VALUE;
+[; ;si4355_defs.h: 150: };
+[; ;si4355_defs.h: 152: struct si4355_reply_FRR_B_READ_map {
+[; ;si4355_defs.h: 153: U8 FRR_B_VALUE;
+[; ;si4355_defs.h: 154: U8 FRR_C_VALUE;
+[; ;si4355_defs.h: 155: U8 FRR_D_VALUE;
+[; ;si4355_defs.h: 156: U8 FRR_A_VALUE;
+[; ;si4355_defs.h: 157: };
+[; ;si4355_defs.h: 159: struct si4355_reply_FRR_C_READ_map {
+[; ;si4355_defs.h: 160: U8 FRR_C_VALUE;
+[; ;si4355_defs.h: 161: U8 FRR_D_VALUE;
+[; ;si4355_defs.h: 162: U8 FRR_A_VALUE;
+[; ;si4355_defs.h: 163: U8 FRR_B_VALUE;
+[; ;si4355_defs.h: 164: };
+[; ;si4355_defs.h: 166: struct si4355_reply_FRR_D_READ_map {
+[; ;si4355_defs.h: 167: U8 FRR_D_VALUE;
+[; ;si4355_defs.h: 168: U8 FRR_A_VALUE;
+[; ;si4355_defs.h: 169: U8 FRR_B_VALUE;
+[; ;si4355_defs.h: 170: U8 FRR_C_VALUE;
+[; ;si4355_defs.h: 171: };
+[; ;si4355_defs.h: 175: union si4355_cmd_reply_union {
+[; ;si4355_defs.h: 176: U8 RAW[16];
+[; ;si4355_defs.h: 177: struct si4355_reply_GENERIC_map GENERIC;
+[; ;si4355_defs.h: 178: struct si4355_reply_PART_INFO_map PART_INFO;
+[; ;si4355_defs.h: 179: struct si4355_reply_TEST_DATA_map TEST_DATA;
+[; ;si4355_defs.h: 180: struct si4355_reply_FUNC_INFO_map FUNC_INFO;
+[; ;si4355_defs.h: 181: struct si4355_reply_GET_PROPERTY_map GET_PROPERTY;
+[; ;si4355_defs.h: 182: struct si4355_reply_GPIO_PIN_CFG_map GPIO_PIN_CFG;
+[; ;si4355_defs.h: 183: struct si4355_reply_FIFO_INFO_map FIFO_INFO;
+[; ;si4355_defs.h: 184: struct si4355_reply_EZCONFIG_CHECK_map EZCONFIG_CHECK;
+[; ;si4355_defs.h: 185: struct si4355_reply_GET_INT_STATUS_map GET_INT_STATUS;
+[; ;si4355_defs.h: 186: struct si4355_reply_REQUEST_DEVICE_STATE_map REQUEST_DEVICE_STATE;
+[; ;si4355_defs.h: 187: struct si4355_reply_READ_CMD_BUFF_map READ_CMD_BUFF;
+[; ;si4355_defs.h: 188: struct si4355_reply_FRR_A_READ_map FRR_A_READ;
+[; ;si4355_defs.h: 189: struct si4355_reply_FRR_B_READ_map FRR_B_READ;
+[; ;si4355_defs.h: 190: struct si4355_reply_FRR_C_READ_map FRR_C_READ;
+[; ;si4355_defs.h: 191: struct si4355_reply_FRR_D_READ_map FRR_D_READ;
+[; ;si4355_defs.h: 192: };
+"9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
+[v _Radio_Configuration_Data_Array `Cuc ~T0 @X0 -> 0 `x e ]
+[i _Radio_Configuration_Data_Array
+:U ..
+-> -> 7 `i `uc
+-> -> 2 `i `uc
+-> -> 1 `i `uc
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 201 `i `uc
+-> -> 195 `i `uc
+-> -> 128 `i `uc
+-> -> 6 `i `uc
+-> -> 17 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 200 `i `uc
+-> -> 8 `i `uc
+-> -> 17 `i `uc
+-> -> 2 `i `uc
+-> -> 4 `i `uc
+-> -> 0 `i `uc
+-> -> 8 `i `uc
+-> -> 6 `i `uc
+-> -> 4 `i `uc
+-> -> 10 `i `uc
+-> -> 5 `i `uc
+-> -> 17 `i `uc
+-> -> 36 `i `uc
+-> -> 1 `i `uc
+-> -> 3 `i `uc
+-> -> 82 `i `uc
+-> -> 114 `i `uc
+-> -> 102 `i `uc
+-> -> 150 `i `uc
+-> -> 112 `i `uc
+-> -> 172 `i `uc
+-> -> 87 `i `uc
+-> -> 159 `i `uc
+-> -> 140 `i `uc
+-> -> 102 `i `uc
+-> -> 127 `i `uc
+-> -> 164 `i `uc
+-> -> 219 `i `uc
+-> -> 45 `i `uc
+-> -> 32 `i `uc
+-> -> 241 `i `uc
+-> -> 85 `i `uc
+-> -> 6 `i `uc
+-> -> 71 `i `uc
+-> -> 125 `i `uc
+-> -> 147 `i `uc
+-> -> 79 `i `uc
+-> -> 36 `i `uc
+-> -> 66 `i `uc
+-> -> 156 `i `uc
+-> -> 175 `i `uc
+-> -> 201 `i `uc
+-> -> 159 `i `uc
+-> -> 124 `i `uc
+-> -> 105 `i `uc
+-> -> 216 `i `uc
+-> -> 94 `i `uc
+-> -> 62 `i `uc
+-> -> 106 `i `uc
+-> -> 210 `i `uc
+-> -> 111 `i `uc
+-> -> 140 `i `uc
+-> -> 178 `i `uc
+-> -> 39 `i `uc
+-> -> 215 `i `uc
+-> -> 7 `i `uc
+-> -> 188 `i `uc
+-> -> 243 `i `uc
+-> -> 86 `i `uc
+-> -> 212 `i `uc
+-> -> 36 `i `uc
+-> -> 5 `i `uc
+-> -> 242 `i `uc
+-> -> 235 `i `uc
+-> -> 178 `i `uc
+-> -> 126 `i `uc
+-> -> 105 `i `uc
+-> -> 127 `i `uc
+-> -> 212 `i `uc
+-> -> 101 `i `uc
+-> -> 201 `i `uc
+-> -> 85 `i `uc
+-> -> 54 `i `uc
+-> -> 74 `i `uc
+-> -> 251 `i `uc
+-> -> 82 `i `uc
+-> -> 93 `i `uc
+-> -> 105 `i `uc
+-> -> 79 `i `uc
+-> -> 153 `i `uc
+-> -> 193 `i `uc
+-> -> 210 `i `uc
+-> -> 95 `i `uc
+-> -> 214 `i `uc
+-> -> 239 `i `uc
+-> -> 197 `i `uc
+-> -> 248 `i `uc
+-> -> 135 `i `uc
+-> -> 15 `i `uc
+-> -> 147 `i `uc
+-> -> 226 `i `uc
+-> -> 7 `i `uc
+-> -> 119 `i `uc
+-> -> 14 `i `uc
+-> -> 16 `i `uc
+-> -> 43 `i `uc
+-> -> 179 `i `uc
+-> -> 57 `i `uc
+-> -> 52 `i `uc
+-> -> 42 `i `uc
+-> -> 102 `i `uc
+-> -> 32 `i `uc
+-> -> 32 `i `uc
+-> -> 13 `i `uc
+-> -> 76 `i `uc
+-> -> 38 `i `uc
+-> -> 132 `i `uc
+-> -> 233 `i `uc
+-> -> 231 `i `uc
+-> -> 245 `i `uc
+-> -> 114 `i `uc
+-> -> 186 `i `uc
+-> -> 121 `i `uc
+-> -> 44 `i `uc
+-> -> 76 `i `uc
+-> -> 237 `i `uc
+-> -> 134 `i `uc
+-> -> 179 `i `uc
+-> -> 152 `i `uc
+-> -> 211 `i `uc
+-> -> 159 `i `uc
+-> -> 59 `i `uc
+-> -> 39 `i `uc
+-> -> 188 `i `uc
+-> -> 10 `i `uc
+-> -> 25 `i `uc
+-> -> 24 `i `uc
+-> -> 133 `i `uc
+-> -> 133 `i `uc
+-> -> 5 `i `uc
+-> -> 22 `i `uc
+-> -> 1 `i `uc
+-> -> 0 `i `uc
+-> -> 112 `i `uc
+-> -> 102 `i `uc
+-> -> 103 `i `uc
+-> -> 78 `i `uc
+-> -> 246 `i `uc
+-> -> 9 `i `uc
+-> -> 101 `i `uc
+-> -> 146 `i `uc
+-> -> 185 `i `uc
+-> -> 12 `i `uc
+-> -> 143 `i `uc
+-> -> 44 `i `uc
+-> -> 154 `i `uc
+-> -> 56 `i `uc
+-> -> 197 `i `uc
+-> -> 10 `i `uc
+-> -> 119 `i `uc
+-> -> 207 `i `uc
+-> -> 128 `i `uc
+-> -> 5 `i `uc
+-> -> 220 `i `uc
+-> -> 40 `i `uc
+-> -> 218 `i `uc
+-> -> 15 `i `uc
+-> -> 190 `i `uc
+-> -> 126 `i `uc
+-> -> 190 `i `uc
+-> -> 198 `i `uc
+-> -> 152 `i `uc
+-> -> 26 `i `uc
+-> -> 31 `i `uc
+-> -> 46 `i `uc
+-> -> 36 `i `uc
+-> -> 157 `i `uc
+-> -> 183 `i `uc
+-> -> 242 `i `uc
+-> -> 114 `i `uc
+-> -> 104 `i `uc
+-> -> 26 `i `uc
+-> -> 4 `i `uc
+-> -> 242 `i `uc
+-> -> 51 `i `uc
+-> -> 77 `i `uc
+-> -> 40 `i `uc
+-> -> 123 `i `uc
+-> -> 30 `i `uc
+-> -> 86 `i `uc
+-> -> 158 `i `uc
+-> -> 25 `i `uc
+-> -> 211 `i `uc
+-> -> 132 `i `uc
+-> -> 117 `i `uc
+-> -> 43 `i `uc
+-> -> 63 `i `uc
+-> -> 198 `i `uc
+-> -> 61 `i `uc
+-> -> 117 `i `uc
+-> -> 65 `i `uc
+-> -> 188 `i `uc
+-> -> 38 `i `uc
+-> -> 252 `i `uc
+-> -> 40 `i `uc
+-> -> 252 `i `uc
+-> -> 214 `i `uc
+-> -> 95 `i `uc
+-> -> 203 `i `uc
+-> -> 115 `i `uc
+-> -> 178 `i `uc
+-> -> 42 `i `uc
+-> -> 161 `i `uc
+-> -> 56 `i `uc
+-> -> 119 `i `uc
+-> -> 0 `i `uc
+-> -> 195 `i `uc
+-> -> 22 `i `uc
+-> -> 217 `i `uc
+-> -> 62 `i `uc
+-> -> 160 `i `uc
+-> -> 67 `i `uc
+-> -> 97 `i `uc
+-> -> 101 `i `uc
+-> -> 239 `i `uc
+-> -> 61 `i `uc
+-> -> 206 `i `uc
+-> -> 128 `i `uc
+-> -> 86 `i `uc
+-> -> 249 `i `uc
+-> -> 207 `i `uc
+-> -> 24 `i `uc
+-> -> 5 `i `uc
+-> -> 73 `i `uc
+-> -> 131 `i `uc
+-> -> 7 `i `uc
+-> -> 130 `i `uc
+-> -> 69 `i `uc
+-> -> 246 `i `uc
+-> -> 7 `i `uc
+-> -> 178 `i `uc
+-> -> 188 `i `uc
+-> -> 76 `i `uc
+-> -> 138 `i `uc
+-> -> 102 `i `uc
+-> -> 111 `i `uc
+-> -> 27 `i `uc
+-> -> 158 `i `uc
+-> -> 239 `i `uc
+-> -> 36 `i `uc
+-> -> 151 `i `uc
+-> -> 10 `i `uc
+-> -> 176 `i `uc
+-> -> 158 `i `uc
+-> -> 207 `i `uc
+-> -> 73 `i `uc
+-> -> 3 `i `uc
+-> -> 25 `i `uc
+-> -> 72 `i `uc
+-> -> 83 `i `uc
+-> -> 8 `i `uc
+-> -> 19 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 96 `i `uc
+-> -> 0 `i `uc
+..
 ]
-[; ;main.c: 33: int counter = 0;
-"35
-[v _TMR_Init `(v ~T0 @X0 1 ef ]
-"36
+[; ;radio.c: 9: U8 const Radio_Configuration_Data_Array[] = { 0x07, 0x02, 0x01, 0x00, 0x01, 0xC9, 0xC3, 0x80, 0x06, 0x11, 0x01, 0x02, 0x00, 0x01, 0xC8, 0x08, 0x11, 0x02, 0x04, 0x00, 0x08, 0x06, 0x04, 0x0A, 0x05, 0x11, 0x24, 0x01, 0x03, 0x52, 0x72, 0x66, 0x96, 0x70, 
+"10
+[v _RadioConfiguration `S262 ~T0 @X0 1 e ]
+[i _RadioConfiguration
+:U ..
+:U ..
+-> &U _Radio_Configuration_Data_Array `*uc
+-> -> 0 `i `uc
+-> -> 7 `i `uc
+-> -> 3 `i `uc
+-> 61440 `ui
+..
+..
+]
+[; ;radio.c: 10: tRadioConfiguration RadioConfiguration = { Radio_Configuration_Data_Array, 0x00, 0x07, 0x03, 0xF000 };
+"11
+[v _pRadioConfiguration `*S262 ~T0 @X0 1 e ]
+[i _pRadioConfiguration
+&U _RadioConfiguration
+]
+[; ;radio.c: 11: tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
+"12
+[v _RadioPacket `S261 ~T0 @X0 1 e ]
+[; ;radio.c: 12: tRadioPacket RadioPacket;
+[; ;radio.c: 13: void Radio_PowerUp(void);
+[; ;radio.c: 14: U8 bRadio_Check_Ezconfig(U16);
+"16
+[v _Radio_PowerUp `(v ~T0 @X0 1 ef ]
+"17
 {
-[; ;main.c: 35: void TMR_Init( void )
-[; ;main.c: 36: {
-[e :U _TMR_Init ]
+[; ;radio.c: 16: void Radio_PowerUp(void)
+[; ;radio.c: 17: {
+[e :U _Radio_PowerUp ]
 [f ]
-[; ;main.c: 37: OPTION_REG = 0xC7;
-"37
-[e = _OPTION_REG -> -> 199 `i `uc ]
-[; ;main.c: 38: TMR0 = 0xFF;
-"38
-[e = _TMR0 -> -> 255 `i `uc ]
-[; ;main.c: 39: TMR0IE = 1;
-"39
-[e = _TMR0IE -> -> 1 `i `b ]
-[; ;main.c: 40: (GIE = 1);
-"40
-[e = _GIE -> -> 1 `i `b ]
-[; ;main.c: 41: }
-"41
-[e :UE 264 ]
+"18
+[v _wDelay `ui ~T0 @X0 1 a ]
+[; ;radio.c: 18: U16 wDelay = 0u;
+[e = _wDelay -> 0 `ui ]
+[; ;radio.c: 20: si4355_reset();
+"20
+[e ( _si4355_reset ..  ]
+[; ;radio.c: 21: for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
+"21
+{
+[e $U 283  ]
+[e :U 280 ]
+[e ++ _wDelay -> -> 1 `i `ui ]
+[e :U 283 ]
+[e $ < _wDelay . *U _pRadioConfiguration 4 280  ]
+[e :U 281 ]
 }
+[; ;radio.c: 22: radio_comm_PollCTS();
+"22
+[e ( _radio_comm_PollCTS ..  ]
+[; ;radio.c: 23: }
+"23
+[e :UE 279 ]
+}
+"25
+[v _Radio_Init `(v ~T0 @X0 1 ef ]
+"26
+{
+[; ;radio.c: 25: void Radio_Init(void)
+[; ;radio.c: 26: {
+[e :U _Radio_Init ]
+[f ]
+[; ;radio.c: 28: Radio_PowerUp();
+"28
+[e ( _Radio_PowerUp ..  ]
+[; ;radio.c: 31: while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
+"31
+[e $U 285  ]
+[e :U 286 ]
+[; ;radio.c: 32: {
+"32
+{
+[; ;radio.c: 34: Radio_PowerUp();
+"34
+[e ( _Radio_PowerUp ..  ]
+"35
+}
+[e :U 285 ]
+"31
+[e $ != -> . `E2132 0 `i -> ( _si4355_configuration_init (1 . *U _pRadioConfiguration 0 `i 286  ]
+[e :U 287 ]
+[; ;radio.c: 35: }
+[; ;radio.c: 38: si4355_get_int_status(0u, 0u, 0u);
+"38
+[e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
+[; ;radio.c: 39: }
+"39
+[e :UE 284 ]
+}
+"41
+[v _Radio_CheckReceived `(uc ~T0 @X0 1 ef ]
+"42
+{
+[; ;radio.c: 41: U8 Radio_CheckReceived(void)
+[; ;radio.c: 42: {
+[e :U _Radio_CheckReceived ]
+[f ]
+[; ;radio.c: 43: if( !RA3 )
 "43
-[v _main `(v ~T0 @X0 1 ef ]
+[e $ ! ! _RA3 289  ]
+[; ;radio.c: 44: {
 "44
 {
-[; ;main.c: 43: void main( void )
-[; ;main.c: 44: {
-[e :U _main ]
-[f ]
-[; ;main.c: 45: TRISA = ~( ( 1 << 0x00 ) | ( 1 << 0x01) | ( 1 << 0x04 ) );
-"45
-[e = _TRISA -> ~ | | << -> 1 `i -> 0 `i << -> 1 `i -> 1 `i << -> 1 `i -> 4 `i `uc ]
-[; ;main.c: 46: SPI_Init();
+[; ;radio.c: 46: si4355_get_int_status(0u, 0u, 0u);
 "46
-[e ( _SPI_Init ..  ]
-[; ;main.c: 47: TMR_Init();
-"47
-[e ( _TMR_Init ..  ]
-[; ;main.c: 48: SPI_Write(0x02);
-"48
-[e ( _SPI_Write (1 -> -> 2 `i `uc ]
-[; ;main.c: 49: while (1);
+[e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
+[; ;radio.c: 49: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
 "49
-[e :U 267 ]
-[e :U 266 ]
-[e $U 267  ]
-[e :U 268 ]
-[; ;main.c: 51: return;
-"51
-[e $UE 265  ]
-[; ;main.c: 52: }
-"52
-[e :UE 265 ]
-}
-[v F2251 `(v ~T0 @X0 1 tf ]
-"54
-[v _Timer0_ISR `IF2251 ~T0 @X0 1 e ]
-"55
+[e $ ! != & -> . . _Si4355Cmd 9 2 `i -> 16 `i -> 0 `i 290  ]
+[; ;radio.c: 50: {
+"50
 {
-[; ;main.c: 54: void interrupt Timer0_ISR(void)
-[; ;main.c: 55: {
-[e :U _Timer0_ISR ]
-[f ]
-[; ;main.c: 56: TMR0IF = 0;
+[; ;radio.c: 52: si4355_read_rx_fifo(sizeof(tRadioPacket), (U8 *) &RadioPacket);
+"52
+[e ( _si4355_read_rx_fifo (2 , -> -> # `S261 `ui `uc -> &U _RadioPacket `*uc ]
+[; ;radio.c: 54: return 1;
+"54
+[e ) -> -> 1 `i `uc ]
+[e $UE 288  ]
+"55
+}
+[e :U 290 ]
 "56
-[e = _TMR0IF -> -> 0 `i `b ]
-[; ;main.c: 57: counter++;
+}
+[e :U 289 ]
+[; ;radio.c: 55: }
+[; ;radio.c: 56: }
+[; ;radio.c: 57: return 0;
 "57
-[e ++ _counter -> 1 `i ]
-[; ;main.c: 58: RA0 = counter & 1;
+[e ) -> -> 0 `i `uc ]
+[e $UE 288  ]
+[; ;radio.c: 58: }
 "58
-[e = _RA0 -> & _counter -> 1 `i `b ]
-[; ;main.c: 60: if( counter & 1 )
+[e :UE 288 ]
+}
 "60
-[e $ ! != & _counter -> 1 `i -> 0 `i 270  ]
-[; ;main.c: 61: {
+[v _Radio_StartRX `(v ~T0 @X0 1 ef1`uc ]
 "61
 {
-[; ;main.c: 62: SPI_Write(0x44);
-"62
-[e ( _SPI_Write (1 -> -> 68 `i `uc ]
+[; ;radio.c: 60: void Radio_StartRX(U8 channel)
+[; ;radio.c: 61: {
+[e :U _Radio_StartRX ]
+"60
+[v _channel `uc ~T0 @X0 1 r1 ]
+"61
+[f ]
+[; ;radio.c: 63: si4355_get_int_status(0u, 0u, 0u);
 "63
-[v _c `uc ~T0 @X0 1 a ]
-[; ;main.c: 63: unsigned char c = SPI_Read();
-[e = _c ( _SPI_Read ..  ]
-[; ;main.c: 64: SPI_Read();
-"64
-[e ( _SPI_Read ..  ]
-[; ;main.c: 65: SPI_Read();
-"65
-[e ( _SPI_Read ..  ]
-[; ;main.c: 66: SPI_Write(0x02);
-"66
-[e ( _SPI_Write (1 -> -> 2 `i `uc ]
-[; ;main.c: 67: SPI_Write(0x10);
-"67
-[e ( _SPI_Write (1 -> -> 16 `i `uc ]
-[; ;main.c: 68: SPI_Read();
-"68
-[e ( _SPI_Read ..  ]
+[e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
+[; ;radio.c: 66: si4355_start_rx(channel, 0u, 0u,
+[; ;radio.c: 67: 8,
+[; ;radio.c: 68: 1,
+[; ;radio.c: 69: 8 );
 "69
-}
-[e :U 270 ]
-[; ;main.c: 69: }
-[; ;main.c: 70: counter &= 0xFF;
+[e ( _si4355_start_rx (4 , , , , , _channel -> -> 0 `ui `uc -> 0 `ui -> -> 8 `i `uc -> -> 1 `i `uc -> -> 8 `i `uc ]
+[; ;radio.c: 70: }
 "70
-[e =& _counter -> 255 `i ]
-[; ;main.c: 71: }
-"71
-[e :UE 269 ]
+[e :UE 291 ]
+}
+"72
+[v _Radio_Check_Ezconfig `(uc ~T0 @X0 1 ef1`ui ]
+"73
+{
+[; ;radio.c: 72: U8 Radio_Check_Ezconfig(U16 crc)
+[; ;radio.c: 73: {
+[e :U _Radio_Check_Ezconfig ]
+"72
+[v _crc `ui ~T0 @X0 1 r1 ]
+"73
+[f ]
+[; ;radio.c: 74: si4355_ezconfig_check(crc);
+"74
+[e ( _si4355_ezconfig_check (1 _crc ]
+[; ;radio.c: 76: return radioCmd[0u];
+"76
+[e ) *U + &U _radioCmd * -> -> 0 `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[e $UE 292  ]
+[; ;radio.c: 77: }
+"77
+[e :UE 292 ]
 }

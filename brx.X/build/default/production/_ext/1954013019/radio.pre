@@ -2807,56 +2807,23 @@ extern states STATE;
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h"
 typedef struct
 {
-U8 Radio_Configuration[202u];
-U16 Radio_Configuration_CRC;
+U8 *Radio_ConfigurationArray;
 
-U8 Radio_BOOT_OPTIONS;
-U8 Radio_XTAL_OPTIONS;
-U32 Radio_XO_FREQ;
-
-U8 Radio_INT_CTL_ENABLE;
-U8 Radio_INT_CTL_PH_ENABLE;
-U8 Radio_INT_CTL_MODEM_ENABLE;
-U8 Radio_INT_CTL_CHIP_ENABLE;
-
-U8 Radio_FRR_CTL_A_MODE;
-U8 Radio_FRR_CTL_B_MODE;
-U8 Radio_FRR_CTL_C_MODE;
-U8 Radio_FRR_CTL_D_MODE;
-
-U8 Radio_SYNC_BITS_31_24;
-U8 Radio_SYNC_BITS_23_16;
-
-U8 Radio_PA_PWR_LVL;
-
-U8 Radio_EZCONFIG_MODULATION;
-U8 Radio_EZCONFIG_XO_TUNE;
-
-U8 Radio_FREQ_CONTROL_INTE;
-U8 Radio_FREQ_CONTROL_FRAC_2;
-U8 Radio_FREQ_CONTROL_FRAC_1;
-U8 Radio_FREQ_CONTROL_FRAC_0;
-
-U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_1;
-U8 Radio_FREQ_CONTROL_CHANNEL_STEP_SIZE_0;
-
-U8 Radio_GPIO0_PIN_CFG;
-U8 Radio_GPIO1_PIN_CFG;
-U8 Radio_GPIO2_PIN_CFG;
-U8 Radio_GPIO3_PIN_CFG;
-U8 Radio_GPIO_NIRQ_MODE;
-U8 Radio_GPIO_SDO_MODE;
-U8 Radio_GPIO_GEN_CONFIG;
-
-U8 Radio_Mode_After_Power_Up;
+U8 Radio_ChannelNumber;
+U8 Radio_PacketLength;
+U8 Radio_State_After_Power_Up;
 
 U16 Radio_Delay_Cnt_After_Reset;
-} tEzConfigArray;
+} tRadioConfiguration;
 
-extern tEzConfigArray config;
+# 24
+extern tRadioConfiguration *pRadioConfiguration;
+
+
+extern const U8 Radio_Configuration_Data_Array[];
 extern tRadioPacket RadioPacket;
 
-# 64
+# 33
 void Radio_Init(void);
 void Radio_SetChip();
 U8 Radio_CheckReceived(void);
@@ -2880,13 +2847,14 @@ extern U8 radioCmd[16];
 
 enum
 {
-SI4355_SUCCESS,
-SI4355_NO_PATCH,
-SI4355_CTS_TIMEOUT,
-SI4355_PATCH_FAIL,
-SI4355_COMMAND_ERROR
+SUCCESS,
+NO_PATCH,
+CTS_TIMEOUT,
+PATCH_FAIL,
+COMMAND_ERROR
 };
 
+U8 si4355_configuration_init(U8 * pSetPropCmd);
 
 void si4355_reset(void);
 void si4355_nop(void);
@@ -3097,8 +3065,10 @@ struct si4355_reply_FRR_C_READ_map FRR_C_READ;
 struct si4355_reply_FRR_D_READ_map FRR_D_READ;
 };
 
-# 13 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
-tEzConfigArray config;
+# 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c"
+U8 const Radio_Configuration_Data_Array[] = { 0x07, 0x02, 0x01, 0x00, 0x01, 0xC9, 0xC3, 0x80, 0x06, 0x11, 0x01, 0x02, 0x00, 0x01, 0xC8, 0x08, 0x11, 0x02, 0x04, 0x00, 0x08, 0x06, 0x04, 0x0A, 0x05, 0x11, 0x24, 0x01, 0x03, 0x52, 0x72, 0x66, 0x96, 0x70, 0xAC, 0x57, 0x9F, 0x8C, 0x66, 0x7F, 0xA4, 0xDB, 0x2D, 0x20, 0xF1, 0x55, 0x06, 0x47, 0x7D, 0x93, 0x4F, 0x24, 0x42, 0x9C, 0xAF, 0xC9, 0x9F, 0x7C, 0x69, 0xD8, 0x5E, 0x3E, 0x6A, 0xD2, 0x6F, 0x8C, 0xB2, 0x27, 0xD7, 0x07, 0xBC, 0xF3, 0x56, 0xD4, 0x24, 0x05, 0xF2, 0xEB, 0xB2, 0x7E, 0x69, 0x7F, 0xD4, 0x65, 0xC9, 0x55, 0x36, 0x4A, 0xFB, 0x52, 0x5D, 0x69, 0x4F, 0x99, 0xC1, 0xD2, 0x5F, 0xD6, 0xEF, 0xC5, 0xF8, 0x87, 0x0F, 0x93, 0xE2, 0x07, 0x77, 0x0E, 0x10, 0x2B, 0xB3, 0x39, 0x34, 0x2A, 0x66, 0x20, 0x20, 0x0D, 0x4C, 0x26, 0x84, 0xE9, 0xE7, 0xF5, 0x72, 0xBA, 0x79, 0x2C, 0x4C, 0xED, 0x86, 0xB3, 0x98, 0xD3, 0x9F, 0x3B, 0x27, 0xBC, 0x0A, 0x19, 0x18, 0x85, 0x85, 0x05, 0x16, 0x01, 0x00, 0x70, 0x66, 0x67, 0x4E, 0xF6, 0x09, 0x65, 0x92, 0xB9, 0x0C, 0x8F, 0x2C, 0x9A, 0x38, 0xC5, 0x0A, 0x77, 0xCF, 0x80, 0x05, 0xDC, 0x28, 0xDA, 0x0F, 0xBE, 0x7E, 0xBE, 0xC6, 0x98, 0x1A, 0x1F, 0x2E, 0x24, 0x9D, 0xB7, 0xF2, 0x72, 0x68, 0x1A, 0x04, 0xF2, 0x33, 0x4D, 0x28, 0x7B, 0x1E, 0x56, 0x9E, 0x19, 0xD3, 0x84, 0x75, 0x2B, 0x3F, 0xC6, 0x3D, 0x75, 0x41, 0xBC, 0x26, 0xFC, 0x28, 0xFC, 0xD6, 0x5F, 0xCB, 0x73, 0xB2, 0x2A, 0xA1, 0x38, 0x77, 0x00, 0xC3, 0x16, 0xD9, 0x3E, 0xA0, 0x43, 0x61, 0x65, 0xEF, 0x3D, 0xCE, 0x80, 0x56, 0xF9, 0xCF, 0x18, 0x05, 0x49, 0x83, 0x07, 0x82, 0x45, 0xF6, 0x07, 0xB2, 0xBC, 0x4C, 0x8A, 0x66, 0x6F, 0x1B, 0x9E, 0xEF, 0x24, 0x97, 0x0A, 0xB0, 0x9E, 0xCF, 0x49, 0x03, 0x19, 0x48, 0x53, 0x08, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x00 };
+tRadioConfiguration RadioConfiguration = { Radio_Configuration_Data_Array, 0x00, 0x07, 0x03, 0xF000 };
+tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 tRadioPacket RadioPacket;
 void Radio_PowerUp(void);
 U8 bRadio_Check_Ezconfig(U16);
@@ -3108,86 +3078,27 @@ void Radio_PowerUp(void)
 U16 wDelay = 0u;
 
 si4355_reset();
-for (; wDelay < config.Radio_Delay_Cnt_After_Reset; wDelay++);
-
-si4355_power_up(config.Radio_BOOT_OPTIONS,
-config.Radio_XTAL_OPTIONS,
-config.Radio_XO_FREQ);
-
+for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
 radio_comm_PollCTS();
 }
 
 void Radio_Init(void)
 {
-config = EZCONFIG_ARRAY_DATA;
-Radio_SetChip();
-}
-
-void Radio_SetChip()
-{
-U8 lTemp;
-
-do
-{
 
 Radio_PowerUp();
 
 
-si4355_write_ezconfig_array(128u, config.Radio_Configuration);
+while (SUCCESS != si4355_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
+{
 
-si4355_write_ezconfig_array(202u - 128u, (U8 *) config.Radio_Configuration + 128u);
-
-lTemp = bRadio_Check_Ezconfig(config.Radio_Configuration_CRC);
-
-} while(lTemp != 0u);
-
-
-si4355_get_int_status(0u, 0u, 0u);
-
-
-si4355_set_property(
-1,
-4,
-0,
-(U8) config.Radio_INT_CTL_ENABLE,
-(U8) config.Radio_INT_CTL_PH_ENABLE,
-(U8) config.Radio_INT_CTL_MODEM_ENABLE,
-(U8) config.Radio_INT_CTL_CHIP_ENABLE
-);
-
-
-si4355_set_property(
-2,
-4,
-0,
-(U8) config.Radio_FRR_CTL_A_MODE,
-(U8) config.Radio_FRR_CTL_B_MODE,
-(U8) config.Radio_FRR_CTL_C_MODE,
-(U8) config.Radio_FRR_CTL_D_MODE
-);
-
-
-si4355_gpio_pin_cfg(
-(U8) config.Radio_GPIO0_PIN_CFG,
-(U8) config.Radio_GPIO1_PIN_CFG,
-(U8) config.Radio_GPIO2_PIN_CFG,
-(U8) config.Radio_GPIO3_PIN_CFG,
-(U8) config.Radio_GPIO_NIRQ_MODE,
-(U8) config.Radio_GPIO_SDO_MODE,
-(U8) config.Radio_GPIO_GEN_CONFIG
-);
-
-
-si4355_change_state(config.Radio_Mode_After_Power_Up);
-
-
-si4355_get_int_status(0u, 0u, 0u);
-
-
-si4355_part_info();
+Radio_PowerUp();
 }
 
-U8 gRadio_CheckReceived(void)
+
+si4355_get_int_status(0u, 0u, 0u);
+}
+
+U8 Radio_CheckReceived(void)
 {
 if( !RA3 )
 {
@@ -3218,7 +3129,7 @@ si4355_start_rx(channel, 0u, 0u,
 8 );
 }
 
-U8 bRadio_Check_Ezconfig(U16 crc)
+U8 Radio_Check_Ezconfig(U16 crc)
 {
 si4355_ezconfig_check(crc);
 

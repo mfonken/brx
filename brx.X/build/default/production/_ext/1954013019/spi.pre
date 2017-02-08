@@ -2803,7 +2803,6 @@ RECEIVING,
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h"
 void SPI_Init( void );
-void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata );
 void SPI_WriteBytes( U8 len, U8 * data );
 void SPI_WriteByte( U8 data );
 void SPI_ReadBytes( U8 len, U8 * data );
@@ -2834,13 +2833,6 @@ SSPM3 = 0;
 
 
 SSPEN = 1;
-}
-
-
-void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata )
-{
-SPI_WriteBytes( wlen, wdata );
-SPI_ReadBytes( rlen, rdata );
 }
 
 void SPI_WriteBytes( U8 len, U8 * data )

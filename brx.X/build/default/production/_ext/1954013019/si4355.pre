@@ -3000,13 +3000,14 @@ extern U8 radioCmd[16];
 
 enum
 {
-SI4355_SUCCESS,
-SI4355_NO_PATCH,
-SI4355_CTS_TIMEOUT,
-SI4355_PATCH_FAIL,
-SI4355_COMMAND_ERROR
+SUCCESS,
+NO_PATCH,
+CTS_TIMEOUT,
+PATCH_FAIL,
+COMMAND_ERROR
 };
 
+U8 si4355_configuration_init(U8 * pSetPropCmd);
 
 void si4355_reset(void);
 void si4355_nop(void);
@@ -3041,7 +3042,6 @@ extern states STATE;
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h"
 void SPI_Init( void );
-void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata );
 void SPI_WriteBytes( U8 len, U8 * data );
 void SPI_WriteByte( U8 data );
 void SPI_ReadBytes( U8 len, U8 * data );
@@ -3050,6 +3050,49 @@ U8 SPI_ReadByte( void );
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
 union si4355_cmd_reply_union Si4355Cmd;
 U8 radioCmd[16u];
+
+U8 si4355_configuration_init(U8 * pSetPropCmd)
+{
+U8 col = 0;
+U8 numOfBytes = 0;
+
+
+while (*pSetPropCmd != 0x00)
+{
+
+# 26
+numOfBytes = *pSetPropCmd++;
+
+if (numOfBytes > 16u)
+{
+
+return COMMAND_ERROR;
+}
+
+for (col = 0u; col < numOfBytes; col++)
+{
+radioCmd[col] = *pSetPropCmd;
+pSetPropCmd++;
+}
+
+if (radio_comm_SendCmdGetResp(numOfBytes, radioCmd, 0, 0) != 0xFF)
+{
+
+return CTS_TIMEOUT;
+}
+
+if (!RA3)
+{
+
+si4355_get_int_status(0, 0, 0);
+if (Si4355Cmd.GET_INT_STATUS.CHIP_PEND)
+{
+return COMMAND_ERROR;
+}
+}
+}
+return SUCCESS;
+}
 
 void si4355_reset(void)
 {
@@ -3125,7 +3168,7 @@ Si4355Cmd.FUNC_INFO.SVNREV.U8[0] = radioCmd[10];
 
 void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... )
 {
-U8 cmdIndex;
+U8 cmdIndex = 0;
 
 radioCmd[0] = 0x11;
 radioCmd[1] = GROUP;

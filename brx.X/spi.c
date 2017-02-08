@@ -26,13 +26,6 @@ void SPI_Init( void )
 	SSPEN   = 1;
 } 
 
-
-void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata )
-{
-    SPI_WriteBytes( wlen, wdata );
-    SPI_ReadBytes(  rlen, rdata );
-}
-
 void SPI_WriteBytes( U8 len, U8 * data )
 {
     while( len-- )

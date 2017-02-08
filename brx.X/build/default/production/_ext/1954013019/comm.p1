@@ -1,13 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "5133 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
 [v _RA5 `Vb ~T0 @X0 0 e@101 ]
-"13 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
+"12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
 [v _SPI_WriteByte `(v ~T0 @X0 0 ef1`uc ]
-"15
-[v _SPI_ReadByte `(uc ~T0 @X0 0 ef ]
 "14
+[v _SPI_ReadByte `(uc ~T0 @X0 0 ef ]
+"13
 [v _SPI_ReadBytes `(v ~T0 @X0 0 ef2`uc`*uc ]
-"12
+"11
 [v _SPI_WriteBytes `(v ~T0 @X0 0 ef2`uc`*uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -2081,11 +2081,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;comm.h: 15: void radio_comm_ReadData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
 [; ;comm.h: 16: void radio_comm_WriteData(U8 cmd, BIT pollCts, U8 byteCount, U8* pData);
 [; ;spi.h: 10: void SPI_Init( void );
-[; ;spi.h: 11: void SPI_WriteReadBytes( U8 wlen, U8 * wdata, U8 rlen, U8 * rdata );
-[; ;spi.h: 12: void SPI_WriteBytes( U8 len, U8 * data );
-[; ;spi.h: 13: void SPI_WriteByte( U8 data );
-[; ;spi.h: 14: void SPI_ReadBytes( U8 len, U8 * data );
-[; ;spi.h: 15: U8 SPI_ReadByte( void );
+[; ;spi.h: 11: void SPI_WriteBytes( U8 len, U8 * data );
+[; ;spi.h: 12: void SPI_WriteByte( U8 data );
+[; ;spi.h: 13: void SPI_ReadBytes( U8 len, U8 * data );
+[; ;spi.h: 14: U8 SPI_ReadByte( void );
 [; ;config.h: 17: extern states STATE;
 "6 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _ctsWentHigh `uc ~T0 @X0 1 e ]

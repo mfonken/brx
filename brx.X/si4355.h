@@ -8,13 +8,14 @@ extern U8 radioCmd[16];
 
 enum
 {
-    SI4355_SUCCESS,
-    SI4355_NO_PATCH,
-    SI4355_CTS_TIMEOUT,
-    SI4355_PATCH_FAIL,
-    SI4355_COMMAND_ERROR
+    SUCCESS,
+    NO_PATCH,
+    CTS_TIMEOUT,
+    PATCH_FAIL,
+    COMMAND_ERROR
 };
 
+U8 si4355_configuration_init(U8 * pSetPropCmd);
 
 void si4355_reset(void);
 void si4355_nop(void);
