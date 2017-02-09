@@ -2801,8 +2801,10 @@ ARMED,
 RECEIVING,
 } states;
 
-# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
+
+void HW_Config( void );
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h"
 typedef struct
@@ -2832,7 +2834,7 @@ U8 Radio_Check_Ezconfig( U16 crc );
 # 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
 U8 radioCmd[16u];
 
-BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+U8 radio_comm_GetResp( U8 byteCount, U8* pData );
 U8 radio_comm_PollCTS( void );
 void radio_comm_SendCmd( U8 byteCount, U8* pData );
 U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
@@ -3068,8 +3070,8 @@ void Radio_PowerUp( void )
 {
 U16 wDelay = 0u;
 
-si4355_reset();
-for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
+
+for( ; wDelay < 50; wDelay++);
 radio_comm_PollCTS();
 }
 

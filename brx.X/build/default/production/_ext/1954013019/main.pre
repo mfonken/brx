@@ -2819,10 +2819,12 @@ RECEIVING,
 #pragma config PLLEN = ON
 #pragma config STVREN = ON
 #pragma config BORV = LO
-#pragma config LVP = ON
+#pragma config LVP = OFF
 
-# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
+
+void HW_Config( void );
 
 # 6 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/timer.h"
 void TMR_Init( U8 psa, U8 value );
@@ -2901,10 +2903,22 @@ U8 SPI_ReadByte( void );
 states STATE = STARTUP;
 int counter = 0;
 
+# 20
 void main( void )
 {
+HW_Config();
 SPI_Init();
-while(1)
+U8 wait = 100;
+for(; wait != 0; wait--);
+U8 r = 0;
+while(!r)
+{
+RA5 = 0;
+SPI_WriteByte(0x44);
+r = SPI_ReadByte();
+RA5 = 1;
+}
+while(1);
 {
 switch( STATE )
 {

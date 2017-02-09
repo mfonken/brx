@@ -3,8 +3,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [c E2083 0 1 2 .. ]
 [n E2083 . STARTUP ARMED RECEIVING  ]
 [p mainexit ]
+"16 C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h
+[v _HW_Config `(v ~T0 @X0 0 ef ]
 "10 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
 [v _SPI_Init `(v ~T0 @X0 0 ef ]
+"5133 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
+[v _RA5 `Vb ~T0 @X0 0 e@101 ]
+"12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
+[v _SPI_WriteByte `(v ~T0 @X0 0 ef1`uc ]
+"14
+[v _SPI_ReadByte `(uc ~T0 @X0 0 ef ]
 "31 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.h
 [v _Radio_Init `(v ~T0 @X0 0 ef ]
 "34
@@ -2108,8 +2116,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "20
 [p x BORV=LO ]
 "21
-[p x LVP=ON ]
-[; ;config.h: 12: extern states STATE;
+[p x LVP=OFF ]
+[; ;config.h: 14: extern states STATE;
+[; ;config.h: 16: void HW_Config( void );
 [; ;timer.h: 6: void TMR_Init( U8 psa, U8 value );
 [; ;radio.h: 10: typedef struct
 [; ;radio.h: 11: {
@@ -2177,114 +2186,160 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `i
 ]
 [; ;main.c: 10: int counter = 0;
-"12
+"20
 [v _main `(v ~T0 @X0 1 ef ]
-"13
+"21
 {
-[; ;main.c: 12: void main( void )
-[; ;main.c: 13: {
+[; ;main.c: 20: void main( void )
+[; ;main.c: 21: {
 [e :U _main ]
 [f ]
-[; ;main.c: 14: SPI_Init();
-"14
-[e ( _SPI_Init ..  ]
-[; ;main.c: 15: while(1)
-"15
-[e :U 266 ]
-[; ;main.c: 16: {
-"16
-{
-[; ;main.c: 17: switch( STATE )
-"17
-[e $U 269  ]
-[; ;main.c: 18: {
-"18
-{
-[; ;main.c: 19: case STARTUP:
-"19
-[e :U 270 ]
-[; ;main.c: 20: Radio_Init();
-"20
-[e ( _Radio_Init ..  ]
-[; ;main.c: 21: case ARMED:
-"21
-[e :U 271 ]
-[; ;main.c: 22: Radio_StartRX( 0u );
+[; ;main.c: 22: HW_Config();
 "22
-[e ( _Radio_StartRX (1 -> -> 0 `ui `uc ]
-[; ;main.c: 24: si4355_fifo_info( 0x02 );
+[e ( _HW_Config ..  ]
+[; ;main.c: 23: SPI_Init();
+"23
+[e ( _SPI_Init ..  ]
 "24
-[e ( _si4355_fifo_info (1 -> -> 2 `i `uc ]
-[; ;main.c: 25: STATE = RECEIVING;
+[v _wait `uc ~T0 @X0 1 a ]
+[; ;main.c: 24: U8 wait = 100;
+[e = _wait -> -> 100 `i `uc ]
+[; ;main.c: 25: for(; wait != 0; wait--);
 "25
-[e = _STATE . `E2083 2 ]
-[; ;main.c: 26: break;
-"26
-[e $U 268  ]
-[; ;main.c: 27: case RECEIVING:
-"27
-[e :U 272 ]
-[; ;main.c: 28: if( Radio_CheckReceived() );
-"28
-[e $ ! != -> ( _Radio_CheckReceived ..  `i -> -> -> 0 `i `uc `i 273  ]
-[e :U 273 ]
-[; ;main.c: 29: STATE = ARMED;
-"29
-[e = _STATE . `E2083 1 ]
-[; ;main.c: 30: break;
-"30
-[e $U 268  ]
-[; ;main.c: 31: default:
-"31
-[e :U 274 ]
-[; ;main.c: 32: STATE = ARMED;
-"32
-[e = _STATE . `E2083 1 ]
-"33
-}
-[; ;main.c: 33: }
-[e $U 268  ]
-"17
-[e :U 269 ]
-[e [\ _STATE , $ . `E2083 0 270
- , $ . `E2083 1 271
- , $ . `E2083 2 272
- 274 ]
-"33
-[e :U 268 ]
-"34
-}
-[e :U 265 ]
-"15
+{
+[e $ != -> _wait `i -> 0 `i 265  ]
 [e $U 266  ]
-[e :U 267 ]
-[; ;main.c: 34: }
-[; ;main.c: 35: return;
+[e :U 265 ]
+[e -- _wait -> -> 1 `i `uc ]
+[e $ != -> _wait `i -> 0 `i 265  ]
+[e :U 266 ]
+}
+"26
+[v _r `uc ~T0 @X0 1 a ]
+[; ;main.c: 26: U8 r = 0;
+[e = _r -> -> 0 `i `uc ]
+[; ;main.c: 27: while(!r)
+"27
+[e $U 268  ]
+[e :U 269 ]
+[; ;main.c: 28: {
+"28
+{
+[; ;main.c: 29: RA5 = 0;
+"29
+[e = _RA5 -> -> 0 `i `b ]
+[; ;main.c: 30: SPI_WriteByte(0x44);
+"30
+[e ( _SPI_WriteByte (1 -> -> 68 `i `uc ]
+[; ;main.c: 31: r = SPI_ReadByte();
+"31
+[e = _r ( _SPI_ReadByte ..  ]
+[; ;main.c: 32: RA5 = 1;
+"32
+[e = _RA5 -> -> 1 `i `b ]
+"33
+}
+[e :U 268 ]
+"27
+[e $ ! != -> _r `i -> -> -> 0 `i `uc `i 269  ]
+[e :U 270 ]
+[; ;main.c: 33: }
+[; ;main.c: 34: while(1);
+"34
+[e :U 272 ]
+[e :U 271 ]
+[e $U 272  ]
+[e :U 273 ]
+[; ;main.c: 35: {
 "35
-[e $UE 264  ]
-[; ;main.c: 36: }
+{
+[; ;main.c: 36: switch( STATE )
 "36
+[e $U 275  ]
+[; ;main.c: 37: {
+"37
+{
+[; ;main.c: 38: case STARTUP:
+"38
+[e :U 276 ]
+[; ;main.c: 39: Radio_Init();
+"39
+[e ( _Radio_Init ..  ]
+[; ;main.c: 40: case ARMED:
+"40
+[e :U 277 ]
+[; ;main.c: 41: Radio_StartRX( 0u );
+"41
+[e ( _Radio_StartRX (1 -> -> 0 `ui `uc ]
+[; ;main.c: 43: si4355_fifo_info( 0x02 );
+"43
+[e ( _si4355_fifo_info (1 -> -> 2 `i `uc ]
+[; ;main.c: 44: STATE = RECEIVING;
+"44
+[e = _STATE . `E2083 2 ]
+[; ;main.c: 45: break;
+"45
+[e $U 274  ]
+[; ;main.c: 46: case RECEIVING:
+"46
+[e :U 278 ]
+[; ;main.c: 47: if( Radio_CheckReceived() );
+"47
+[e $ ! != -> ( _Radio_CheckReceived ..  `i -> -> -> 0 `i `uc `i 279  ]
+[e :U 279 ]
+[; ;main.c: 48: STATE = ARMED;
+"48
+[e = _STATE . `E2083 1 ]
+[; ;main.c: 49: break;
+"49
+[e $U 274  ]
+[; ;main.c: 50: default:
+"50
+[e :U 280 ]
+[; ;main.c: 51: STATE = ARMED;
+"51
+[e = _STATE . `E2083 1 ]
+"52
+}
+[; ;main.c: 52: }
+[e $U 274  ]
+"36
+[e :U 275 ]
+[e [\ _STATE , $ . `E2083 0 276
+ , $ . `E2083 1 277
+ , $ . `E2083 2 278
+ 280 ]
+"52
+[e :U 274 ]
+"53
+}
+[; ;main.c: 53: }
+[; ;main.c: 54: return;
+"54
+[e $UE 264  ]
+[; ;main.c: 55: }
+"55
 [e :UE 264 ]
 }
-[v F2205 `(v ~T0 @X0 1 tf ]
-"38
-[v _Timer0_ISR `IF2205 ~T0 @X0 1 e ]
-"39
+[v F2209 `(v ~T0 @X0 1 tf ]
+"57
+[v _Timer0_ISR `IF2209 ~T0 @X0 1 e ]
+"58
 {
-[; ;main.c: 38: void interrupt Timer0_ISR( void )
-[; ;main.c: 39: {
+[; ;main.c: 57: void interrupt Timer0_ISR( void )
+[; ;main.c: 58: {
 [e :U _Timer0_ISR ]
 [f ]
-[; ;main.c: 40: TMR0IF = 0;
-"40
+[; ;main.c: 59: TMR0IF = 0;
+"59
 [e = _TMR0IF -> -> 0 `i `b ]
-[; ;main.c: 41: counter++;
-"41
+[; ;main.c: 60: counter++;
+"60
 [e ++ _counter -> 1 `i ]
-[; ;main.c: 42: RA0 = counter & 1;
-"42
+[; ;main.c: 61: RA0 = counter & 1;
+"61
 [e = _RA0 -> & _counter -> 1 `i `b ]
-[; ;main.c: 43: }
-"43
-[e :UE 275 ]
+[; ;main.c: 62: }
+"62
+[e :UE 281 ]
 }

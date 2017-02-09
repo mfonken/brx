@@ -9,10 +9,29 @@
 states STATE = STARTUP;
 int counter = 0;
 
+#define LED0     0x00 
+#define SCK0     0x01 
+#define SDI0     0x02 
+#define SDO0     0x04 
+#define SS0      0x05 
+
+
+ 
 void main( void )
 {
+    HW_Config();
     SPI_Init();
-    while(1)
+    U8 wait = 100;
+    for(; wait != 0; wait--);
+    U8 r = 0;
+    while(!r)
+    {
+        SS_PIN = 0;
+        SPI_WriteByte(0x44);
+        r = SPI_ReadByte();
+        SS_PIN = 1;
+    }
+    while(1);
     {
         switch( STATE )
         {

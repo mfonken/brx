@@ -1,9 +1,10 @@
 #include "spi.h"
+#include "config.h"
 
 U8 dummy;
 
 void SPI_Init( void ) 
-{    
+{   
     /* Disable SSP */
     SSPEN   = 0;
     /* Set alternate pins locations */
@@ -20,8 +21,8 @@ void SPI_Init( void )
     SSPM1   = 0;
     SSPM2   = 0;
     SSPM3   = 0;
-    
-    //SSP1IE  = 1;
+
+    SSP1IE  = 1;
     /* Enable SSP */
 	SSPEN   = 1;
 } 
@@ -37,8 +38,8 @@ void SPI_WriteBytes( U8 len, U8 * data )
 void SPI_WriteByte( U8 data )
 {   
     SSPBUF = data; 
-    while( !SSP1IF );  //wait for transmission complete 
-    data = SSPBUF; 
+    while( !SSP1IF );
+    data = SSPBUF;
 }
 
 void SPI_ReadBytes( U8 len, U8 * data )
@@ -51,11 +52,11 @@ void SPI_ReadBytes( U8 len, U8 * data )
 
 U8 SPI_ReadByte( void )
 {   
-    U8 data;
+    register U8 data = 0;
 	SSPBUF = 0;				// write out to buffer
-    while( !SSP1IF );				// wait for flag
+    while( BF == 0 );				// wait for flag
     data = SSPBUF;
-    return 1;
+    return data;
 }
 
 

@@ -2137,7 +2137,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radioCmd `uc ~T0 @X0 -> 16 `ui e ]
 [; ;comm.h: 9: U8 radioCmd[16u];
-[; ;comm.h: 11: BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+[; ;comm.h: 11: U8 radio_comm_GetResp( U8 byteCount, U8* pData );
 [; ;comm.h: 12: U8 radio_comm_PollCTS( void );
 [; ;comm.h: 13: void radio_comm_SendCmd( U8 byteCount, U8* pData );
 [; ;comm.h: 14: U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
@@ -2337,7 +2337,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;si4355.h: 37: void si4355_frr_c_read( U8 respByteCount );
 [; ;si4355.h: 38: void si4355_frr_d_read( U8 respByteCount );
 [; ;si4355.h: 39: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
-[; ;config.h: 12: extern states STATE;
+[; ;config.h: 14: extern states STATE;
+[; ;config.h: 16: void HW_Config( void );
 [; ;spi.h: 10: void SPI_Init( void );
 [; ;spi.h: 11: void SPI_WriteBytes( U8 len, U8 * data );
 [; ;spi.h: 12: void SPI_WriteByte( U8 data );
@@ -2438,19 +2439,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;si4355.c: 49: si4355_get_int_status( 0u, 0u, 0u );
 "49
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
-[; ;si4355.c: 50: if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )
-"50
-[e $ ! != -> . . _Si4355Cmd 9 6 `i -> -> -> 0 `i `uc `i 289  ]
-[; ;si4355.c: 51: {
-"51
-{
-[; ;si4355.c: 52: return COMMAND_ERROR;
-"52
-[e ) -> . `E2259 4 `uc ]
-[e $UE 278  ]
-"53
-}
-[e :U 289 ]
 "54
 }
 [e :U 288 ]
@@ -2460,7 +2448,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "19
 [e $ != -> *U _pSetPropCmd `i -> 0 `i 280  ]
 [e :U 281 ]
-[; ;si4355.c: 53: }
 [; ;si4355.c: 54: }
 [; ;si4355.c: 55: }
 [; ;si4355.c: 56: return SUCCESS;
@@ -2481,7 +2468,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;si4355.c: 63: }
 "63
-[e :UE 290 ]
+[e :UE 289 ]
 }
 "66
 [v _si4355_nop `(v ~T0 @X0 1 ef ]
@@ -2499,7 +2486,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_SendCmd (2 , -> -> 1 `i `uc &U _radioCmd ]
 [; ;si4355.c: 71: }
 "71
-[e :UE 291 ]
+[e :UE 290 ]
 }
 "74
 [v _si4355_part_info `(v ~T0 @X0 1 ef ]
@@ -2547,7 +2534,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 2 6 *U + &U _radioCmd * -> -> -> 8 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 92: }
 "92
-[e :UE 292 ]
+[e :UE 291 ]
 }
 "95
 [v _si4355_power_up `(v ~T0 @X0 1 ef3`uc`uc`ul ]
@@ -2588,7 +2575,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_SendCmd (2 , -> -> 7 `i `uc &U _radioCmd ]
 [; ;si4355.c: 106: }
 "106
-[e :UE 293 ]
+[e :UE 292 ]
 }
 "109
 [v _si4355_func_info `(v ~T0 @X0 1 ef ]
@@ -2642,7 +2629,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U + &U . . . _Si4355Cmd 4 6 5 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 6 5 `ui `ux *U + &U _radioCmd * -> -> -> 10 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 129: }
 "129
-[e :UE 294 ]
+[e :UE 293 ]
 }
 "131
 [v _si4355_set_property `(v ~T0 @X0 1 e2v`uc`uc`uc ]
@@ -2678,7 +2665,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_SendCmd (2 , _cmdIndex &U _radioCmd ]
 [; ;si4355.c: 141: }
 "141
-[e :UE 295 ]
+[e :UE 294 ]
 }
 "144
 [v _si4355_get_property `(v ~T0 @X0 1 ef3`uc`uc`uc ]
@@ -2761,7 +2748,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 5 15 *U + &U _radioCmd * -> -> -> 15 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 172: }
 "172
-[e :UE 296 ]
+[e :UE 295 ]
 }
 "175
 [v _si4355_gpio_pin_cfg `(v ~T0 @X0 1 ef7`uc`uc`uc`uc`uc`uc`uc ]
@@ -2833,7 +2820,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 6 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 198: }
 "198
-[e :UE 297 ]
+[e :UE 296 ]
 }
 "200
 [v _si4355_fifo_info `(v ~T0 @X0 1 ef1`uc ]
@@ -2866,7 +2853,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 7 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 212: }
 "212
-[e :UE 298 ]
+[e :UE 297 ]
 }
 "214
 [v _si4355_write_ezconfig_array `(v ~T0 @X0 1 ef2`uc`*uc ]
@@ -2882,7 +2869,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;si4355.c: 217: }
 "217
-[e :UE 299 ]
+[e :UE 298 ]
 }
 "219
 [v _si4355_ezconfig_check `(v ~T0 @X0 1 ef1`ui ]
@@ -2915,7 +2902,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_GetResp (2 , -> -> 1 `ui `uc &U _radioCmd ]
 [; ;si4355.c: 236: }
 "236
-[e :UE 300 ]
+[e :UE 299 ]
 }
 "239
 [v _si4355_get_int_status `(v ~T0 @X0 1 ef3`uc`uc`uc ]
@@ -2974,7 +2961,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 9 7 *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 259: }
 "259
-[e :UE 301 ]
+[e :UE 300 ]
 }
 "261
 [v _si4355_start_rx `(v ~T0 @X0 1 ef6`uc`uc`ui`uc`uc`uc ]
@@ -3021,7 +3008,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_SendCmd (2 , -> -> 8 `i `uc &U _radioCmd ]
 [; ;si4355.c: 273: }
 "273
-[e :UE 302 ]
+[e :UE 301 ]
 }
 "276
 [v _si4355_request_device_state `(v ~T0 @X0 1 ef ]
@@ -3048,7 +3035,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 10 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 287: }
 "287
-[e :UE 303 ]
+[e :UE 302 ]
 }
 "290
 [v _si4355_change_state `(v ~T0 @X0 1 ef1`uc ]
@@ -3072,7 +3059,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_SendCmd (2 , -> -> 2 `i `uc &U _radioCmd ]
 [; ;si4355.c: 296: }
 "296
-[e :UE 304 ]
+[e :UE 303 ]
 }
 "299
 [v _si4355_read_cmd_buff `(v ~T0 @X0 1 ef ]
@@ -3084,7 +3071,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;si4355.c: 302: }
 "302
-[e :UE 305 ]
+[e :UE 304 ]
 }
 "305
 [v _si4355_frr_a_read `(v ~T0 @X0 1 ef1`uc ]
@@ -3117,7 +3104,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 12 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 316: }
 "316
-[e :UE 306 ]
+[e :UE 305 ]
 }
 "319
 [v _si4355_frr_b_read `(v ~T0 @X0 1 ef1`uc ]
@@ -3150,7 +3137,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 13 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 330: }
 "330
-[e :UE 307 ]
+[e :UE 306 ]
 }
 "333
 [v _si4355_frr_c_read `(v ~T0 @X0 1 ef1`uc ]
@@ -3183,7 +3170,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 14 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 344: }
 "344
-[e :UE 308 ]
+[e :UE 307 ]
 }
 "347
 [v _si4355_frr_d_read `(v ~T0 @X0 1 ef1`uc ]
@@ -3216,7 +3203,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _Si4355Cmd 15 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
 [; ;si4355.c: 358: }
 "358
-[e :UE 309 ]
+[e :UE 308 ]
 }
 "360
 [v _si4355_read_rx_fifo `(v ~T0 @X0 1 ef2`uc`*uc ]
@@ -3235,5 +3222,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _radio_comm_ReadData (4 , , , -> -> 119 `i `uc -> -> 0 `i `uc _numBytes _pRxData ]
 [; ;si4355.c: 363: }
 "363
-[e :UE 310 ]
+[e :UE 309 ]
 }

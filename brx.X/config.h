@@ -1,3 +1,5 @@
+#include "types.h"
+
 #ifndef CONFIG_H
 #define	CONFIG_H
 
@@ -10,5 +12,7 @@
 #define SS_PIN      RA5
     
 extern states STATE;
+
+void HW_Config( void );
 
 #endif	/* SPI_H */

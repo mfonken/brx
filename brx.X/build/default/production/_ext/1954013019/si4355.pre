@@ -2804,7 +2804,7 @@ RECEIVING,
 # 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
 U8 radioCmd[16u];
 
-BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+U8 radio_comm_GetResp( U8 byteCount, U8* pData );
 U8 radio_comm_PollCTS( void );
 void radio_comm_SendCmd( U8 byteCount, U8* pData );
 U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
@@ -3030,8 +3030,10 @@ void si4355_frr_c_read( U8 respByteCount );
 void si4355_frr_d_read( U8 respByteCount );
 void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
 
-# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
+
+void HW_Config( void );
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h"
 void SPI_Init( void );
@@ -3078,10 +3080,10 @@ if( !RA3 )
 {
 
 si4355_get_int_status( 0u, 0u, 0u );
-if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )
-{
-return COMMAND_ERROR;
-}
+
+
+
+
 }
 }
 return SUCCESS;

@@ -8,7 +8,7 @@
 
 U8 radioCmd[16u];
 
-BIT     radio_comm_GetResp(  U8 byteCount, U8* pData );
+U8     radio_comm_GetResp(  U8 byteCount, U8* pData );
 U8      radio_comm_PollCTS(  void );
 void    radio_comm_SendCmd(  U8 byteCount, U8* pData );
 U8      radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );

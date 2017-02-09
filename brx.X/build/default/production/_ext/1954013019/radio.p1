@@ -5,13 +5,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "39 C:/Users/Matthew Fonken/Desktop/brx/brx.X/types.h
 [s S261 `ul 1 `uc 1 `ui 1 ]
 [n S261 . ChipID Flags RollingCounter ]
-"19 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
-[v _si4355_reset `(v ~T0 @X0 0 ef ]
 "12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radio_comm_PollCTS `(uc ~T0 @X0 0 ef ]
 "29 C:/Users/Matthew Fonken/Desktop/brx/brx.X/radio.c
-[c E2137 0 1 2 3 4 .. ]
-[n E2137 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
+[c E2139 0 1 2 3 4 .. ]
+[n E2139 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
 "18 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
 [v _si4355_configuration_init `(uc ~T0 @X0 0 ef1`*uc ]
 "30
@@ -2142,7 +2140,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 50: ARMED,
 [; ;types.h: 51: RECEIVING,
 [; ;types.h: 52: } states;
-[; ;config.h: 12: extern states STATE;
+[; ;config.h: 14: extern states STATE;
+[; ;config.h: 16: void HW_Config( void );
 [; ;radio.h: 10: typedef struct
 [; ;radio.h: 11: {
 [; ;radio.h: 12: U8 * Radio_ConfigurationArray;
@@ -2163,7 +2162,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "9 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
 [v _radioCmd `uc ~T0 @X0 -> 16 `ui e ]
 [; ;comm.h: 9: U8 radioCmd[16u];
-[; ;comm.h: 11: BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+[; ;comm.h: 11: U8 radio_comm_GetResp( U8 byteCount, U8* pData );
 [; ;comm.h: 12: U8 radio_comm_PollCTS( void );
 [; ;comm.h: 13: void radio_comm_SendCmd( U8 byteCount, U8* pData );
 [; ;comm.h: 14: U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
@@ -2679,17 +2678,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _wDelay `ui ~T0 @X0 1 a ]
 [; ;radio.c: 16: U16 wDelay = 0u;
 [e = _wDelay -> 0 `ui ]
-[; ;radio.c: 18: si4355_reset();
-"18
-[e ( _si4355_reset ..  ]
-[; ;radio.c: 19: for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
+[; ;radio.c: 19: for( ; wDelay < 50; wDelay++);
 "19
 {
-[e $U 283  ]
+[e $ < _wDelay -> -> 50 `i `ui 280  ]
+[e $U 281  ]
 [e :U 280 ]
 [e ++ _wDelay -> -> 1 `i `ui ]
-[e :U 283 ]
-[e $ < _wDelay . *U _pRadioConfiguration 4 280  ]
+[e $ < _wDelay -> -> 50 `i `ui 280  ]
 [e :U 281 ]
 }
 [; ;radio.c: 20: radio_comm_PollCTS();
@@ -2712,8 +2708,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Radio_PowerUp ..  ]
 [; ;radio.c: 29: while( SUCCESS != si4355_configuration_init( pRadioConfiguration->Radio_ConfigurationArray ) )
 "29
-[e $U 285  ]
-[e :U 286 ]
+[e $U 284  ]
+[e :U 285 ]
 [; ;radio.c: 30: {
 "30
 {
@@ -2722,17 +2718,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Radio_PowerUp ..  ]
 "33
 }
-[e :U 285 ]
+[e :U 284 ]
 "29
-[e $ != -> . `E2137 0 `i -> ( _si4355_configuration_init (1 . *U _pRadioConfiguration 0 `i 286  ]
-[e :U 287 ]
+[e $ != -> . `E2139 0 `i -> ( _si4355_configuration_init (1 . *U _pRadioConfiguration 0 `i 285  ]
+[e :U 286 ]
 [; ;radio.c: 33: }
 [; ;radio.c: 36: si4355_get_int_status(0u, 0u, 0u);
 "36
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
 [; ;radio.c: 37: }
 "37
-[e :UE 284 ]
+[e :UE 283 ]
 }
 "39
 [v _Radio_CheckReceived `(uc ~T0 @X0 1 ef ]
@@ -2744,7 +2740,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;radio.c: 41: if( !RA3 )
 "41
-[e $ ! ! _RA3 289  ]
+[e $ ! ! _RA3 288  ]
 [; ;radio.c: 42: {
 "42
 {
@@ -2753,7 +2749,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
 [; ;radio.c: 47: if (Si4355Cmd.GET_INT_STATUS.PH_PEND & 0x10)
 "47
-[e $ ! != & -> . . _Si4355Cmd 9 2 `i -> 16 `i -> 0 `i 290  ]
+[e $ ! != & -> . . _Si4355Cmd 9 2 `i -> 16 `i -> 0 `i 289  ]
 [; ;radio.c: 48: {
 "48
 {
@@ -2763,22 +2759,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;radio.c: 51: return 1;
 "51
 [e ) -> -> 1 `i `uc ]
-[e $UE 288  ]
+[e $UE 287  ]
 "52
 }
-[e :U 290 ]
+[e :U 289 ]
 "53
 }
-[e :U 289 ]
+[e :U 288 ]
 [; ;radio.c: 52: }
 [; ;radio.c: 53: }
 [; ;radio.c: 54: return 0;
 "54
 [e ) -> -> 0 `i `uc ]
-[e $UE 288  ]
+[e $UE 287  ]
 [; ;radio.c: 55: }
 "55
-[e :UE 288 ]
+[e :UE 287 ]
 }
 "57
 [v _Radio_StartRX `(v ~T0 @X0 1 ef1`uc ]
@@ -2802,7 +2798,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _si4355_start_rx (4 , , , , , _channel -> -> 0 `ui `uc -> 0 `ui -> -> 8 `i `uc -> -> 1 `i `uc -> -> 8 `i `uc ]
 [; ;radio.c: 67: }
 "67
-[e :UE 291 ]
+[e :UE 290 ]
 }
 "69
 [v _Radio_Check_Ezconfig `(uc ~T0 @X0 1 ef1`ui ]
@@ -2821,8 +2817,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;radio.c: 73: return radioCmd[0u];
 "73
 [e ) *U + &U _radioCmd * -> -> 0 `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[e $UE 292  ]
+[e $UE 291  ]
 [; ;radio.c: 74: }
 "74
-[e :UE 292 ]
+[e :UE 291 ]
 }

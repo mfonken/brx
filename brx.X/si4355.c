@@ -47,10 +47,10 @@ U8 si4355_configuration_init( U8 * pSetPropCmd )
     {
       /* Get and clear all interrupts.  An error has occurred... */
       si4355_get_int_status( 0u, 0u, 0u );
-      if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )// & SI4355_CMD_GET_CHIP_STATUS_REP_CMD_ERROR_PEND_MASK)
-      {
-        return COMMAND_ERROR;
-      }
+//      if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )// & SI4355_CMD_GET_CHIP_STATUS_REP_CMD_ERROR_PEND_MASK)
+//      {
+//        return COMMAND_ERROR;
+//      }
     }
   }
   return SUCCESS;

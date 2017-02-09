@@ -2804,7 +2804,7 @@ RECEIVING,
 # 9 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h"
 U8 radioCmd[16u];
 
-BIT radio_comm_GetResp( U8 byteCount, U8* pData );
+U8 radio_comm_GetResp( U8 byteCount, U8* pData );
 U8 radio_comm_PollCTS( void );
 void radio_comm_SendCmd( U8 byteCount, U8* pData );
 U8 radio_comm_SendCmdGetResp( U8 cmdByteCount, U8* pCmdData, U8 respByteCount, U8* pRespData );
@@ -2818,13 +2818,15 @@ void SPI_WriteByte( U8 data );
 void SPI_ReadBytes( U8 len, U8 * data );
 U8 SPI_ReadByte( void );
 
-# 12 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
-# 6 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
-BIT ctsWentHigh = 0;
+void HW_Config( void );
 
-BIT radio_comm_GetResp( U8 byteCount, U8* pData )
+# 6 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c"
+U8 ctsWentHigh = 0;
+
+U8 radio_comm_GetResp( U8 byteCount, U8* pData )
 {
 U16 errCnt = 5000;
 while( errCnt != 0 )
@@ -2849,12 +2851,6 @@ if( errCnt == 0 )
 {
 return 0;
 }
-
-if ( ctsWentHigh )
-{
-ctsWentHigh = 1;
-}
-
 return ctsWentHigh;
 }
 
@@ -2866,7 +2862,7 @@ return radio_comm_GetResp( 0, 0 );
 void radio_comm_SendCmd( U8 byteCount, U8* pData )
 {
 
-# 51
+# 45
 if ( byteCount == 1 )
 byteCount++;
 

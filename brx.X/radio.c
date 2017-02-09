@@ -15,8 +15,8 @@ void Radio_PowerUp( void )
 {
     U16 wDelay = 0u;
     
-    si4355_reset();
-    for( ; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
+    //si4355_reset();
+    for( ; wDelay < 50; wDelay++);//pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++ );
     radio_comm_PollCTS();
 }
 

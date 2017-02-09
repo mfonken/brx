@@ -3,9 +3,9 @@
 #include "spi.h"
 #include "config.h"
 
-BIT ctsWentHigh = 0;
+U8 ctsWentHigh = 0;
 
-BIT radio_comm_GetResp( U8 byteCount, U8* pData )
+U8 radio_comm_GetResp( U8 byteCount, U8* pData )
 {
     U16 errCnt = RADIO_CTS_TIMEOUT;
     while( errCnt != 0 )      //wait until radio IC is ready with the data
@@ -30,12 +30,6 @@ BIT radio_comm_GetResp( U8 byteCount, U8* pData )
     {
         return 0;
     }
-
-    if ( ctsWentHigh )
-    {
-        ctsWentHigh = 1;
-    }
-
     return ctsWentHigh;
 }
 
