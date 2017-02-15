@@ -1,5 +1,5 @@
-#include "config.h"
 #include <xc.h>
+#include "config.h"
 
 void HW_Config( void )
 {

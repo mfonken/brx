@@ -2085,8 +2085,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi.h: 12: void SPI_WriteByte( U8 data );
 [; ;spi.h: 13: void SPI_ReadBytes( U8 len, U8 * data );
 [; ;spi.h: 14: U8 SPI_ReadByte( void );
-[; ;config.h: 14: extern states STATE;
-[; ;config.h: 16: void HW_Config( void );
+[; ;config.h: 16: extern states STATE;
+[; ;config.h: 18: void HW_Config( void );
 "6 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.c
 [v _ctsWentHigh `uc ~T0 @X0 1 e ]
 [i _ctsWentHigh

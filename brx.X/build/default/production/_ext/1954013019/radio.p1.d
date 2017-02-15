@@ -6,5 +6,6 @@ C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/si4355.h  \
 C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/si4355_defs.h  \
 C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/radio_config.h  \
 C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/comm.h  \
+C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/spi.h  \
 C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/radio.h  \
 C:/Users/Matthew\ Fonken/Desktop/brx/brx.X/config.h 

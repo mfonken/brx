@@ -2821,7 +2821,7 @@ RECEIVING,
 #pragma config BORV = LO
 #pragma config LVP = OFF
 
-# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 16 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 void HW_Config( void );
@@ -2856,7 +2856,6 @@ U8 Radio_Check_Ezconfig( U16 crc );
 
 # 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h"
 extern union si4355_cmd_reply_union Si4355Cmd;
-extern U8 radioCmd[16];
 
 
 
@@ -2903,22 +2902,19 @@ U8 SPI_ReadByte( void );
 states STATE = STARTUP;
 int counter = 0;
 
-# 20
+# 18
 void main( void )
 {
 HW_Config();
 SPI_Init();
-U8 wait = 100;
-for(; wait != 0; wait--);
-U8 r = 0;
-while(!r)
-{
-RA5 = 0;
-SPI_WriteByte(0x44);
-r = SPI_ReadByte();
+U8 wait = 1;
+
+_delay((unsigned long)((1000)*(1000000/4000.0)));
+
 RA5 = 1;
-}
-while(1);
+
+# 35
+while(1)
 {
 switch( STATE )
 {

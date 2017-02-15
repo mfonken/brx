@@ -2808,12 +2808,13 @@ void SPI_WriteByte( U8 data );
 void SPI_ReadBytes( U8 len, U8 * data );
 U8 SPI_ReadByte( void );
 
-# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 16 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 void HW_Config( void );
 
 # 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.c"
+U8 wait;
 U8 dummy;
 
 void SPI_Init( void )
@@ -2830,7 +2831,7 @@ CKE = 0;
 
 CKP = 0;
 
-SSPM0 = 0;
+SSPM0 = 1;
 SSPM1 = 0;
 SSPM2 = 0;
 SSPM3 = 0;
@@ -2853,6 +2854,8 @@ void SPI_WriteByte( U8 data )
 SSPBUF = data;
 while( !SSP1IF );
 data = SSPBUF;
+wait = 0;
+while(wait--);
 }
 
 void SPI_ReadBytes( U8 len, U8 * data )
@@ -2869,6 +2872,7 @@ register U8 data = 0;
 SSPBUF = 0;
 while( BF == 0 );
 data = SSPBUF;
+wait = 0;
+while(wait--);
 return data;
 }
-

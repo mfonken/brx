@@ -2073,8 +2073,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;types.h: 50: ARMED,
 [; ;types.h: 51: RECEIVING,
 [; ;types.h: 52: } states;
-[; ;config.h: 14: extern states STATE;
-[; ;config.h: 16: void HW_Config( void );
+[; ;config.h: 16: extern states STATE;
+[; ;config.h: 18: void HW_Config( void );
 "4 C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.c
 [v _HW_Config `(v ~T0 @X0 1 ef ]
 "5

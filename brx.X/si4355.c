@@ -8,13 +8,15 @@
 #define SI4355_XTAL_FREQ 30000000L
 
 union si4355_cmd_reply_union Si4355Cmd;
-U8 radioCmd[16u];
+
 
 U8 si4355_configuration_init( U8 * pSetPropCmd )
 {
   U8 col = 0;
-  U8 numOfBytes = 0;
-
+  U8 numOfBytes = 0, numOfBytes_2 = 0;
+  U8 radioCmd[80];
+  U8 radioCmd2[40];
+  bool second_cmd_buffer = false;
   /* While cycle as far as the pointer points to a command */
   while ( *pSetPropCmd != 0x00 )
   {
@@ -25,32 +27,57 @@ U8 si4355_configuration_init( U8 * pSetPropCmd )
 
     numOfBytes = *pSetPropCmd++;
 
-    if ( numOfBytes > 16u )
+    if ( numOfBytes > 80u )
     {
+      second_cmd_buffer = true;
       /* Number of command bytes exceeds maximal allowable length */
-      return COMMAND_ERROR;
+      //return COMMAND_ERROR;
     }
-
-    for ( col = 0u; col < numOfBytes; col++ )
+    
+    
+    for ( col = 0u; col < numOfBytes && col < 80u; col++ )
     {
       radioCmd[col] = *pSetPropCmd;
       pSetPropCmd++;
     }
-
-    if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
+    if(second_cmd_buffer)
     {
-      /* Timeout occurred */
-      return CTS_TIMEOUT;
+        numOfBytes -= 80u;
+        for ( col = 0u; col < numOfBytes; col++ )
+        {
+          radioCmd2[col] = *pSetPropCmd;
+          pSetPropCmd++;
+        }
+        
+        SS_PIN = 0;
+        U8 ctsWentHigh = 0;
+        while( !ctsWentHigh )
+        {
+            SPI_WriteByte( 0x44 );    //read CMD buffer
+            ctsWentHigh = SPI_ReadByte();
+        }
+        SPI_WriteBytes( 80u, radioCmd );
+        SPI_WriteBytes( numOfBytes, radioCmd2 );
+//        if(!radio_comm_GetResp( 0, 0 ))
+//        {
+//          /* Timeout occurred */
+//            return CTS_TIMEOUT;
+//        }
+        SS_PIN = 1;
+    }
+    else
+    {
+        if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
+        {
+          /* Timeout occurred */
+         // return CTS_TIMEOUT;
+        }
     }
 
     if( !IRQ_PIN )
     {
       /* Get and clear all interrupts.  An error has occurred... */
       si4355_get_int_status( 0u, 0u, 0u );
-//      if ( Si4355Cmd.GET_INT_STATUS.CHIP_PEND )// & SI4355_CMD_GET_CHIP_STATUS_REP_CMD_ERROR_PEND_MASK)
-//      {
-//        return COMMAND_ERROR;
-//      }
     }
   }
   return SUCCESS;

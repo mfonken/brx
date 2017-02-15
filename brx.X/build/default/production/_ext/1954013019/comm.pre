@@ -2818,7 +2818,7 @@ void SPI_WriteByte( U8 data );
 void SPI_ReadBytes( U8 len, U8 * data );
 U8 SPI_ReadByte( void );
 
-# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 16 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 void HW_Config( void );

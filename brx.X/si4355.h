@@ -2,7 +2,6 @@
 #define _SI4355_H_
 
 extern union si4355_cmd_reply_union Si4355Cmd;
-extern U8 radioCmd[16];
 
 #define SI4355_FIFO_SIZE 64
 

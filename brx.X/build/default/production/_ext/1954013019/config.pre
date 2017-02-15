@@ -2801,7 +2801,7 @@ ARMED,
 RECEIVING,
 } states;
 
-# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 16 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 void HW_Config( void );

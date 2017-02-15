@@ -2994,7 +2994,6 @@ struct si4355_reply_FRR_D_READ_map FRR_D_READ;
 
 # 4 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h"
 extern union si4355_cmd_reply_union Si4355Cmd;
-extern U8 radioCmd[16];
 
 
 
@@ -3030,7 +3029,7 @@ void si4355_frr_c_read( U8 respByteCount );
 void si4355_frr_d_read( U8 respByteCount );
 void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
 
-# 14 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
+# 16 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/config.h"
 extern states STATE;
 
 void HW_Config( void );
@@ -3044,46 +3043,70 @@ U8 SPI_ReadByte( void );
 
 # 10 "C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c"
 union si4355_cmd_reply_union Si4355Cmd;
-U8 radioCmd[16u];
+
 
 U8 si4355_configuration_init( U8 * pSetPropCmd )
 {
 U8 col = 0;
-U8 numOfBytes = 0;
-
+U8 numOfBytes = 0, numOfBytes_2 = 0;
+U8 radioCmd[80];
+U8 radioCmd2[40];
+bool second_cmd_buffer = 0;
 
 while ( *pSetPropCmd != 0x00 )
 {
 
-# 26
+# 28
 numOfBytes = *pSetPropCmd++;
 
-if ( numOfBytes > 16u )
+if ( numOfBytes > 80u )
 {
+second_cmd_buffer = 1;
 
-return COMMAND_ERROR;
+
 }
 
-for ( col = 0u; col < numOfBytes; col++ )
+
+for ( col = 0u; col < numOfBytes && col < 80u; col++ )
 {
 radioCmd[col] = *pSetPropCmd;
 pSetPropCmd++;
 }
+if(second_cmd_buffer)
+{
+numOfBytes -= 80u;
+for ( col = 0u; col < numOfBytes; col++ )
+{
+radioCmd2[col] = *pSetPropCmd;
+pSetPropCmd++;
+}
 
+RA5 = 0;
+U8 ctsWentHigh = 0;
+while( !ctsWentHigh )
+{
+SPI_WriteByte( 0x44 );
+ctsWentHigh = SPI_ReadByte();
+}
+SPI_WriteBytes( 80u, radioCmd );
+SPI_WriteBytes( numOfBytes, radioCmd2 );
+
+# 66
+RA5 = 1;
+}
+else
+{
 if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
 {
 
-return CTS_TIMEOUT;
+
+}
 }
 
 if( !RA3 )
 {
 
 si4355_get_int_status( 0u, 0u, 0u );
-
-
-
-
 }
 }
 return SUCCESS;

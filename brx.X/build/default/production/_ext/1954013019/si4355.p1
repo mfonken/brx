@@ -53,22 +53,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 "175
 [u S277 `uc -> 16 `i `S262 1 `S263 1 `S264 1 `S265 1 `S266 1 `S267 1 `S268 1 `S269 1 `S270 1 `S271 1 `S272 1 `S273 1 `S274 1 `S275 1 `S276 1 ]
 [n S277 si4355_cmd_reply_union RAW GENERIC PART_INFO TEST_DATA FUNC_INFO GET_PROPERTY GPIO_PIN_CFG FIFO_INFO EZCONFIG_CHECK GET_INT_STATUS REQUEST_DEVICE_STATE READ_CMD_BUFF FRR_A_READ FRR_B_READ FRR_C_READ FRR_D_READ ]
-"31 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
-[c E2259 0 1 2 3 4 .. ]
-[n E2259 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
-"14 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
-[v _radio_comm_SendCmdGetResp `(uc ~T0 @X0 0 ef4`uc`*uc`uc`*uc ]
-"5129 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
-[v _RA3 `Vb ~T0 @X0 0 e@99 ]
-"30 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
-[v _si4355_get_int_status `(v ~T0 @X0 0 ef3`uc`uc`uc ]
-"13 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
-[v _radio_comm_SendCmd `(v ~T0 @X0 0 ef2`uc`*uc ]
 "5133 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
 [v _RA5 `Vb ~T0 @X0 0 e@101 ]
 "12 C:/Users/Matthew Fonken/Desktop/brx/brx.X/spi.h
 [v _SPI_WriteByte `(v ~T0 @X0 0 ef1`uc ]
-"11 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
+"14
+[v _SPI_ReadByte `(uc ~T0 @X0 0 ef ]
+"11
+[v _SPI_WriteBytes `(v ~T0 @X0 0 ef2`uc`*uc ]
+"14 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
+[v _radio_comm_SendCmdGetResp `(uc ~T0 @X0 0 ef4`uc`*uc`uc`*uc ]
+"5129 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic12lf1840.h
+[v _RA3 `Vb ~T0 @X0 0 e@99 ]
+"29 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.h
+[v _si4355_get_int_status `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"83 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
+[c E2259 0 1 2 3 4 .. ]
+[n E2259 . SUCCESS NO_PATCH CTS_TIMEOUT PATCH_FAIL COMMAND_ERROR  ]
+"13 C:/Users/Matthew Fonken/Desktop/brx/brx.X/comm.h
+[v _radio_comm_SendCmd `(v ~T0 @X0 0 ef2`uc`*uc ]
+"11
 [v _radio_comm_GetResp `(uc ~T0 @X0 0 ef2`uc`*uc ]
 "15
 [v _radio_comm_ReadData `(v ~T0 @X0 0 ef4`uc`uc`uc`*uc ]
@@ -2306,39 +2310,38 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;si4355_defs.h: 191: struct si4355_reply_FRR_D_READ_map FRR_D_READ;
 [; ;si4355_defs.h: 192: };
 [; ;si4355.h: 4: extern union si4355_cmd_reply_union Si4355Cmd;
-[; ;si4355.h: 5: extern U8 radioCmd[16];
-[; ;si4355.h: 9: enum
-[; ;si4355.h: 10: {
-[; ;si4355.h: 11: SUCCESS,
-[; ;si4355.h: 12: NO_PATCH,
-[; ;si4355.h: 13: CTS_TIMEOUT,
-[; ;si4355.h: 14: PATCH_FAIL,
-[; ;si4355.h: 15: COMMAND_ERROR
-[; ;si4355.h: 16: };
-[; ;si4355.h: 18: U8 si4355_configuration_init( U8 * pSetPropCmd );
-[; ;si4355.h: 19: void si4355_reset( void );
-[; ;si4355.h: 20: void si4355_nop( void );
-[; ;si4355.h: 21: void si4355_part_info( void );
-[; ;si4355.h: 22: void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ );
-[; ;si4355.h: 23: void si4355_func_info( void);
-[; ;si4355.h: 24: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
-[; ;si4355.h: 25: void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP );
-[; ;si4355.h: 26: void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG );
-[; ;si4355.h: 27: void si4355_fifo_info( U8 FIFO);
-[; ;si4355.h: 28: void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray );
-[; ;si4355.h: 29: void si4355_ezconfig_check( U16 CHECKSUM);
-[; ;si4355.h: 30: void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND );
-[; ;si4355.h: 31: void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 );
-[; ;si4355.h: 32: void si4355_request_device_state( void );
-[; ;si4355.h: 33: void si4355_change_state( U8 NEXT_STATE1 );
-[; ;si4355.h: 34: void si4355_read_cmd_buff( void );
-[; ;si4355.h: 35: void si4355_frr_a_read( U8 respByteCount );
-[; ;si4355.h: 36: void si4355_frr_b_read( U8 respByteCount );
-[; ;si4355.h: 37: void si4355_frr_c_read( U8 respByteCount );
-[; ;si4355.h: 38: void si4355_frr_d_read( U8 respByteCount );
-[; ;si4355.h: 39: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
-[; ;config.h: 14: extern states STATE;
-[; ;config.h: 16: void HW_Config( void );
+[; ;si4355.h: 8: enum
+[; ;si4355.h: 9: {
+[; ;si4355.h: 10: SUCCESS,
+[; ;si4355.h: 11: NO_PATCH,
+[; ;si4355.h: 12: CTS_TIMEOUT,
+[; ;si4355.h: 13: PATCH_FAIL,
+[; ;si4355.h: 14: COMMAND_ERROR
+[; ;si4355.h: 15: };
+[; ;si4355.h: 17: U8 si4355_configuration_init( U8 * pSetPropCmd );
+[; ;si4355.h: 18: void si4355_reset( void );
+[; ;si4355.h: 19: void si4355_nop( void );
+[; ;si4355.h: 20: void si4355_part_info( void );
+[; ;si4355.h: 21: void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ );
+[; ;si4355.h: 22: void si4355_func_info( void);
+[; ;si4355.h: 23: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... );
+[; ;si4355.h: 24: void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP );
+[; ;si4355.h: 25: void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG );
+[; ;si4355.h: 26: void si4355_fifo_info( U8 FIFO);
+[; ;si4355.h: 27: void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray );
+[; ;si4355.h: 28: void si4355_ezconfig_check( U16 CHECKSUM);
+[; ;si4355.h: 29: void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND );
+[; ;si4355.h: 30: void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 );
+[; ;si4355.h: 31: void si4355_request_device_state( void );
+[; ;si4355.h: 32: void si4355_change_state( U8 NEXT_STATE1 );
+[; ;si4355.h: 33: void si4355_read_cmd_buff( void );
+[; ;si4355.h: 34: void si4355_frr_a_read( U8 respByteCount );
+[; ;si4355.h: 35: void si4355_frr_b_read( U8 respByteCount );
+[; ;si4355.h: 36: void si4355_frr_c_read( U8 respByteCount );
+[; ;si4355.h: 37: void si4355_frr_d_read( U8 respByteCount );
+[; ;si4355.h: 38: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData );
+[; ;config.h: 16: extern states STATE;
+[; ;config.h: 18: void HW_Config( void );
 [; ;spi.h: 10: void SPI_Init( void );
 [; ;spi.h: 11: void SPI_WriteBytes( U8 len, U8 * data );
 [; ;spi.h: 12: void SPI_WriteByte( U8 data );
@@ -2347,7 +2350,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "10 C:/Users/Matthew Fonken/Desktop/brx/brx.X/si4355.c
 [v _Si4355Cmd `S277 ~T0 @X0 1 e ]
 [; ;si4355.c: 10: union si4355_cmd_reply_union Si4355Cmd;
-[; ;si4355.c: 11: U8 radioCmd[16u];
 "13
 [v _si4355_configuration_init `(uc ~T0 @X0 1 ef1`*uc ]
 "14
@@ -2365,399 +2367,489 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _col -> -> 0 `i `uc ]
 "16
 [v _numOfBytes `uc ~T0 @X0 1 a ]
-[; ;si4355.c: 16: U8 numOfBytes = 0;
+[; ;si4355.c: 16: U8 numOfBytes = 0, numOfBytes_2 = 0;
 [e = _numOfBytes -> -> 0 `i `uc ]
-[; ;si4355.c: 19: while ( *pSetPropCmd != 0x00 )
+[v _numOfBytes_2 `uc ~T0 @X0 1 a ]
+[e = _numOfBytes_2 -> -> 0 `i `uc ]
+[v _radioCmd `uc ~T0 @X0 -> 80 `i a ]
+"18
+[v _radioCmd2 `uc ~T0 @X0 -> 40 `i a ]
 "19
+[v _second_cmd_buffer `uc ~T0 @X0 1 a ]
+[; ;si4355.c: 17: U8 radioCmd[80];
+[; ;si4355.c: 18: U8 radioCmd2[40];
+[; ;si4355.c: 19: bool second_cmd_buffer = 0;
+[e = _second_cmd_buffer -> -> 0 `i `uc ]
+[; ;si4355.c: 21: while ( *pSetPropCmd != 0x00 )
+"21
 [e $U 279  ]
 [e :U 280 ]
-[; ;si4355.c: 20: {
-"20
+[; ;si4355.c: 22: {
+"22
 {
-[; ;si4355.c: 26: numOfBytes = *pSetPropCmd++;
-"26
-[e = _numOfBytes *U ++ _pSetPropCmd * -> -> 1 `i `x -> -> # *U _pSetPropCmd `i `x ]
-[; ;si4355.c: 28: if ( numOfBytes > 16u )
+[; ;si4355.c: 28: numOfBytes = *pSetPropCmd++;
 "28
-[e $ ! > -> _numOfBytes `ui -> 16 `ui 282  ]
-[; ;si4355.c: 29: {
-"29
-{
-[; ;si4355.c: 31: return COMMAND_ERROR;
+[e = _numOfBytes *U ++ _pSetPropCmd * -> -> 1 `i `x -> -> # *U _pSetPropCmd `i `x ]
+[; ;si4355.c: 30: if ( numOfBytes > 80u )
+"30
+[e $ ! > -> _numOfBytes `ui -> 80 `ui 282  ]
+[; ;si4355.c: 31: {
 "31
-[e ) -> . `E2259 4 `uc ]
-[e $UE 278  ]
+{
+[; ;si4355.c: 32: second_cmd_buffer = 1;
 "32
+[e = _second_cmd_buffer -> -> 1 `i `uc ]
+"35
 }
 [e :U 282 ]
-[; ;si4355.c: 32: }
-[; ;si4355.c: 34: for ( col = 0u; col < numOfBytes; col++ )
-"34
+[; ;si4355.c: 35: }
+[; ;si4355.c: 38: for ( col = 0u; col < numOfBytes && col < 80u; col++ )
+"38
 {
 [e = _col -> -> 0 `ui `uc ]
 [e $U 286  ]
-"35
+"39
 [e :U 283 ]
-[; ;si4355.c: 35: {
+[; ;si4355.c: 39: {
 {
-[; ;si4355.c: 36: radioCmd[col] = *pSetPropCmd;
-"36
+[; ;si4355.c: 40: radioCmd[col] = *pSetPropCmd;
+"40
 [e = *U + &U _radioCmd * -> _col `ux -> -> # *U &U _radioCmd `ui `ux *U _pSetPropCmd ]
-[; ;si4355.c: 37: pSetPropCmd++;
-"37
+[; ;si4355.c: 41: pSetPropCmd++;
+"41
 [e ++ _pSetPropCmd * -> -> 1 `i `x -> -> # *U _pSetPropCmd `i `x ]
-"38
+"42
 }
-"34
+"38
 [e ++ _col -> -> 1 `i `uc ]
 [e :U 286 ]
-[e $ < -> _col `i -> _numOfBytes `i 283  ]
+[e $ && < -> _col `i -> _numOfBytes `i < -> _col `ui -> 80 `ui 283  ]
 [e :U 284 ]
-"38
+"42
 }
-[; ;si4355.c: 38: }
-[; ;si4355.c: 40: if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
-"40
-[e $ ! ! != -> ( _radio_comm_SendCmdGetResp (4 , , , _numOfBytes &U _radioCmd -> -> 0 `i `uc -> -> 0 `i `*uc `i -> -> -> 0 `i `uc `i 287  ]
-[; ;si4355.c: 41: {
-"41
-{
-[; ;si4355.c: 43: return CTS_TIMEOUT;
+[; ;si4355.c: 42: }
+[; ;si4355.c: 43: if(second_cmd_buffer)
 "43
-[e ) -> . `E2259 2 `uc ]
-[e $UE 278  ]
+[e $ ! != -> _second_cmd_buffer `i -> -> -> 0 `i `uc `i 287  ]
+[; ;si4355.c: 44: {
 "44
-}
-[e :U 287 ]
-[; ;si4355.c: 44: }
-[; ;si4355.c: 46: if( !RA3 )
-"46
-[e $ ! ! _RA3 288  ]
-[; ;si4355.c: 47: {
-"47
 {
-[; ;si4355.c: 49: si4355_get_int_status( 0u, 0u, 0u );
-"49
-[e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
-"54
-}
+[; ;si4355.c: 45: numOfBytes -= 80u;
+"45
+[e =- _numOfBytes -> -> 80 `ui `uc ]
+[; ;si4355.c: 46: for ( col = 0u; col < numOfBytes; col++ )
+"46
+{
+[e = _col -> -> 0 `ui `uc ]
+[e $U 291  ]
+"47
 [e :U 288 ]
+[; ;si4355.c: 47: {
+{
+[; ;si4355.c: 48: radioCmd2[col] = *pSetPropCmd;
+"48
+[e = *U + &U _radioCmd2 * -> _col `ux -> -> # *U &U _radioCmd2 `ui `ux *U _pSetPropCmd ]
+[; ;si4355.c: 49: pSetPropCmd++;
+"49
+[e ++ _pSetPropCmd * -> -> 1 `i `x -> -> # *U _pSetPropCmd `i `x ]
+"50
+}
+"46
+[e ++ _col -> -> 1 `i `uc ]
+[e :U 291 ]
+[e $ < -> _col `i -> _numOfBytes `i 288  ]
+[e :U 289 ]
+"50
+}
+[; ;si4355.c: 50: }
+[; ;si4355.c: 52: RA5 = 0;
+"52
+[e = _RA5 -> -> 0 `i `b ]
+"53
+[v _ctsWentHigh `uc ~T0 @X0 1 a ]
+[; ;si4355.c: 53: U8 ctsWentHigh = 0;
+[e = _ctsWentHigh -> -> 0 `i `uc ]
+[; ;si4355.c: 54: while( !ctsWentHigh )
+"54
+[e $U 292  ]
+[e :U 293 ]
+[; ;si4355.c: 55: {
 "55
+{
+[; ;si4355.c: 56: SPI_WriteByte( 0x44 );
+"56
+[e ( _SPI_WriteByte (1 -> -> 68 `i `uc ]
+[; ;si4355.c: 57: ctsWentHigh = SPI_ReadByte();
+"57
+[e = _ctsWentHigh ( _SPI_ReadByte ..  ]
+"58
+}
+[e :U 292 ]
+"54
+[e $ ! != -> _ctsWentHigh `i -> -> -> 0 `i `uc `i 293  ]
+[e :U 294 ]
+[; ;si4355.c: 58: }
+[; ;si4355.c: 59: SPI_WriteBytes( 80u, radioCmd );
+"59
+[e ( _SPI_WriteBytes (2 , -> -> 80 `ui `uc &U _radioCmd ]
+[; ;si4355.c: 60: SPI_WriteBytes( numOfBytes, radioCmd2 );
+"60
+[e ( _SPI_WriteBytes (2 , _numOfBytes &U _radioCmd2 ]
+[; ;si4355.c: 66: RA5 = 1;
+"66
+[e = _RA5 -> -> 1 `i `b ]
+"67
+}
+[; ;si4355.c: 67: }
+[e $U 295  ]
+"68
+[e :U 287 ]
+[; ;si4355.c: 68: else
+[; ;si4355.c: 69: {
+"69
+{
+[; ;si4355.c: 70: if ( !radio_comm_SendCmdGetResp( numOfBytes, radioCmd, 0, 0 ) )
+"70
+[e $ ! ! != -> ( _radio_comm_SendCmdGetResp (4 , , , _numOfBytes &U _radioCmd -> -> 0 `i `uc -> -> 0 `i `*uc `i -> -> -> 0 `i `uc `i 296  ]
+[; ;si4355.c: 71: {
+"71
+{
+"74
+}
+[e :U 296 ]
+"75
+}
+[e :U 295 ]
+[; ;si4355.c: 74: }
+[; ;si4355.c: 75: }
+[; ;si4355.c: 77: if( !RA3 )
+"77
+[e $ ! ! _RA3 297  ]
+[; ;si4355.c: 78: {
+"78
+{
+[; ;si4355.c: 80: si4355_get_int_status( 0u, 0u, 0u );
+"80
+[e ( _si4355_get_int_status (3 , , -> -> 0 `ui `uc -> -> 0 `ui `uc -> -> 0 `ui `uc ]
+"81
+}
+[e :U 297 ]
+"82
 }
 [e :U 279 ]
-"19
+"21
 [e $ != -> *U _pSetPropCmd `i -> 0 `i 280  ]
 [e :U 281 ]
-[; ;si4355.c: 54: }
-[; ;si4355.c: 55: }
-[; ;si4355.c: 56: return SUCCESS;
-"56
+[; ;si4355.c: 81: }
+[; ;si4355.c: 82: }
+[; ;si4355.c: 83: return SUCCESS;
+"83
 [e ) -> . `E2259 0 `uc ]
 [e $UE 278  ]
-[; ;si4355.c: 57: }
-"57
+[; ;si4355.c: 84: }
+"84
 [e :UE 278 ]
 }
-"59
+"86
 [v _si4355_reset `(v ~T0 @X0 1 ef ]
-"60
+"87
 {
-[; ;si4355.c: 59: void si4355_reset( void )
-[; ;si4355.c: 60: {
+[; ;si4355.c: 86: void si4355_reset( void )
+[; ;si4355.c: 87: {
 [e :U _si4355_reset ]
 [f ]
-[; ;si4355.c: 63: }
-"63
-[e :UE 289 ]
+[; ;si4355.c: 90: }
+"90
+[e :UE 298 ]
 }
-"66
+"93
 [v _si4355_nop `(v ~T0 @X0 1 ef ]
-"67
+"94
 {
-[; ;si4355.c: 66: void si4355_nop( void )
-[; ;si4355.c: 67: {
+[; ;si4355.c: 93: void si4355_nop( void )
+[; ;si4355.c: 94: {
 [e :U _si4355_nop ]
 [f ]
-[; ;si4355.c: 68: radioCmd[0] = 0x00;
-"68
+[; ;si4355.c: 95: radioCmd[0] = 0x00;
+"95
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 0 `i `uc ]
-[; ;si4355.c: 70: radio_comm_SendCmd( 1, radioCmd );
-"70
+[; ;si4355.c: 97: radio_comm_SendCmd( 1, radioCmd );
+"97
 [e ( _radio_comm_SendCmd (2 , -> -> 1 `i `uc &U _radioCmd ]
-[; ;si4355.c: 71: }
-"71
-[e :UE 290 ]
+[; ;si4355.c: 98: }
+"98
+[e :UE 299 ]
 }
-"74
+"101
 [v _si4355_part_info `(v ~T0 @X0 1 ef ]
-"75
+"102
 {
-[; ;si4355.c: 74: void si4355_part_info( void )
-[; ;si4355.c: 75: {
+[; ;si4355.c: 101: void si4355_part_info( void )
+[; ;si4355.c: 102: {
 [e :U _si4355_part_info ]
 [f ]
-[; ;si4355.c: 76: radioCmd[0] = 0x01;
-"76
+[; ;si4355.c: 103: radioCmd[0] = 0x01;
+"103
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 1 `i `uc ]
-[; ;si4355.c: 78: radio_comm_SendCmdGetResp( 1,
-[; ;si4355.c: 79: radioCmd,
-[; ;si4355.c: 80: 9,
-[; ;si4355.c: 81: radioCmd );
-"81
+[; ;si4355.c: 105: radio_comm_SendCmdGetResp( 1,
+[; ;si4355.c: 106: radioCmd,
+[; ;si4355.c: 107: 9,
+[; ;si4355.c: 108: radioCmd );
+"108
 [e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 1 `i `uc &U _radioCmd -> -> 9 `i `uc &U _radioCmd ]
-[; ;si4355.c: 83: Si4355Cmd.PART_INFO.CHIPREV = radioCmd[0];
-"83
+[; ;si4355.c: 110: Si4355Cmd.PART_INFO.CHIPREV = radioCmd[0];
+"110
 [e = . . _Si4355Cmd 2 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 84: Si4355Cmd.PART_INFO.PART.U8[1] = radioCmd[1];
-"84
+[; ;si4355.c: 111: Si4355Cmd.PART_INFO.PART.U8[1] = radioCmd[1];
+"111
 [e = *U + &U . . . _Si4355Cmd 2 1 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 2 1 2 `ui `ux *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 85: Si4355Cmd.PART_INFO.PART.U8[0] = radioCmd[2];
-"85
+[; ;si4355.c: 112: Si4355Cmd.PART_INFO.PART.U8[0] = radioCmd[2];
+"112
 [e = *U + &U . . . _Si4355Cmd 2 1 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 2 1 2 `ui `ux *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 86: Si4355Cmd.PART_INFO.PBUILD = radioCmd[3];
-"86
+[; ;si4355.c: 113: Si4355Cmd.PART_INFO.PBUILD = radioCmd[3];
+"113
 [e = . . _Si4355Cmd 2 2 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 87: Si4355Cmd.PART_INFO.ID.U8[1] = radioCmd[4];
-"87
+[; ;si4355.c: 114: Si4355Cmd.PART_INFO.ID.U8[1] = radioCmd[4];
+"114
 [e = *U + &U . . . _Si4355Cmd 2 3 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 2 3 2 `ui `ux *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 88: Si4355Cmd.PART_INFO.ID.U8[0] = radioCmd[5];
-"88
+[; ;si4355.c: 115: Si4355Cmd.PART_INFO.ID.U8[0] = radioCmd[5];
+"115
 [e = *U + &U . . . _Si4355Cmd 2 3 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 2 3 2 `ui `ux *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 89: Si4355Cmd.PART_INFO.CUSTOMER = radioCmd[6];
-"89
+[; ;si4355.c: 116: Si4355Cmd.PART_INFO.CUSTOMER = radioCmd[6];
+"116
 [e = . . _Si4355Cmd 2 4 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 90: Si4355Cmd.PART_INFO.ROMID = radioCmd[7];
-"90
+[; ;si4355.c: 117: Si4355Cmd.PART_INFO.ROMID = radioCmd[7];
+"117
 [e = . . _Si4355Cmd 2 5 *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 91: Si4355Cmd.PART_INFO.BOND = radioCmd[8];
-"91
+[; ;si4355.c: 118: Si4355Cmd.PART_INFO.BOND = radioCmd[8];
+"118
 [e = . . _Si4355Cmd 2 6 *U + &U _radioCmd * -> -> -> 8 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 92: }
-"92
-[e :UE 291 ]
+[; ;si4355.c: 119: }
+"119
+[e :UE 300 ]
 }
-"95
+"122
 [v _si4355_power_up `(v ~T0 @X0 1 ef3`uc`uc`ul ]
-"96
+"123
 {
-[; ;si4355.c: 95: void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ )
-[; ;si4355.c: 96: {
+[; ;si4355.c: 122: void si4355_power_up( U8 BOOT_OPTIONS, U8 XTAL_OPTIONS, U32 XO_FREQ )
+[; ;si4355.c: 123: {
 [e :U _si4355_power_up ]
-"95
+"122
 [v _BOOT_OPTIONS `uc ~T0 @X0 1 r1 ]
 [v _XTAL_OPTIONS `uc ~T0 @X0 1 r2 ]
 [v _XO_FREQ `ul ~T0 @X0 1 r3 ]
-"96
+"123
 [f ]
-[; ;si4355.c: 97: radioCmd[0] = 0x02;
-"97
+[; ;si4355.c: 124: radioCmd[0] = 0x02;
+"124
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 2 `i `uc ]
-[; ;si4355.c: 98: radioCmd[1] = BOOT_OPTIONS;
-"98
+[; ;si4355.c: 125: radioCmd[1] = BOOT_OPTIONS;
+"125
 [e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _BOOT_OPTIONS ]
-[; ;si4355.c: 99: radioCmd[2] = XTAL_OPTIONS;
-"99
+[; ;si4355.c: 126: radioCmd[2] = XTAL_OPTIONS;
+"126
 [e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _XTAL_OPTIONS ]
-[; ;si4355.c: 100: radioCmd[3] = ( U8 )( XO_FREQ >> 24 );
-"100
+[; ;si4355.c: 127: radioCmd[3] = ( U8 )( XO_FREQ >> 24 );
+"127
 [e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> >> _XO_FREQ -> 24 `i `uc ]
-[; ;si4355.c: 101: radioCmd[4] = ( U8 )( XO_FREQ >> 16 );
-"101
+[; ;si4355.c: 128: radioCmd[4] = ( U8 )( XO_FREQ >> 16 );
+"128
 [e = *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> >> _XO_FREQ -> 16 `i `uc ]
-[; ;si4355.c: 102: radioCmd[5] = ( U8 )( XO_FREQ >> 8 );
-"102
+[; ;si4355.c: 129: radioCmd[5] = ( U8 )( XO_FREQ >> 8 );
+"129
 [e = *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> >> _XO_FREQ -> 8 `i `uc ]
-[; ;si4355.c: 103: radioCmd[6] = ( U8 )( XO_FREQ );
-"103
+[; ;si4355.c: 130: radioCmd[6] = ( U8 )( XO_FREQ );
+"130
 [e = *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> _XO_FREQ `uc ]
-[; ;si4355.c: 105: radio_comm_SendCmd( 7, radioCmd );
-"105
+[; ;si4355.c: 132: radio_comm_SendCmd( 7, radioCmd );
+"132
 [e ( _radio_comm_SendCmd (2 , -> -> 7 `i `uc &U _radioCmd ]
-[; ;si4355.c: 106: }
-"106
-[e :UE 292 ]
+[; ;si4355.c: 133: }
+"133
+[e :UE 301 ]
 }
-"109
+"136
 [v _si4355_func_info `(v ~T0 @X0 1 ef ]
-"110
+"137
 {
-[; ;si4355.c: 109: void si4355_func_info( void )
-[; ;si4355.c: 110: {
+[; ;si4355.c: 136: void si4355_func_info( void )
+[; ;si4355.c: 137: {
 [e :U _si4355_func_info ]
 [f ]
-[; ;si4355.c: 111: radioCmd[0] = 0x10;
-"111
+[; ;si4355.c: 138: radioCmd[0] = 0x10;
+"138
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 16 `i `uc ]
-[; ;si4355.c: 113: radio_comm_SendCmdGetResp( 1,
-[; ;si4355.c: 114: radioCmd,
-[; ;si4355.c: 115: 11,
-[; ;si4355.c: 116: radioCmd );
-"116
+[; ;si4355.c: 140: radio_comm_SendCmdGetResp( 1,
+[; ;si4355.c: 141: radioCmd,
+[; ;si4355.c: 142: 11,
+[; ;si4355.c: 143: radioCmd );
+"143
 [e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 1 `i `uc &U _radioCmd -> -> 11 `i `uc &U _radioCmd ]
-[; ;si4355.c: 118: Si4355Cmd.FUNC_INFO.REVEXT = radioCmd[0];
-"118
+[; ;si4355.c: 145: Si4355Cmd.FUNC_INFO.REVEXT = radioCmd[0];
+"145
 [e = . . _Si4355Cmd 4 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 119: Si4355Cmd.FUNC_INFO.REVBRANCH = radioCmd[1];
-"119
+[; ;si4355.c: 146: Si4355Cmd.FUNC_INFO.REVBRANCH = radioCmd[1];
+"146
 [e = . . _Si4355Cmd 4 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 120: Si4355Cmd.FUNC_INFO.REVINT = radioCmd[2];
-"120
+[; ;si4355.c: 147: Si4355Cmd.FUNC_INFO.REVINT = radioCmd[2];
+"147
 [e = . . _Si4355Cmd 4 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 121: Si4355Cmd.FUNC_INFO.PATCH.U8[1] = radioCmd[3];
-"121
+[; ;si4355.c: 148: Si4355Cmd.FUNC_INFO.PATCH.U8[1] = radioCmd[3];
+"148
 [e = *U + &U . . . _Si4355Cmd 4 3 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 3 2 `ui `ux *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 122: Si4355Cmd.FUNC_INFO.PATCH.U8[0] = radioCmd[4];
-"122
+[; ;si4355.c: 149: Si4355Cmd.FUNC_INFO.PATCH.U8[0] = radioCmd[4];
+"149
 [e = *U + &U . . . _Si4355Cmd 4 3 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 3 2 `ui `ux *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 123: Si4355Cmd.FUNC_INFO.FUNC = radioCmd[5];
-"123
+[; ;si4355.c: 150: Si4355Cmd.FUNC_INFO.FUNC = radioCmd[5];
+"150
 [e = . . _Si4355Cmd 4 4 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 124: Si4355Cmd.FUNC_INFO.SVNFLAGS = radioCmd[6];
-"124
+[; ;si4355.c: 151: Si4355Cmd.FUNC_INFO.SVNFLAGS = radioCmd[6];
+"151
 [e = . . _Si4355Cmd 4 5 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 125: Si4355Cmd.FUNC_INFO.SVNREV.U8[3] = radioCmd[7];
-"125
+[; ;si4355.c: 152: Si4355Cmd.FUNC_INFO.SVNREV.U8[3] = radioCmd[7];
+"152
 [e = *U + &U . . . _Si4355Cmd 4 6 5 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 6 5 `ui `ux *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 126: Si4355Cmd.FUNC_INFO.SVNREV.U8[2] = radioCmd[8];
-"126
+[; ;si4355.c: 153: Si4355Cmd.FUNC_INFO.SVNREV.U8[2] = radioCmd[8];
+"153
 [e = *U + &U . . . _Si4355Cmd 4 6 5 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 6 5 `ui `ux *U + &U _radioCmd * -> -> -> 8 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 127: Si4355Cmd.FUNC_INFO.SVNREV.U8[1] = radioCmd[9];
-"127
+[; ;si4355.c: 154: Si4355Cmd.FUNC_INFO.SVNREV.U8[1] = radioCmd[9];
+"154
 [e = *U + &U . . . _Si4355Cmd 4 6 5 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 6 5 `ui `ux *U + &U _radioCmd * -> -> -> 9 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 128: Si4355Cmd.FUNC_INFO.SVNREV.U8[0] = radioCmd[10];
-"128
+[; ;si4355.c: 155: Si4355Cmd.FUNC_INFO.SVNREV.U8[0] = radioCmd[10];
+"155
 [e = *U + &U . . . _Si4355Cmd 4 6 5 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . . _Si4355Cmd 4 6 5 `ui `ux *U + &U _radioCmd * -> -> -> 10 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 129: }
-"129
-[e :UE 293 ]
+[; ;si4355.c: 156: }
+"156
+[e :UE 302 ]
 }
-"131
+"158
 [v _si4355_set_property `(v ~T0 @X0 1 e2v`uc`uc`uc ]
-"132
+"159
 {
-[; ;si4355.c: 131: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... )
-[; ;si4355.c: 132: {
+[; ;si4355.c: 158: void si4355_set_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP, ... )
+[; ;si4355.c: 159: {
 [e :U _si4355_set_property ]
-"131
+"158
 [v _GROUP `uc ~T0 @X0 1 r1 ]
 [v _NUM_PROPS `uc ~T0 @X0 1 r2 ]
 [v _START_PROP `uc ~T0 @X0 1 r0 ]
-"132
+"159
 [f ]
-"133
+"160
 [v _cmdIndex `uc ~T0 @X0 1 a ]
-[; ;si4355.c: 133: U8 cmdIndex = 0;
+[; ;si4355.c: 160: U8 cmdIndex = 0;
 [e = _cmdIndex -> -> 0 `i `uc ]
-[; ;si4355.c: 135: radioCmd[0] = 0x11;
-"135
+[; ;si4355.c: 162: radioCmd[0] = 0x11;
+"162
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 17 `i `uc ]
-[; ;si4355.c: 136: radioCmd[1] = GROUP;
-"136
+[; ;si4355.c: 163: radioCmd[1] = GROUP;
+"163
 [e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GROUP ]
-[; ;si4355.c: 137: radioCmd[2] = NUM_PROPS;
-"137
+[; ;si4355.c: 164: radioCmd[2] = NUM_PROPS;
+"164
 [e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NUM_PROPS ]
-[; ;si4355.c: 138: radioCmd[3] = START_PROP;
-"138
+[; ;si4355.c: 165: radioCmd[3] = START_PROP;
+"165
 [e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _START_PROP ]
-[; ;si4355.c: 140: radio_comm_SendCmd( cmdIndex, radioCmd );
-"140
+[; ;si4355.c: 167: radio_comm_SendCmd( cmdIndex, radioCmd );
+"167
 [e ( _radio_comm_SendCmd (2 , _cmdIndex &U _radioCmd ]
-[; ;si4355.c: 141: }
-"141
-[e :UE 294 ]
+[; ;si4355.c: 168: }
+"168
+[e :UE 303 ]
 }
-"144
+"171
 [v _si4355_get_property `(v ~T0 @X0 1 ef3`uc`uc`uc ]
-"145
+"172
 {
-[; ;si4355.c: 144: void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP )
-[; ;si4355.c: 145: {
+[; ;si4355.c: 171: void si4355_get_property( U8 GROUP, U8 NUM_PROPS, U8 START_PROP )
+[; ;si4355.c: 172: {
 [e :U _si4355_get_property ]
-"144
+"171
 [v _GROUP `uc ~T0 @X0 1 r1 ]
 [v _NUM_PROPS `uc ~T0 @X0 1 r2 ]
 [v _START_PROP `uc ~T0 @X0 1 r3 ]
-"145
-[f ]
-[; ;si4355.c: 146: radioCmd[0] = 0x12;
-"146
-[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 18 `i `uc ]
-[; ;si4355.c: 147: radioCmd[1] = GROUP;
-"147
-[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GROUP ]
-[; ;si4355.c: 148: radioCmd[2] = NUM_PROPS;
-"148
-[e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NUM_PROPS ]
-[; ;si4355.c: 149: radioCmd[3] = START_PROP;
-"149
-[e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _START_PROP ]
-[; ;si4355.c: 151: radio_comm_SendCmdGetResp( 4,
-[; ;si4355.c: 152: radioCmd,
-[; ;si4355.c: 153: 16,
-[; ;si4355.c: 154: radioCmd );
-"154
-[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 4 `i `uc &U _radioCmd -> -> 16 `i `uc &U _radioCmd ]
-[; ;si4355.c: 156: Si4355Cmd.GET_PROPERTY.DATA0 = radioCmd[0];
-"156
-[e = . . _Si4355Cmd 5 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 157: Si4355Cmd.GET_PROPERTY.DATA1 = radioCmd[1];
-"157
-[e = . . _Si4355Cmd 5 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 158: Si4355Cmd.GET_PROPERTY.DATA2 = radioCmd[2];
-"158
-[e = . . _Si4355Cmd 5 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 159: Si4355Cmd.GET_PROPERTY.DATA3 = radioCmd[3];
-"159
-[e = . . _Si4355Cmd 5 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 160: Si4355Cmd.GET_PROPERTY.DATA4 = radioCmd[4];
-"160
-[e = . . _Si4355Cmd 5 4 *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 161: Si4355Cmd.GET_PROPERTY.DATA5 = radioCmd[5];
-"161
-[e = . . _Si4355Cmd 5 5 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 162: Si4355Cmd.GET_PROPERTY.DATA6 = radioCmd[6];
-"162
-[e = . . _Si4355Cmd 5 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 163: Si4355Cmd.GET_PROPERTY.DATA7 = radioCmd[7];
-"163
-[e = . . _Si4355Cmd 5 7 *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 164: Si4355Cmd.GET_PROPERTY.DATA8 = radioCmd[8];
-"164
-[e = . . _Si4355Cmd 5 8 *U + &U _radioCmd * -> -> -> 8 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 165: Si4355Cmd.GET_PROPERTY.DATA9 = radioCmd[9];
-"165
-[e = . . _Si4355Cmd 5 9 *U + &U _radioCmd * -> -> -> 9 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 166: Si4355Cmd.GET_PROPERTY.DATA10 = radioCmd[10];
-"166
-[e = . . _Si4355Cmd 5 10 *U + &U _radioCmd * -> -> -> 10 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 167: Si4355Cmd.GET_PROPERTY.DATA11 = radioCmd[11];
-"167
-[e = . . _Si4355Cmd 5 11 *U + &U _radioCmd * -> -> -> 11 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 168: Si4355Cmd.GET_PROPERTY.DATA12 = radioCmd[12];
-"168
-[e = . . _Si4355Cmd 5 12 *U + &U _radioCmd * -> -> -> 12 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 169: Si4355Cmd.GET_PROPERTY.DATA13 = radioCmd[13];
-"169
-[e = . . _Si4355Cmd 5 13 *U + &U _radioCmd * -> -> -> 13 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 170: Si4355Cmd.GET_PROPERTY.DATA14 = radioCmd[14];
-"170
-[e = . . _Si4355Cmd 5 14 *U + &U _radioCmd * -> -> -> 14 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 171: Si4355Cmd.GET_PROPERTY.DATA15 = radioCmd[15];
-"171
-[e = . . _Si4355Cmd 5 15 *U + &U _radioCmd * -> -> -> 15 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 172: }
 "172
-[e :UE 295 ]
-}
+[f ]
+[; ;si4355.c: 173: radioCmd[0] = 0x12;
+"173
+[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 18 `i `uc ]
+[; ;si4355.c: 174: radioCmd[1] = GROUP;
+"174
+[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GROUP ]
+[; ;si4355.c: 175: radioCmd[2] = NUM_PROPS;
 "175
-[v _si4355_gpio_pin_cfg `(v ~T0 @X0 1 ef7`uc`uc`uc`uc`uc`uc`uc ]
+[e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NUM_PROPS ]
+[; ;si4355.c: 176: radioCmd[3] = START_PROP;
 "176
+[e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _START_PROP ]
+[; ;si4355.c: 178: radio_comm_SendCmdGetResp( 4,
+[; ;si4355.c: 179: radioCmd,
+[; ;si4355.c: 180: 16,
+[; ;si4355.c: 181: radioCmd );
+"181
+[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 4 `i `uc &U _radioCmd -> -> 16 `i `uc &U _radioCmd ]
+[; ;si4355.c: 183: Si4355Cmd.GET_PROPERTY.DATA0 = radioCmd[0];
+"183
+[e = . . _Si4355Cmd 5 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 184: Si4355Cmd.GET_PROPERTY.DATA1 = radioCmd[1];
+"184
+[e = . . _Si4355Cmd 5 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 185: Si4355Cmd.GET_PROPERTY.DATA2 = radioCmd[2];
+"185
+[e = . . _Si4355Cmd 5 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 186: Si4355Cmd.GET_PROPERTY.DATA3 = radioCmd[3];
+"186
+[e = . . _Si4355Cmd 5 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 187: Si4355Cmd.GET_PROPERTY.DATA4 = radioCmd[4];
+"187
+[e = . . _Si4355Cmd 5 4 *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 188: Si4355Cmd.GET_PROPERTY.DATA5 = radioCmd[5];
+"188
+[e = . . _Si4355Cmd 5 5 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 189: Si4355Cmd.GET_PROPERTY.DATA6 = radioCmd[6];
+"189
+[e = . . _Si4355Cmd 5 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 190: Si4355Cmd.GET_PROPERTY.DATA7 = radioCmd[7];
+"190
+[e = . . _Si4355Cmd 5 7 *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 191: Si4355Cmd.GET_PROPERTY.DATA8 = radioCmd[8];
+"191
+[e = . . _Si4355Cmd 5 8 *U + &U _radioCmd * -> -> -> 8 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 192: Si4355Cmd.GET_PROPERTY.DATA9 = radioCmd[9];
+"192
+[e = . . _Si4355Cmd 5 9 *U + &U _radioCmd * -> -> -> 9 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 193: Si4355Cmd.GET_PROPERTY.DATA10 = radioCmd[10];
+"193
+[e = . . _Si4355Cmd 5 10 *U + &U _radioCmd * -> -> -> 10 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 194: Si4355Cmd.GET_PROPERTY.DATA11 = radioCmd[11];
+"194
+[e = . . _Si4355Cmd 5 11 *U + &U _radioCmd * -> -> -> 11 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 195: Si4355Cmd.GET_PROPERTY.DATA12 = radioCmd[12];
+"195
+[e = . . _Si4355Cmd 5 12 *U + &U _radioCmd * -> -> -> 12 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 196: Si4355Cmd.GET_PROPERTY.DATA13 = radioCmd[13];
+"196
+[e = . . _Si4355Cmd 5 13 *U + &U _radioCmd * -> -> -> 13 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 197: Si4355Cmd.GET_PROPERTY.DATA14 = radioCmd[14];
+"197
+[e = . . _Si4355Cmd 5 14 *U + &U _radioCmd * -> -> -> 14 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 198: Si4355Cmd.GET_PROPERTY.DATA15 = radioCmd[15];
+"198
+[e = . . _Si4355Cmd 5 15 *U + &U _radioCmd * -> -> -> 15 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 199: }
+"199
+[e :UE 304 ]
+}
+"202
+[v _si4355_gpio_pin_cfg `(v ~T0 @X0 1 ef7`uc`uc`uc`uc`uc`uc`uc ]
+"203
 {
-[; ;si4355.c: 175: void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG )
-[; ;si4355.c: 176: {
+[; ;si4355.c: 202: void si4355_gpio_pin_cfg( U8 GPIO0, U8 GPIO1, U8 GPIO2, U8 GPIO3, U8 NIRQ, U8 SDO, U8 GEN_CONFIG )
+[; ;si4355.c: 203: {
 [e :U _si4355_gpio_pin_cfg ]
-"175
+"202
 [v _GPIO0 `uc ~T0 @X0 1 r1 ]
 [v _GPIO1 `uc ~T0 @X0 1 r2 ]
 [v _GPIO2 `uc ~T0 @X0 1 r3 ]
@@ -2765,462 +2857,462 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _NIRQ `uc ~T0 @X0 1 r5 ]
 [v _SDO `uc ~T0 @X0 1 r6 ]
 [v _GEN_CONFIG `uc ~T0 @X0 1 r7 ]
-"176
-[f ]
-[; ;si4355.c: 177: radioCmd[0] = 0x13;
-"177
-[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 19 `i `uc ]
-[; ;si4355.c: 178: radioCmd[1] = GPIO0;
-"178
-[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO0 ]
-[; ;si4355.c: 179: radioCmd[2] = GPIO1;
-"179
-[e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO1 ]
-[; ;si4355.c: 180: radioCmd[3] = GPIO2;
-"180
-[e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO2 ]
-[; ;si4355.c: 181: radioCmd[4] = GPIO3;
-"181
-[e = *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO3 ]
-[; ;si4355.c: 182: radioCmd[5] = NIRQ;
-"182
-[e = *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NIRQ ]
-[; ;si4355.c: 183: radioCmd[6] = SDO;
-"183
-[e = *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _SDO ]
-[; ;si4355.c: 184: radioCmd[7] = GEN_CONFIG;
-"184
-[e = *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GEN_CONFIG ]
-[; ;si4355.c: 186: radio_comm_SendCmdGetResp( 8,
-[; ;si4355.c: 187: radioCmd,
-[; ;si4355.c: 188: 7,
-[; ;si4355.c: 189: radioCmd );
-"189
-[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 8 `i `uc &U _radioCmd -> -> 7 `i `uc &U _radioCmd ]
-[; ;si4355.c: 191: Si4355Cmd.GPIO_PIN_CFG.GPIO0 = radioCmd[0];
-"191
-[e = . . _Si4355Cmd 6 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 192: Si4355Cmd.GPIO_PIN_CFG.GPIO1 = radioCmd[1];
-"192
-[e = . . _Si4355Cmd 6 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 193: Si4355Cmd.GPIO_PIN_CFG.GPIO2 = radioCmd[2];
-"193
-[e = . . _Si4355Cmd 6 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 194: Si4355Cmd.GPIO_PIN_CFG.GPIO3 = radioCmd[3];
-"194
-[e = . . _Si4355Cmd 6 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 195: Si4355Cmd.GPIO_PIN_CFG.NIRQ = radioCmd[4];
-"195
-[e = . . _Si4355Cmd 6 4 *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 196: Si4355Cmd.GPIO_PIN_CFG.SDO = radioCmd[5];
-"196
-[e = . . _Si4355Cmd 6 5 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 197: Si4355Cmd.GPIO_PIN_CFG.GEN_CONFIG = radioCmd[6];
-"197
-[e = . . _Si4355Cmd 6 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 198: }
-"198
-[e :UE 296 ]
-}
-"200
-[v _si4355_fifo_info `(v ~T0 @X0 1 ef1`uc ]
-"201
-{
-[; ;si4355.c: 200: void si4355_fifo_info( U8 FIFO )
-[; ;si4355.c: 201: {
-[e :U _si4355_fifo_info ]
-"200
-[v _FIFO `uc ~T0 @X0 1 r1 ]
-"201
-[f ]
-[; ;si4355.c: 202: radioCmd[0] = 0x15;
-"202
-[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 21 `i `uc ]
-[; ;si4355.c: 203: radioCmd[1] = FIFO;
 "203
-[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _FIFO ]
-[; ;si4355.c: 205: radio_comm_SendCmdGetResp( 2,
-[; ;si4355.c: 206: radioCmd,
-[; ;si4355.c: 207: 2,
-[; ;si4355.c: 208: radioCmd );
+[f ]
+[; ;si4355.c: 204: radioCmd[0] = 0x13;
+"204
+[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 19 `i `uc ]
+[; ;si4355.c: 205: radioCmd[1] = GPIO0;
+"205
+[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO0 ]
+[; ;si4355.c: 206: radioCmd[2] = GPIO1;
+"206
+[e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO1 ]
+[; ;si4355.c: 207: radioCmd[3] = GPIO2;
+"207
+[e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO2 ]
+[; ;si4355.c: 208: radioCmd[4] = GPIO3;
 "208
-[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 2 `i `uc &U _radioCmd -> -> 2 `i `uc &U _radioCmd ]
-[; ;si4355.c: 210: Si4355Cmd.FIFO_INFO.RX_FIFO_COUNT = radioCmd[0];
+[e = *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GPIO3 ]
+[; ;si4355.c: 209: radioCmd[5] = NIRQ;
+"209
+[e = *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NIRQ ]
+[; ;si4355.c: 210: radioCmd[6] = SDO;
 "210
-[e = . . _Si4355Cmd 7 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 211: Si4355Cmd.FIFO_INFO.TX_FIFO_SPACE = radioCmd[1];
+[e = *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _SDO ]
+[; ;si4355.c: 211: radioCmd[7] = GEN_CONFIG;
 "211
-[e = . . _Si4355Cmd 7 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 212: }
-"212
-[e :UE 297 ]
+[e = *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _GEN_CONFIG ]
+[; ;si4355.c: 213: radio_comm_SendCmdGetResp( 8,
+[; ;si4355.c: 214: radioCmd,
+[; ;si4355.c: 215: 7,
+[; ;si4355.c: 216: radioCmd );
+"216
+[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 8 `i `uc &U _radioCmd -> -> 7 `i `uc &U _radioCmd ]
+[; ;si4355.c: 218: Si4355Cmd.GPIO_PIN_CFG.GPIO0 = radioCmd[0];
+"218
+[e = . . _Si4355Cmd 6 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 219: Si4355Cmd.GPIO_PIN_CFG.GPIO1 = radioCmd[1];
+"219
+[e = . . _Si4355Cmd 6 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 220: Si4355Cmd.GPIO_PIN_CFG.GPIO2 = radioCmd[2];
+"220
+[e = . . _Si4355Cmd 6 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 221: Si4355Cmd.GPIO_PIN_CFG.GPIO3 = radioCmd[3];
+"221
+[e = . . _Si4355Cmd 6 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 222: Si4355Cmd.GPIO_PIN_CFG.NIRQ = radioCmd[4];
+"222
+[e = . . _Si4355Cmd 6 4 *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 223: Si4355Cmd.GPIO_PIN_CFG.SDO = radioCmd[5];
+"223
+[e = . . _Si4355Cmd 6 5 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 224: Si4355Cmd.GPIO_PIN_CFG.GEN_CONFIG = radioCmd[6];
+"224
+[e = . . _Si4355Cmd 6 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 225: }
+"225
+[e :UE 305 ]
 }
-"214
-[v _si4355_write_ezconfig_array `(v ~T0 @X0 1 ef2`uc`*uc ]
-"215
+"227
+[v _si4355_fifo_info `(v ~T0 @X0 1 ef1`uc ]
+"228
 {
-[; ;si4355.c: 214: void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray )
-[; ;si4355.c: 215: {
+[; ;si4355.c: 227: void si4355_fifo_info( U8 FIFO )
+[; ;si4355.c: 228: {
+[e :U _si4355_fifo_info ]
+"227
+[v _FIFO `uc ~T0 @X0 1 r1 ]
+"228
+[f ]
+[; ;si4355.c: 229: radioCmd[0] = 0x15;
+"229
+[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 21 `i `uc ]
+[; ;si4355.c: 230: radioCmd[1] = FIFO;
+"230
+[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _FIFO ]
+[; ;si4355.c: 232: radio_comm_SendCmdGetResp( 2,
+[; ;si4355.c: 233: radioCmd,
+[; ;si4355.c: 234: 2,
+[; ;si4355.c: 235: radioCmd );
+"235
+[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 2 `i `uc &U _radioCmd -> -> 2 `i `uc &U _radioCmd ]
+[; ;si4355.c: 237: Si4355Cmd.FIFO_INFO.RX_FIFO_COUNT = radioCmd[0];
+"237
+[e = . . _Si4355Cmd 7 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 238: Si4355Cmd.FIFO_INFO.TX_FIFO_SPACE = radioCmd[1];
+"238
+[e = . . _Si4355Cmd 7 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 239: }
+"239
+[e :UE 306 ]
+}
+"241
+[v _si4355_write_ezconfig_array `(v ~T0 @X0 1 ef2`uc`*uc ]
+"242
+{
+[; ;si4355.c: 241: void si4355_write_ezconfig_array( U8 numBytes, U8* pEzConfigArray )
+[; ;si4355.c: 242: {
 [e :U _si4355_write_ezconfig_array ]
-"214
+"241
 [v _numBytes `uc ~T0 @X0 1 r1 ]
 [v _pEzConfigArray `*uc ~T0 @X0 1 r2 ]
-"215
+"242
 [f ]
-[; ;si4355.c: 217: }
-"217
-[e :UE 298 ]
+[; ;si4355.c: 244: }
+"244
+[e :UE 307 ]
 }
-"219
+"246
 [v _si4355_ezconfig_check `(v ~T0 @X0 1 ef1`ui ]
-"220
+"247
 {
-[; ;si4355.c: 219: void si4355_ezconfig_check( U16 CHECKSUM )
-[; ;si4355.c: 220: {
+[; ;si4355.c: 246: void si4355_ezconfig_check( U16 CHECKSUM )
+[; ;si4355.c: 247: {
 [e :U _si4355_ezconfig_check ]
-"219
+"246
 [v _CHECKSUM `ui ~T0 @X0 1 r1 ]
-"220
+"247
 [f ]
-[; ;si4355.c: 223: RA5 = 0;
-"223
+[; ;si4355.c: 250: RA5 = 0;
+"250
 [e = _RA5 -> -> 0 `i `b ]
-[; ;si4355.c: 226: SPI_WriteByte( 0x19 );
-"226
+[; ;si4355.c: 253: SPI_WriteByte( 0x19 );
+"253
 [e ( _SPI_WriteByte (1 -> -> 25 `i `uc ]
-[; ;si4355.c: 229: SPI_WriteByte( ( U16 ) CHECKSUM >> 8u );
-"229
+[; ;si4355.c: 256: SPI_WriteByte( ( U16 ) CHECKSUM >> 8u );
+"256
 [e ( _SPI_WriteByte (1 -> >> _CHECKSUM -> 8 `ui `uc ]
-[; ;si4355.c: 230: SPI_WriteByte( ( U16 ) CHECKSUM & 0x00FF );
-"230
+[; ;si4355.c: 257: SPI_WriteByte( ( U16 ) CHECKSUM & 0x00FF );
+"257
 [e ( _SPI_WriteByte (1 -> & _CHECKSUM -> -> 255 `i `ui `uc ]
-[; ;si4355.c: 232: RA5 = 1;
-"232
+[; ;si4355.c: 259: RA5 = 1;
+"259
 [e = _RA5 -> -> 1 `i `b ]
-[; ;si4355.c: 235: radio_comm_GetResp( 1u, radioCmd );
-"235
+[; ;si4355.c: 262: radio_comm_GetResp( 1u, radioCmd );
+"262
 [e ( _radio_comm_GetResp (2 , -> -> 1 `ui `uc &U _radioCmd ]
-[; ;si4355.c: 236: }
-"236
-[e :UE 299 ]
+[; ;si4355.c: 263: }
+"263
+[e :UE 308 ]
 }
-"239
+"266
 [v _si4355_get_int_status `(v ~T0 @X0 1 ef3`uc`uc`uc ]
-"240
+"267
 {
-[; ;si4355.c: 239: void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND )
-[; ;si4355.c: 240: {
+[; ;si4355.c: 266: void si4355_get_int_status( U8 PH_CLR_PEND, U8 MODEM_CLR_PEND, U8 CHIP_CLR_PEND )
+[; ;si4355.c: 267: {
 [e :U _si4355_get_int_status ]
-"239
+"266
 [v _PH_CLR_PEND `uc ~T0 @X0 1 r1 ]
 [v _MODEM_CLR_PEND `uc ~T0 @X0 1 r2 ]
 [v _CHIP_CLR_PEND `uc ~T0 @X0 1 r3 ]
-"240
+"267
 [f ]
-[; ;si4355.c: 241: radioCmd[0] = 0x20;
-"241
+[; ;si4355.c: 268: radioCmd[0] = 0x20;
+"268
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 32 `i `uc ]
-[; ;si4355.c: 242: radioCmd[1] = PH_CLR_PEND;
-"242
+[; ;si4355.c: 269: radioCmd[1] = PH_CLR_PEND;
+"269
 [e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _PH_CLR_PEND ]
-[; ;si4355.c: 243: radioCmd[2] = MODEM_CLR_PEND;
-"243
+[; ;si4355.c: 270: radioCmd[2] = MODEM_CLR_PEND;
+"270
 [e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _MODEM_CLR_PEND ]
-[; ;si4355.c: 244: radioCmd[3] = CHIP_CLR_PEND;
-"244
+[; ;si4355.c: 271: radioCmd[3] = CHIP_CLR_PEND;
+"271
 [e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _CHIP_CLR_PEND ]
-[; ;si4355.c: 246: radio_comm_SendCmdGetResp( 4,
-[; ;si4355.c: 247: radioCmd,
-[; ;si4355.c: 248: 8,
-[; ;si4355.c: 249: radioCmd );
-"249
+[; ;si4355.c: 273: radio_comm_SendCmdGetResp( 4,
+[; ;si4355.c: 274: radioCmd,
+[; ;si4355.c: 275: 8,
+[; ;si4355.c: 276: radioCmd );
+"276
 [e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 4 `i `uc &U _radioCmd -> -> 8 `i `uc &U _radioCmd ]
-[; ;si4355.c: 251: Si4355Cmd.GET_INT_STATUS.INT_PEND = radioCmd[0];
-"251
+[; ;si4355.c: 278: Si4355Cmd.GET_INT_STATUS.INT_PEND = radioCmd[0];
+"278
 [e = . . _Si4355Cmd 9 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 252: Si4355Cmd.GET_INT_STATUS.INT_STATUS = radioCmd[1];
-"252
+[; ;si4355.c: 279: Si4355Cmd.GET_INT_STATUS.INT_STATUS = radioCmd[1];
+"279
 [e = . . _Si4355Cmd 9 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 253: Si4355Cmd.GET_INT_STATUS.PH_PEND = radioCmd[2];
-"253
+[; ;si4355.c: 280: Si4355Cmd.GET_INT_STATUS.PH_PEND = radioCmd[2];
+"280
 [e = . . _Si4355Cmd 9 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 254: Si4355Cmd.GET_INT_STATUS.PH_STATUS = radioCmd[3];
-"254
+[; ;si4355.c: 281: Si4355Cmd.GET_INT_STATUS.PH_STATUS = radioCmd[3];
+"281
 [e = . . _Si4355Cmd 9 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 255: Si4355Cmd.GET_INT_STATUS.MODEM_PEND = radioCmd[4];
-"255
+[; ;si4355.c: 282: Si4355Cmd.GET_INT_STATUS.MODEM_PEND = radioCmd[4];
+"282
 [e = . . _Si4355Cmd 9 4 *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 256: Si4355Cmd.GET_INT_STATUS.MODEM_STATUS = radioCmd[5];
-"256
+[; ;si4355.c: 283: Si4355Cmd.GET_INT_STATUS.MODEM_STATUS = radioCmd[5];
+"283
 [e = . . _Si4355Cmd 9 5 *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 257: Si4355Cmd.GET_INT_STATUS.CHIP_PEND = radioCmd[6];
-"257
+[; ;si4355.c: 284: Si4355Cmd.GET_INT_STATUS.CHIP_PEND = radioCmd[6];
+"284
 [e = . . _Si4355Cmd 9 6 *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 258: Si4355Cmd.GET_INT_STATUS.CHIP_STATUS = radioCmd[7];
-"258
+[; ;si4355.c: 285: Si4355Cmd.GET_INT_STATUS.CHIP_STATUS = radioCmd[7];
+"285
 [e = . . _Si4355Cmd 9 7 *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 259: }
-"259
-[e :UE 300 ]
+[; ;si4355.c: 286: }
+"286
+[e :UE 309 ]
 }
-"261
+"288
 [v _si4355_start_rx `(v ~T0 @X0 1 ef6`uc`uc`ui`uc`uc`uc ]
-"262
+"289
 {
-[; ;si4355.c: 261: void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 )
-[; ;si4355.c: 262: {
+[; ;si4355.c: 288: void si4355_start_rx( U8 CHANNEL, U8 CONDITION, U16 RX_LEN, U8 NEXT_STATE1, U8 NEXT_STATE2, U8 NEXT_STATE3 )
+[; ;si4355.c: 289: {
 [e :U _si4355_start_rx ]
-"261
+"288
 [v _CHANNEL `uc ~T0 @X0 1 r1 ]
 [v _CONDITION `uc ~T0 @X0 1 r2 ]
 [v _RX_LEN `ui ~T0 @X0 1 r3 ]
 [v _NEXT_STATE1 `uc ~T0 @X0 1 r4 ]
 [v _NEXT_STATE2 `uc ~T0 @X0 1 r5 ]
 [v _NEXT_STATE3 `uc ~T0 @X0 1 r6 ]
-"262
+"289
 [f ]
-[; ;si4355.c: 263: radioCmd[0] = 0x32;
-"263
+[; ;si4355.c: 290: radioCmd[0] = 0x32;
+"290
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 50 `i `uc ]
-[; ;si4355.c: 264: radioCmd[1] = CHANNEL;
-"264
+[; ;si4355.c: 291: radioCmd[1] = CHANNEL;
+"291
 [e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _CHANNEL ]
-[; ;si4355.c: 265: radioCmd[2] = CONDITION;
-"265
+[; ;si4355.c: 292: radioCmd[2] = CONDITION;
+"292
 [e = *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _CONDITION ]
-[; ;si4355.c: 266: radioCmd[3] = ( U8 )( RX_LEN >> 8 );
-"266
+[; ;si4355.c: 293: radioCmd[3] = ( U8 )( RX_LEN >> 8 );
+"293
 [e = *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> >> _RX_LEN -> 8 `i `uc ]
-[; ;si4355.c: 267: radioCmd[4] = ( U8 )( RX_LEN );
-"267
+[; ;si4355.c: 294: radioCmd[4] = ( U8 )( RX_LEN );
+"294
 [e = *U + &U _radioCmd * -> -> -> 4 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> _RX_LEN `uc ]
-[; ;si4355.c: 268: radioCmd[5] = NEXT_STATE1;
-"268
+[; ;si4355.c: 295: radioCmd[5] = NEXT_STATE1;
+"295
 [e = *U + &U _radioCmd * -> -> -> 5 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NEXT_STATE1 ]
-[; ;si4355.c: 269: radioCmd[6] = NEXT_STATE2;
-"269
+[; ;si4355.c: 296: radioCmd[6] = NEXT_STATE2;
+"296
 [e = *U + &U _radioCmd * -> -> -> 6 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NEXT_STATE2 ]
-[; ;si4355.c: 270: radioCmd[7] = NEXT_STATE3;
-"270
+[; ;si4355.c: 297: radioCmd[7] = NEXT_STATE3;
+"297
 [e = *U + &U _radioCmd * -> -> -> 7 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NEXT_STATE3 ]
-[; ;si4355.c: 272: radio_comm_SendCmd( 8, radioCmd );
-"272
+[; ;si4355.c: 299: radio_comm_SendCmd( 8, radioCmd );
+"299
 [e ( _radio_comm_SendCmd (2 , -> -> 8 `i `uc &U _radioCmd ]
-[; ;si4355.c: 273: }
-"273
-[e :UE 301 ]
+[; ;si4355.c: 300: }
+"300
+[e :UE 310 ]
 }
-"276
+"303
 [v _si4355_request_device_state `(v ~T0 @X0 1 ef ]
-"277
+"304
 {
-[; ;si4355.c: 276: void si4355_request_device_state(void)
-[; ;si4355.c: 277: {
+[; ;si4355.c: 303: void si4355_request_device_state(void)
+[; ;si4355.c: 304: {
 [e :U _si4355_request_device_state ]
 [f ]
-[; ;si4355.c: 278: radioCmd[0] = 0x33;
-"278
+[; ;si4355.c: 305: radioCmd[0] = 0x33;
+"305
 [e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 51 `i `uc ]
-[; ;si4355.c: 280: radio_comm_SendCmdGetResp( 1,
-[; ;si4355.c: 281: radioCmd,
-[; ;si4355.c: 282: 2,
-[; ;si4355.c: 283: radioCmd );
-"283
-[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 1 `i `uc &U _radioCmd -> -> 2 `i `uc &U _radioCmd ]
-[; ;si4355.c: 285: Si4355Cmd.REQUEST_DEVICE_STATE.CURR_STATE = radioCmd[0];
-"285
-[e = . . _Si4355Cmd 10 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 286: Si4355Cmd.REQUEST_DEVICE_STATE.CURRENT_CHANNEL = radioCmd[1];
-"286
-[e = . . _Si4355Cmd 10 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 287: }
-"287
-[e :UE 302 ]
-}
-"290
-[v _si4355_change_state `(v ~T0 @X0 1 ef1`uc ]
-"291
-{
-[; ;si4355.c: 290: void si4355_change_state( U8 NEXT_STATE1 )
-[; ;si4355.c: 291: {
-[e :U _si4355_change_state ]
-"290
-[v _NEXT_STATE1 `uc ~T0 @X0 1 r1 ]
-"291
-[f ]
-[; ;si4355.c: 292: radioCmd[0] = 0x34;
-"292
-[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 52 `i `uc ]
-[; ;si4355.c: 293: radioCmd[1] = NEXT_STATE1;
-"293
-[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NEXT_STATE1 ]
-[; ;si4355.c: 295: radio_comm_SendCmd( 2, radioCmd );
-"295
-[e ( _radio_comm_SendCmd (2 , -> -> 2 `i `uc &U _radioCmd ]
-[; ;si4355.c: 296: }
-"296
-[e :UE 303 ]
-}
-"299
-[v _si4355_read_cmd_buff `(v ~T0 @X0 1 ef ]
-"300
-{
-[; ;si4355.c: 299: void si4355_read_cmd_buff( void )
-[; ;si4355.c: 300: {
-[e :U _si4355_read_cmd_buff ]
-[f ]
-[; ;si4355.c: 302: }
-"302
-[e :UE 304 ]
-}
-"305
-[v _si4355_frr_a_read `(v ~T0 @X0 1 ef1`uc ]
-"306
-{
-[; ;si4355.c: 305: void si4355_frr_a_read( U8 respByteCount )
-[; ;si4355.c: 306: {
-[e :U _si4355_frr_a_read ]
-"305
-[v _respByteCount `uc ~T0 @X0 1 r1 ]
-"306
-[f ]
-[; ;si4355.c: 307: radio_comm_ReadData( 0x50,
-[; ;si4355.c: 308: 0,
-[; ;si4355.c: 309: respByteCount,
+[; ;si4355.c: 307: radio_comm_SendCmdGetResp( 1,
+[; ;si4355.c: 308: radioCmd,
+[; ;si4355.c: 309: 2,
 [; ;si4355.c: 310: radioCmd );
 "310
-[e ( _radio_comm_ReadData (4 , , , -> -> 80 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
-[; ;si4355.c: 312: Si4355Cmd.FRR_A_READ.FRR_A_VALUE = radioCmd[0];
+[e ( _radio_comm_SendCmdGetResp (4 , , , -> -> 1 `i `uc &U _radioCmd -> -> 2 `i `uc &U _radioCmd ]
+[; ;si4355.c: 312: Si4355Cmd.REQUEST_DEVICE_STATE.CURR_STATE = radioCmd[0];
 "312
-[e = . . _Si4355Cmd 12 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 313: Si4355Cmd.FRR_A_READ.FRR_B_VALUE = radioCmd[1];
+[e = . . _Si4355Cmd 10 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 313: Si4355Cmd.REQUEST_DEVICE_STATE.CURRENT_CHANNEL = radioCmd[1];
 "313
-[e = . . _Si4355Cmd 12 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 314: Si4355Cmd.FRR_A_READ.FRR_C_VALUE = radioCmd[2];
+[e = . . _Si4355Cmd 10 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 314: }
 "314
-[e = . . _Si4355Cmd 12 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 315: Si4355Cmd.FRR_A_READ.FRR_D_VALUE = radioCmd[3];
-"315
-[e = . . _Si4355Cmd 12 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 316: }
-"316
-[e :UE 305 ]
+[e :UE 311 ]
 }
-"319
-[v _si4355_frr_b_read `(v ~T0 @X0 1 ef1`uc ]
-"320
+"317
+[v _si4355_change_state `(v ~T0 @X0 1 ef1`uc ]
+"318
 {
-[; ;si4355.c: 319: void si4355_frr_b_read( U8 respByteCount )
-[; ;si4355.c: 320: {
-[e :U _si4355_frr_b_read ]
-"319
-[v _respByteCount `uc ~T0 @X0 1 r1 ]
-"320
+[; ;si4355.c: 317: void si4355_change_state( U8 NEXT_STATE1 )
+[; ;si4355.c: 318: {
+[e :U _si4355_change_state ]
+"317
+[v _NEXT_STATE1 `uc ~T0 @X0 1 r1 ]
+"318
 [f ]
-[; ;si4355.c: 321: radio_comm_ReadData( 0x51,
-[; ;si4355.c: 322: 0,
-[; ;si4355.c: 323: respByteCount,
-[; ;si4355.c: 324: radioCmd );
-"324
-[e ( _radio_comm_ReadData (4 , , , -> -> 81 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
-[; ;si4355.c: 326: Si4355Cmd.FRR_B_READ.FRR_B_VALUE = radioCmd[0];
+[; ;si4355.c: 319: radioCmd[0] = 0x34;
+"319
+[e = *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux -> -> 52 `i `uc ]
+[; ;si4355.c: 320: radioCmd[1] = NEXT_STATE1;
+"320
+[e = *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux _NEXT_STATE1 ]
+[; ;si4355.c: 322: radio_comm_SendCmd( 2, radioCmd );
+"322
+[e ( _radio_comm_SendCmd (2 , -> -> 2 `i `uc &U _radioCmd ]
+[; ;si4355.c: 323: }
+"323
+[e :UE 312 ]
+}
 "326
-[e = . . _Si4355Cmd 13 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 327: Si4355Cmd.FRR_B_READ.FRR_C_VALUE = radioCmd[1];
+[v _si4355_read_cmd_buff `(v ~T0 @X0 1 ef ]
 "327
-[e = . . _Si4355Cmd 13 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 328: Si4355Cmd.FRR_B_READ.FRR_D_VALUE = radioCmd[2];
-"328
-[e = . . _Si4355Cmd 13 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 329: Si4355Cmd.FRR_B_READ.FRR_A_VALUE = radioCmd[3];
+{
+[; ;si4355.c: 326: void si4355_read_cmd_buff( void )
+[; ;si4355.c: 327: {
+[e :U _si4355_read_cmd_buff ]
+[f ]
+[; ;si4355.c: 329: }
 "329
-[e = . . _Si4355Cmd 13 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 330: }
-"330
-[e :UE 306 ]
+[e :UE 313 ]
 }
+"332
+[v _si4355_frr_a_read `(v ~T0 @X0 1 ef1`uc ]
 "333
-[v _si4355_frr_c_read `(v ~T0 @X0 1 ef1`uc ]
-"334
 {
-[; ;si4355.c: 333: void si4355_frr_c_read( U8 respByteCount )
-[; ;si4355.c: 334: {
-[e :U _si4355_frr_c_read ]
-"333
+[; ;si4355.c: 332: void si4355_frr_a_read( U8 respByteCount )
+[; ;si4355.c: 333: {
+[e :U _si4355_frr_a_read ]
+"332
 [v _respByteCount `uc ~T0 @X0 1 r1 ]
-"334
+"333
 [f ]
-[; ;si4355.c: 335: radio_comm_ReadData( 0x53,
-[; ;si4355.c: 336: 0,
-[; ;si4355.c: 337: respByteCount,
-[; ;si4355.c: 338: radioCmd);
-"338
-[e ( _radio_comm_ReadData (4 , , , -> -> 83 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
-[; ;si4355.c: 340: Si4355Cmd.FRR_C_READ.FRR_C_VALUE = radioCmd[0];
+[; ;si4355.c: 334: radio_comm_ReadData( 0x50,
+[; ;si4355.c: 335: 0,
+[; ;si4355.c: 336: respByteCount,
+[; ;si4355.c: 337: radioCmd );
+"337
+[e ( _radio_comm_ReadData (4 , , , -> -> 80 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
+[; ;si4355.c: 339: Si4355Cmd.FRR_A_READ.FRR_A_VALUE = radioCmd[0];
+"339
+[e = . . _Si4355Cmd 12 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 340: Si4355Cmd.FRR_A_READ.FRR_B_VALUE = radioCmd[1];
 "340
-[e = . . _Si4355Cmd 14 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 341: Si4355Cmd.FRR_C_READ.FRR_D_VALUE = radioCmd[1];
+[e = . . _Si4355Cmd 12 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 341: Si4355Cmd.FRR_A_READ.FRR_C_VALUE = radioCmd[2];
 "341
-[e = . . _Si4355Cmd 14 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 342: Si4355Cmd.FRR_C_READ.FRR_A_VALUE = radioCmd[2];
+[e = . . _Si4355Cmd 12 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 342: Si4355Cmd.FRR_A_READ.FRR_D_VALUE = radioCmd[3];
 "342
-[e = . . _Si4355Cmd 14 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 343: Si4355Cmd.FRR_C_READ.FRR_B_VALUE = radioCmd[3];
+[e = . . _Si4355Cmd 12 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 343: }
 "343
-[e = . . _Si4355Cmd 14 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 344: }
-"344
-[e :UE 307 ]
+[e :UE 314 ]
 }
+"346
+[v _si4355_frr_b_read `(v ~T0 @X0 1 ef1`uc ]
 "347
-[v _si4355_frr_d_read `(v ~T0 @X0 1 ef1`uc ]
-"348
 {
-[; ;si4355.c: 347: void si4355_frr_d_read( U8 respByteCount )
-[; ;si4355.c: 348: {
-[e :U _si4355_frr_d_read ]
-"347
+[; ;si4355.c: 346: void si4355_frr_b_read( U8 respByteCount )
+[; ;si4355.c: 347: {
+[e :U _si4355_frr_b_read ]
+"346
 [v _respByteCount `uc ~T0 @X0 1 r1 ]
-"348
+"347
 [f ]
-[; ;si4355.c: 349: radio_comm_ReadData( 0x57,
-[; ;si4355.c: 350: 0,
-[; ;si4355.c: 351: respByteCount,
-[; ;si4355.c: 352: radioCmd );
-"352
-[e ( _radio_comm_ReadData (4 , , , -> -> 87 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
-[; ;si4355.c: 354: Si4355Cmd.FRR_D_READ.FRR_D_VALUE = radioCmd[0];
+[; ;si4355.c: 348: radio_comm_ReadData( 0x51,
+[; ;si4355.c: 349: 0,
+[; ;si4355.c: 350: respByteCount,
+[; ;si4355.c: 351: radioCmd );
+"351
+[e ( _radio_comm_ReadData (4 , , , -> -> 81 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
+[; ;si4355.c: 353: Si4355Cmd.FRR_B_READ.FRR_B_VALUE = radioCmd[0];
+"353
+[e = . . _Si4355Cmd 13 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 354: Si4355Cmd.FRR_B_READ.FRR_C_VALUE = radioCmd[1];
 "354
-[e = . . _Si4355Cmd 15 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 355: Si4355Cmd.FRR_D_READ.FRR_A_VALUE = radioCmd[1];
+[e = . . _Si4355Cmd 13 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 355: Si4355Cmd.FRR_B_READ.FRR_D_VALUE = radioCmd[2];
 "355
-[e = . . _Si4355Cmd 15 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 356: Si4355Cmd.FRR_D_READ.FRR_B_VALUE = radioCmd[2];
+[e = . . _Si4355Cmd 13 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 356: Si4355Cmd.FRR_B_READ.FRR_A_VALUE = radioCmd[3];
 "356
-[e = . . _Si4355Cmd 15 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 357: Si4355Cmd.FRR_D_READ.FRR_C_VALUE = radioCmd[3];
+[e = . . _Si4355Cmd 13 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 357: }
 "357
-[e = . . _Si4355Cmd 15 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
-[; ;si4355.c: 358: }
-"358
-[e :UE 308 ]
+[e :UE 315 ]
 }
 "360
-[v _si4355_read_rx_fifo `(v ~T0 @X0 1 ef2`uc`*uc ]
+[v _si4355_frr_c_read `(v ~T0 @X0 1 ef1`uc ]
 "361
 {
-[; ;si4355.c: 360: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData )
+[; ;si4355.c: 360: void si4355_frr_c_read( U8 respByteCount )
 [; ;si4355.c: 361: {
-[e :U _si4355_read_rx_fifo ]
+[e :U _si4355_frr_c_read ]
 "360
+[v _respByteCount `uc ~T0 @X0 1 r1 ]
+"361
+[f ]
+[; ;si4355.c: 362: radio_comm_ReadData( 0x53,
+[; ;si4355.c: 363: 0,
+[; ;si4355.c: 364: respByteCount,
+[; ;si4355.c: 365: radioCmd);
+"365
+[e ( _radio_comm_ReadData (4 , , , -> -> 83 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
+[; ;si4355.c: 367: Si4355Cmd.FRR_C_READ.FRR_C_VALUE = radioCmd[0];
+"367
+[e = . . _Si4355Cmd 14 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 368: Si4355Cmd.FRR_C_READ.FRR_D_VALUE = radioCmd[1];
+"368
+[e = . . _Si4355Cmd 14 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 369: Si4355Cmd.FRR_C_READ.FRR_A_VALUE = radioCmd[2];
+"369
+[e = . . _Si4355Cmd 14 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 370: Si4355Cmd.FRR_C_READ.FRR_B_VALUE = radioCmd[3];
+"370
+[e = . . _Si4355Cmd 14 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 371: }
+"371
+[e :UE 316 ]
+}
+"374
+[v _si4355_frr_d_read `(v ~T0 @X0 1 ef1`uc ]
+"375
+{
+[; ;si4355.c: 374: void si4355_frr_d_read( U8 respByteCount )
+[; ;si4355.c: 375: {
+[e :U _si4355_frr_d_read ]
+"374
+[v _respByteCount `uc ~T0 @X0 1 r1 ]
+"375
+[f ]
+[; ;si4355.c: 376: radio_comm_ReadData( 0x57,
+[; ;si4355.c: 377: 0,
+[; ;si4355.c: 378: respByteCount,
+[; ;si4355.c: 379: radioCmd );
+"379
+[e ( _radio_comm_ReadData (4 , , , -> -> 87 `i `uc -> -> 0 `i `uc _respByteCount &U _radioCmd ]
+[; ;si4355.c: 381: Si4355Cmd.FRR_D_READ.FRR_D_VALUE = radioCmd[0];
+"381
+[e = . . _Si4355Cmd 15 0 *U + &U _radioCmd * -> -> -> 0 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 382: Si4355Cmd.FRR_D_READ.FRR_A_VALUE = radioCmd[1];
+"382
+[e = . . _Si4355Cmd 15 1 *U + &U _radioCmd * -> -> -> 1 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 383: Si4355Cmd.FRR_D_READ.FRR_B_VALUE = radioCmd[2];
+"383
+[e = . . _Si4355Cmd 15 2 *U + &U _radioCmd * -> -> -> 2 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 384: Si4355Cmd.FRR_D_READ.FRR_C_VALUE = radioCmd[3];
+"384
+[e = . . _Si4355Cmd 15 3 *U + &U _radioCmd * -> -> -> 3 `i `ui `ux -> -> # *U &U _radioCmd `ui `ux ]
+[; ;si4355.c: 385: }
+"385
+[e :UE 317 ]
+}
+"387
+[v _si4355_read_rx_fifo `(v ~T0 @X0 1 ef2`uc`*uc ]
+"388
+{
+[; ;si4355.c: 387: void si4355_read_rx_fifo( U8 numBytes, U8* pRxData )
+[; ;si4355.c: 388: {
+[e :U _si4355_read_rx_fifo ]
+"387
 [v _numBytes `uc ~T0 @X0 1 r1 ]
 [v _pRxData `*uc ~T0 @X0 1 r2 ]
-"361
+"388
 [f ]
-[; ;si4355.c: 362: radio_comm_ReadData( 0x77, 0, numBytes, pRxData );
-"362
+[; ;si4355.c: 389: radio_comm_ReadData( 0x77, 0, numBytes, pRxData );
+"389
 [e ( _radio_comm_ReadData (4 , , , -> -> 119 `i `uc -> -> 0 `i `uc _numBytes _pRxData ]
-[; ;si4355.c: 363: }
-"363
-[e :UE 309 ]
+[; ;si4355.c: 390: }
+"390
+[e :UE 318 ]
 }
