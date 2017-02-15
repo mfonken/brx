@@ -32,17 +32,6 @@ void Radio_Init( void )
     /* Power Up the radio chip */
     Radio_PowerUp();
   }
-  SS_PIN = 0;
-  __delay_ms(50);
-  SS_PIN = 1;
-  __delay_ms(50);
-  SS_PIN = 0;
-  __delay_ms(50);
-  SS_PIN = 1;
-  __delay_ms(50);
-  SS_PIN = 0;
-  __delay_ms(50);
-  SS_PIN = 1;
   while(1);
   // Read ITs, clear pending ones
   si4355_get_int_status(0u, 0u, 0u);
